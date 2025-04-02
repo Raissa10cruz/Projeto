@@ -1,5 +1,7 @@
-body {
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+ body {
+    font-family: "Dancing Script", cursive;
+    font-weight: 500px;
     background: url('img/flores.jpg') no-repeat center center fixed;
     background-size: cover;
     text-align: center;
@@ -39,11 +41,10 @@ h1 {
 
 /* Estilização das imagens */
 .circle img {
-    width: 160px;
-    height: 160px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     object-fit: cover;
-    border: 5px solid white;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
