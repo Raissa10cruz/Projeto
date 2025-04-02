@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('img/flores.jpg') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #c44;
+    font-style: italic;
+    font-size: 32px;
+    margin: 40px 0;
+}
+
+/* Organiza os círculos */
+.circles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px 100px; /* Espaçamento entre os círculos */
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Cada círculo estilizado */
+.circle {
+    text-decoration: none;
+    color: #c44;
+    text-align: center;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Estilização das imagens */
+.circle img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.circle img:hover {
+    transform: scale(1.15);
+    box-shadow: 7px 7px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Nome abaixo do círculo */
+.circle p {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .circles {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .circle img {
+        width: 130px;
+        height: 130px;
+    }
+}
