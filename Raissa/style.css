@@ -1,0 +1,170 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, serif;
+    background-image: url('/imgRaissa/Flower\ hd\ 4k\ wallpaper\ 1920x1080\ laptop\ desktop\ wpp_\ 🌹.jfif');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* MENU HAMBURGUER */
+  .menu-hamburguer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: 20;
+  }
+  
+  /* MENU LATERAL */
+  .menu-lateral {
+    position: fixed;
+    top: 60px;
+    left: -200px;
+    width: 180px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: left 0.3s ease-in-out;
+    z-index: 10;
+  }
+  
+  .menu-lateral.aberto {
+    left: 20px;
+  }
+  
+  .menu-lateral a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: background 0.3s;
+  }
+  
+  .menu-lateral a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* BOTÃO PLANO DE AÇÃO */
+  .topo-direita {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+    z-index: 10;
+  }
+  
+  .btn-acao {
+    background-color: #d2b8f4;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .btn-acao:hover {
+    background-color: #bca0e6;
+    transform: scale(1.05);
+  }
+  
+  /* FORMULÁRIO DE LOGIN */
+  .form-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 40px 30px;
+    width: 300px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .form-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .form-container h2 {
+    margin-bottom: 30px;
+    color: white;
+    font-weight: normal;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+  }
+  
+  .btn {
+    background-color: #d2b8f4;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .btn:hover {
+    background-color: #bca0e6;
+  }
+  
+  .link {
+    margin-top: 15px;
+    display: block;
+    font-size: 14px;
+    color: #5c459c;
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
+  /* TÍTULO */
+  .titulo {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+  
+  .titulo h1 {
+    font-size: 28px;
+    margin: 0;
+  }
+  
+  .titulo h2 {
+    margin: 0;
+    font-size: 22px;
+  }
+  
