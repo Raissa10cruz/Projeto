@@ -15,7 +15,7 @@ $emailSessao = $userSessao["email"] ?? '';
 $stmt = $conn->prepare("SELECT email, profile_pic FROM users WHERE email = :email");
 $stmt->bindParam(':email', $emailSessao);
 $stmt->execute();
-
+$user = $stmt->fetch(PDO::FETCH_ASSOC); // <-- Correção aplicada aqui
 
 // Definindo variáveis de exibição
 $foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))

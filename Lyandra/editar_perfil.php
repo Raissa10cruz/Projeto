@@ -12,7 +12,7 @@ $email = $_SESSION["user"]["email"] ?? '';
 $stmt = $conn->prepare("SELECT name, email, profile_pic, descricao FROM users WHERE email = :email");
 $stmt->bindParam(':email', $email);
 $stmt->execute();
-
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 // Atualização
