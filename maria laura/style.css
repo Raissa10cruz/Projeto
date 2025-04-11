@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    background: url(img/imagem.jpg) no-repeat center center/cover;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form {
+    padding: 5px;
+    border-radius: 20px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 90px;
+    height: 90px;
+    background-color: #000000;
+    border-radius: 70%;
+    margin-bottom: 70px;
+    background-image: url('img/do-utilizador.png');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    border-bottom: 1px solid #333;
+    width: 100%;
+  }
+  
+  .input-group input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+    color: #000000;
+  }
+  
+  .input-group label {
+    margin-right: 10px;
+    color: #000000;
+  }
+  
+  .input-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .input-group.half {
+    width: 48%;
+  }
+  
+  .btn {
+    margin-top: 20px;
+    background-color: #dbecc8;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #c0d4ad;
+  }
+  .input-nome {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  #nome {
+    background-color: #dbecc8;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: #000;
+    font-weight: bold;
+    width: 100%;
+    border: none;
+    outline: none;
+  }
+  
+  .icon, .fa-solid {
+    color: #000000;
+    font-size: 16px;
+  }
+  
