@@ -125,7 +125,7 @@ if (!isset($_SESSION['usuario'])) {
     </style>
 </head>
 <body>
-    <div class="header">
+    <div class="gheader">
         <div class="reflexao">
         "A vida é um projeto em construção, e cada escolha que fazemos define o caminho
          que seguimos. Sonhar é essencial, mas agir com coragem e persistência é o que 
