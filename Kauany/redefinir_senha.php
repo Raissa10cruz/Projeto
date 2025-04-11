@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <form method="post">
             <input type="password" id="senha" name="senha" placeholder="Nova Senha" required>
-            <input type="hidden" name="usuario" value="<?= htmlspecialchars($usuario) ?>">
+            <input type="hidden" name="usuario" value="<?= htmlspecialchars($usuarios) ?>">
             <button type="submit">Redefinir Senha</button>
         </form>
 

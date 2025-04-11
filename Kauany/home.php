@@ -15,7 +15,7 @@ if (!isset($_SESSION['usuario'])) {
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #D23636;
         }
 
         .header {
@@ -57,26 +57,60 @@ if (!isset($_SESSION['usuario'])) {
             padding: 4px;
         }
 
-        .section-title {
+        h2.section-title {
             text-align: center;
-            margin-top: 30px;
-            font-size: 24px;
+            font-size: 28px;
             color: #333;
             font-weight: bold;
-            background-color: rgba(255,255,255,0.8);
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 10px;
+            margin: 40px 0 20px;
+            font-family: 'Comic Sans MS', cursive;
         }
 
         .bloco-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 30px;
+            gap: 30px;
+            padding: 0 60px 60px;
+            justify-items: center;
         }
 
-        @media (max-width: 900px) {
+        .bloco {
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.3s;
+    height: 330px;
+    width: 100%;
+    max-width: 280px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bloco img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.bloco span {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+    margin-top: 25px; /* Espaço entre imagem e texto */
+    margin-bottom: auto; /* empurra o texto um pouco mais pro centro */
+}
+
+
+        .bloco:hover {
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 992px) {
             .bloco-container {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -85,42 +119,8 @@ if (!isset($_SESSION['usuario'])) {
         @media (max-width: 600px) {
             .bloco-container {
                 grid-template-columns: 1fr;
+                padding: 0 20px 40px;
             }
-        }
-
-        .bloco {
-            background-color: #ddd;
-            border-radius: 15px;
-            overflow: hidden;
-            text-decoration: none;
-            color: black;
-            transition: transform 0.2s;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            height: 300px;
-        }
-
-        .bloco img {
-            width: 100%;
-            height: 65%;
-            object-fit: cover;
-        }
-
-        .bloco span {
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            padding: 15px;
-            background-color: #ddd;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .bloco:hover {
-            transform: scale(1.03);
         }
     </style>
 </head>
@@ -144,15 +144,15 @@ if (!isset($_SESSION['usuario'])) {
             <span>QUEM SOU EU?</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/objetivos.png" alt="">
+            <img src="7.jpg" alt="">
             <span>OBJETIVOS</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/plano.png" alt="">
+            <img src="8.png" alt="">
             <span>PLANO DE AÇÃO</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/sonhos.png" alt="">
+            <img src="9." alt="">
             <span>SONHOS</span>
         </a>
         <a href="#" class="bloco">
