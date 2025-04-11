@@ -76,7 +76,7 @@ $email = htmlspecialchars($user['email']);
     .botao-voltar:hover {
       background-color: #f0f0f0;
     }
-    }
+    
   </style>
 </head>
 <body>
