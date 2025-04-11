@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";  // Altere se tiver senha
 $pass = "";
-$db = "projeto_vida";
+$db = "site_autoconhecimento";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
@@ -19,25 +19,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $senha = $_POST['senha'];
   $confirmar = $_POST['confirmar'];
 
+  // Verifica se as senhas são iguais
   if ($senha !== $confirmar) {
     $msg = "As senhas não coincidem!";
   } else {
-    $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
-    $stmt = $conn->prepare("INSERT INTO usuarios (email, senha) VALUES (?, ?)");
-    $stmt->bind_param("ss", $email, $senhaHash);
-
-    if ($stmt->execute()) {
-      $msg = "Cadastro realizado com sucesso!";
-    } else {
-      $msg = "Erro: " . $stmt->error;
-    }
-
+    // Verificando se o e-mail já existe no banco de dados
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($emailExistente);
+    $stmt->fetch();
     $stmt->close();
+
+    if ($emailExistente > 0) {
+      $msg = "Este e-mail já está cadastrado!";
+    } else {
+      // Criptografando a senha antes de armazená-la
+      $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+      // Preparando a consulta para inserir os dados na tabela 'usuarios'
+      $stmt = $conn->prepare("INSERT INTO usuarios (email, senha) VALUES (?, ?)");
+      $stmt->bind_param("ss", $email, $senhaHash);
+
+      // Executando a consulta
+      if ($stmt->execute()) {
+        $msg = "Cadastro realizado com sucesso!";
+      } else {
+        // Se ocorrer algum erro na execução, exibe a mensagem de erro
+        $msg = "Erro: " . $stmt->error;
+      }
+
+      $stmt->close();
+    }
   }
 }
 
-$conn->close();
+$conn->close();  // Fecha a conexão com o banco de dados
 ?>
 
 <!DOCTYPE html>
@@ -143,9 +160,8 @@ $conn->close();
       <button class="btn-cadastro" type="submit">CADASTRAR</button>
 
       <p style="color: white; text-align: center; margin-top: 20px;">
-  Já tem uma conta? <a href="login.php" style="color: #ffffff; text-decoration: underline;">Entre.</a>
-</p>
-
+        Já tem uma conta? <a href="login.php" style="color: #ffffff; text-decoration: underline;">Entre.</a>
+      </p>
 
       <?php if ($msg): ?>
         <p class="mensagem"><?= $msg ?></p>

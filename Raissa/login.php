@@ -5,45 +5,47 @@ session_start();
 $host = "localhost";
 $user = "root";  // ou outro usuário
 $pass = "";
-$db = "projeto_vida";
+$db = "site_autoconhecimento";
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-  die("Erro de conexão: " . $conn->connect_error);
+try {
+    // Usando PDO para a conexão
+    $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    // Definir o modo de erro do PDO
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erro de conexão: " . $e->getMessage());
 }
 
 // Verificação de login
 $msg = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $email = $_POST['email'];
-  $senha = $_POST['senha'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-  $stmt = $conn->prepare("SELECT id, senha FROM usuarios WHERE email = ?");
-  $stmt->bind_param("s", $email);
-  $stmt->execute();
-  $stmt->store_result();
+    // Corrigido para a tabela correta, por exemplo, "usuarios"
+    $stmt = $conn->prepare("SELECT id, senha FROM usuarios WHERE email = :email");
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
 
-  if ($stmt->num_rows > 0) {
-    $stmt->bind_result($id, $senhaHash);
-    $stmt->fetch();
+    // Verifica se o usuário existe
+    if ($stmt->rowCount() > 0) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (password_verify($senha, $senhaHash)) {
-      $_SESSION['usuario_id'] = $id;
-      header("Location: dashboard.php"); // redirecionar após login
-      exit();
+        // Verifica a senha
+        if (password_verify($senha, $user['senha'])) {
+            $_SESSION['usuario_id'] = $user['id'];
+            header("Location: dashboard.php"); // redirecionar após login
+            exit();
+        } else {
+            $msg = "Senha incorreta.";
+        }
     } else {
-      $msg = "Senha incorreta.";
+        $msg = "Email não encontrado.";
     }
-  } else {
-    $msg = "Email não encontrado.";
-  }
-
-  $stmt->close();
 }
 
-$conn->close();
+$conn = null;  // Fecha a conexão PDO
 ?>
 
 <!DOCTYPE html>
@@ -158,7 +160,7 @@ $conn->close();
 
       <button class="btn-login" type="submit">ENTRAR</button>
 
-      <a href="#" class="link">esqueceu a senha?</a>
+      <a href="esqueci_senha.php" class="link">esqueceu a senha?</a>
 
       <?php if ($msg): ?>
         <p class="mensagem"><?= $msg ?></p>
