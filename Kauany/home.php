@@ -22,7 +22,7 @@ if (!isset($_SESSION['usuario'])) {
             position: relative;
             width: 100%;
             height: 200px;
-            background-image: url('kauany.jpg'); /* Substitua pelo seu banner */
+            background-image: url('kauany.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -89,31 +89,34 @@ if (!isset($_SESSION['usuario'])) {
         }
 
         .bloco {
-            background-color: rgba(255,255,255,0.9);
+            background-color: #ddd;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            text-align: center;
+            overflow: hidden;
             text-decoration: none;
             color: black;
             transition: transform 0.2s;
-            aspect-ratio: 1 / 1;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            height: 300px;
         }
 
         .bloco img {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            margin-bottom: 10px;
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
         }
 
         .bloco span {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
-            padding: 0 10px;
+            text-align: center;
+            padding: 15px;
+            background-color: #ddd;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .bloco:hover {
@@ -137,7 +140,7 @@ if (!isset($_SESSION['usuario'])) {
 
     <div class="bloco-container">
         <a href="quem-sou-eu.php" class="bloco">
-            <img src="img/quem.png" alt="">
+            <img src="images.png" alt="">
             <span>QUEM SOU EU?</span>
         </a>
         <a href="#" class="bloco">
