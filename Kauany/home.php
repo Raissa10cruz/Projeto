@@ -15,37 +15,46 @@ if (!isset($_SESSION['usuario'])) {
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('kauany.jpg'); /* imagem de fundo */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: #f5f5f5;
         }
 
         .header {
-            background-color: #d32f2f;
-            color: white;
-            padding: 15px;
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-image: url('kauany.jpg'); /* Substitua pelo seu banner */
+            background-size: cover;
+            background-position: center;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
         }
 
-        .header .reflexao {
-            font-size: 18px;
+        .reflexao {
+            color: white;
+            font-size: 24px;
             font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
         }
 
         .icones {
+            position: absolute;
+            top: 10px;
+            right: 15px;
             display: flex;
-            gap: 15px;
-            align-items: center;
+            gap: 10px;
         }
 
         .icones a img {
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 6px;
+            padding: 4px;
         }
 
         .section-title {
@@ -118,9 +127,9 @@ if (!isset($_SESSION['usuario'])) {
             "A maior jornada começa com o primeiro passo."
         </div>
         <div class="icones">
-            <a href="home.php" title="Voltar"><img src="" alt="Voltar"></a>
-            <a href="perfil.php" title="Perfil"><img src="2.png" alt="Perfil"></a>
-            <a href="logout.php" title="Sair"><img src="icone1.png" alt="Sair"></a>
+            <a href="home.php" title="Voltar"><img src="img/home.png" alt="Voltar"></a>
+            <a href="perfil.php" title="Perfil"><img src="img/perfil.png" alt="Perfil"></a>
+            <a href="logout.php" title="Sair"><img src="img/sair.png" alt="Sair"></a>
         </div>
     </div>
 
