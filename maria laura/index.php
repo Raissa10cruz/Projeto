@@ -1,4 +1,25 @@
+<?php
+session_start();
 
+// Verifica se o usuário está logado
+$foto = 'default.png'; // Imagem padrão
+
+if (isset($_SESSION['usuario_id'])) {
+    try {
+        $conn = new PDO('mysql:host=localhost;dbname=sistema_cadastro;charset=utf8', 'root', '');
+        $stmt = $conn->prepare("SELECT foto_perfil FROM usuarios WHERE id = :id");
+        $stmt->execute([':id' => $_SESSION['usuario_id']]);
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($resultado && !empty($resultado['foto_perfil'])) {
+            $foto = $resultado['foto_perfil'];
+        }
+    } catch (PDOException $e) {
+        // Em produção, você deve lidar melhor com o erro ou registrar em log
+        echo "Erro ao conectar ao banco de dados: " . $e->getMessage();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,7 +30,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Raleway:wght@400;700&family=Shadows+Into+Light&display=swap"
         rel="stylesheet">
-
 
     <style>
         .card-link {
@@ -28,14 +48,11 @@
             margin-top: 60px;
             text-align: left;
             padding-left: 30px;
-            /* opcional, para afastar da borda */
         }
 
         body {
             margin: 0;
             font-family: "Playfair Display", serif;
-            font-optical-sizing: auto;
-            font-weight: <weight>;
             font-style: italic;
             background-color: #d9ded7;
         }
@@ -66,25 +83,12 @@
             text-decoration: none;
             margin: 0 10px;
             font-weight: bold;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
         nav a:hover {
             color: #98A38F;
-            /* dourado suave */
             transform: scale(1.1);
-        }
-
-
-        .header-text {
-            margin-top: 60px;
         }
 
         .header-text h1 {
@@ -122,7 +126,6 @@
             transition: all 0.5s ease-in-out;
         }
 
-
         .card-image {
             position: relative;
         }
@@ -143,9 +146,6 @@
             border-radius: 4px;
             font-size: 1em;
             font-family: "Playfair Display", serif;
-            font-optical-sizing: auto;
-            font-weight: <weight>;
-            font-style: italic;
         }
 
         .card-content {
@@ -184,23 +184,23 @@
         <nav>
             <div>
                 <a href="#">Início</a>
-                <a href="#">Somos</a>
+                <a href="#">Sonhos</a>
                 <a href="#">Objetivos</a>
             </div>
             <div style="display: flex; align-items: center; gap: 15px;">
                 <a href="perfil.php">Plano Ação</a>
                 <a href="perfil.php" class="perfil-link">
-                    <img src="img/foto de perfil.webp" alt="Perfil" class="perfil-foto">
+                    <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
                 </a>
             </div>
         </nav>
 
         <div class="header-text">
             <h1>Projeto de Vida</h1>
-            <p>"Cada escolha que você faz construir o futuro que deseja. Sonhe, planeje e realize!" 💭✨🌱</p>
+            <p>"Cada escolha que você faz constrói o futuro que deseja. Sonhe, planeje e realize!" 💭✨🌱</p>
         </div>
-
     </header>
+
     <main>
         <a href="multiplas-inteligencias.html" class="card-link">
             <div class="card">
@@ -209,8 +209,7 @@
                     <h3>Testes de Múltiplas Inteligências</h3>
                 </div>
                 <div class="card-content">
-                    <p>
-                        Os Testes de Múltiplas Inteligências avaliam quais tipos de inteligência, segundo a teoria de
+                    <p>Os Testes de Múltiplas Inteligências avaliam quais tipos de inteligência, segundo a teoria de
                         Howard Gardner, são mais desenvolvidos em uma pessoa.</p>
                 </div>
             </div>
@@ -235,13 +234,10 @@
                     <h3>Quem Sou Eu?</h3>
                 </div>
                 <div class="card-content">
-                    <p>
-                        🌟Quem Sou Eu? Descubra o Fascinante Universo que É Você! 🌟
-                        Você já se perguntou o que te torna único? O que há por trás do seu sorriso, das suas escolhas e
-                        dos seus sonhos? Quem Sou Eu? não é apenas uma pergunta, é uma jornada emocionante para explorar
-                        o que faz de você, VOCÊ!
-                        ✨ Por que descobrir quem você é?
-                    </p>
+                    <p>🌟Quem Sou Eu? Descubra o Fascinante Universo que É Você! 🌟 Você já se perguntou o que te
+                        torna único? O que há por trás do seu sorriso, das suas escolhas e dos seus sonhos? Quem Sou Eu?
+                        não é apenas uma pergunta, é uma jornada emocionante para explorar o que faz de você, VOCÊ!
+                        ✨ Por que descobrir quem você é?</p>
                 </div>
             </div>
         </a>
@@ -259,8 +255,6 @@
                 </div>
             </div>
         </a>
-
-        </div>
     </main>
 </body>
 

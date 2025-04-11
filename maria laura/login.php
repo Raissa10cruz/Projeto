@@ -30,12 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario && password_verify($senha, $usuario['senha'])) {
-            // Login bem-sucedido
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['foto_perfil'] = $usuario['foto_perfil'];
 
-            header("Location: index.php"); // redireciona para página protegida
+            header("Location: index.php");
             exit;
         } else {
             $mensagem = "❌ Email ou senha incorretos!";
@@ -48,23 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <title>Tela de Login</title>
-  <!-- Link para os ícones do Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       background-image: url('img/imagem.jpg');
-      /* Substitua com o caminho da sua imagem */
       background-size: cover;
       background-position: center;
       height: 100vh;
@@ -72,9 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       justify-content: center;
       align-items: center;
     }
-
     .login-container {
-      /* Sem fundo */
       padding: 5px;
       border-radius: 10px;
       width: 570px;
@@ -83,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       flex-direction: column;
       align-items: center;
     }
-
     .profile-img {
       width: 80px;
       height: 80px;
@@ -92,13 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       margin-bottom: 30px;
       border: 3px solid white;
     }
-
     .input-group {
       position: relative;
       width: 100%;
       margin-bottom: 30px;
     }
-
     .input-group input {
       width: 100%;
       padding: 14px 45px;
@@ -108,16 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       background-color: #e9efd9;
       outline: none;
     }
-
     .input-group.password input {
       background-color: transparent;
       border-radius: 0;
-      border: none;
       border-bottom: 1px solid #444;
       padding-left: 35px;
       color: white;
     }
-
     .input-group i {
       position: absolute;
       top: 50%;
@@ -126,7 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       font-size: 16px;
       color: #444;
     }
-
     .forgot-password {
       font-size: 12px;
       text-align: left;
@@ -134,12 +118,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       margin-top: -20px;
       margin-bottom: 30px;
     }
-
     .forgot-password a {
       color: #000;
       text-decoration: none;
     }
-
     .login-container button {
       background-color: #e9efd9;
       border: none;
@@ -149,43 +131,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     .login-container button:hover {
       background-color: #d4dec2;
     }
-
-    .sobre-mim {
-      position: absolute;
-      bottom: 15px;
-      right: 20px;
-      background-color: rgba(255, 255, 255, 0.6);
-      padding: 6px 15px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-style: italic;
-      color: #333;
-    }
-  </style>
-</head>
-<!-- Deixe o PHP no topo como você já tem -->
-
-<!-- HTML abaixo do PHP -->
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Tela de Login</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* Seu CSS continua o mesmo */
-    /* ... (igual ao que você já mandou) */
   </style>
 </head>
 <body>
   <div class="login-container">
     <img src="img/foto de perfil.webp" alt="Avatar" class="profile-img">
 
-    <!-- FORMULÁRIO CORRETO AQUI -->
     <form method="POST" action="login.php" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       <div class="input-group">
         <i class="fas fa-user"></i>
@@ -198,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="forgot-password">
-        <a href="esqueci_senha.php">Esqueceu a Senha?</a>
+        <a href="esqueci_senha.php">Esqueceu a Senha?</a> <!-- CORRIGIDO -->
       </div>
 
       <button type="submit">Entrar</button>
@@ -207,7 +161,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p style="margin-top: 20px; font-weight: bold; color: red;"><?= $mensagem ?></p>
       <?php endif; ?>
     </form>
-
   </div>
 </body>
 </html>

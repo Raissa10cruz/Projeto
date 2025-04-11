@@ -3,10 +3,6 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
 
 $host = 'localhost';
 $dbname = 'sistema_cadastro';
@@ -82,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 50px 40px;
+            padding: 30px 40px;
             width: 100%;
             max-width: 480px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
