@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":email", $email);
             $stmt->bindParam(":password", $password);
-            $stmt->bindParam(":profile_pic", $profile_pic_destination);
+            $stmt->bindParam(":profile_pic", $profile_pic_name);
         } else {
             $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
             $stmt = $conn->prepare($sql);

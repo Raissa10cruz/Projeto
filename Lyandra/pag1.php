@@ -8,19 +8,19 @@ if (!isset($_SESSION["user"])) {
 include 'conexao.php'; // Conexão com o banco
 
 // Pegando o e-mail da sessão
-$user = $_SESSION["user"];
-$email = $user["email"] ?? '';
+$userSessao = $_SESSION["user"];
+$emailSessao = $userSessao["email"] ?? '';
 
 // Buscando dados atualizados do usuário no banco (tabela correta: users)
 $stmt = $conn->prepare("SELECT email, profile_pic FROM users WHERE email = :email");
-$stmt->bindParam(':email', $email);
+$stmt->bindParam(':email', $emailSessao);
 $stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 // Definindo variáveis de exibição
 $foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))
     ? 'uploads/' . $user['profile_pic']
-    : 'img/perfil_padrao.png';
+    : 'perfil.png';
 
 $email = htmlspecialchars($user['email']);
 ?>
@@ -57,9 +57,10 @@ $email = htmlspecialchars($user['email']);
     }
 
     .usuario-logado:hover {
-      opacity: 0.8;}
+      opacity: 0.8;
+    }
 
-      .botao-voltar {
+    .botao-voltar {
       position: absolute;
       top: 15px;
       left: 20px;
@@ -76,7 +77,6 @@ $email = htmlspecialchars($user['email']);
     .botao-voltar:hover {
       background-color: #f0f0f0;
     }
-    
   </style>
 </head>
 <body>
