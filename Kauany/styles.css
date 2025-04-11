@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('kauany.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.header {
+    background-color: #d32f2f;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.banner {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.banner img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.section-title {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+.bloco-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 30px;
+}
+
+@media (max-width: 900px) {
+    .bloco-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .bloco-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bloco {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    transition: transform 0.2s;
+    
+    position: relative;
+    aspect-ratio: 1 / 1; /* 🟦 Garante que o bloco seja quadrado */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bloco img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.bloco span {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.bloco:hover {
+    transform: scale(1.03);
+}
+
+.login-box {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    margin: 100px auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+input, button {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 25px;
+}
+
+button {
+    background: white;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.link {
+    margin-top: 10px;
+}
