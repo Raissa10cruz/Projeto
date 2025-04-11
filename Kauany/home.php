@@ -127,12 +127,15 @@ if (!isset($_SESSION['usuario'])) {
 <body>
     <div class="header">
         <div class="reflexao">
-            "A maior jornada começa com o primeiro passo."
+        "A vida é um projeto em construção, e cada escolha que fazemos define o caminho
+         que seguimos. Sonhar é essencial, mas agir com coragem e persistência é o que 
+         nos leva adiante. O futuro não acontece por acaso, ele é criado a cada passo que 
+         damos com determinação e propósito."
         </div>
         <div class="icones">
-            <a href="home.php" title="Voltar"><img src="img/home.png" alt="Voltar"></a>
-            <a href="perfil.php" title="Perfil"><img src="img/perfil.png" alt="Perfil"></a>
-            <a href="logout.php" title="Sair"><img src="img/sair.png" alt="Sair"></a>
+            <a href="home.php" title="Voltar"><img src="3.png" alt="Voltar"></a>
+            <a href="perfil.php" title="Perfil"><img src="2.png" alt="Perfil"></a>
+            <a href="logout.php" title="Sair"><img src="icone1.png" alt="Sair"></a>
         </div>
     </div>
 
@@ -152,27 +155,27 @@ if (!isset($_SESSION['usuario'])) {
             <span>PLANO DE AÇÃO</span>
         </a>
         <a href="#" class="bloco">
-            <img src="9." alt="">
+            <img src="9.jpg" alt="">
             <span>SONHOS</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/profissoes.png" alt="">
+            <img src="1.webp" alt="">
             <span>PROFISSÕES</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/personalidade.png" alt="">
+            <img src="6.jpg" alt="">
             <span>TESTE DE PERSONALIDADE</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/inteligencias.png" alt="">
-            <span>TESTE DE INTELIGÊNCIAS</span>
+            <img src="5.jpg" alt="">
+            <span>TESTE DE MÚLTIPLAS INTELIGÊNCIAS</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/projeto.png" alt="">
-            <span>QUAL É O PROJETO DE VIDA?</span>
+            <img src="11.JPG" alt="">
+            <span>OQUE É O PROJETO DE VIDA?</span>
         </a>
         <a href="#" class="bloco">
-            <img src="img/como-fazer.png" alt="">
+            <img src="12.jpg" alt="">
             <span>COMO TER UM PROJETO DE VIDA?</span>
         </a>
     </div>
