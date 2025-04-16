@@ -262,6 +262,7 @@ $foto_perfil = $usuario['foto_perfil'] ? $usuario['foto_perfil'] : 'default.png'
         </form>
 
         <a href="index.php" class="botao-voltar">← Voltar</a>
+      
     </div>
 </body>
 </html>
