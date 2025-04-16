@@ -125,7 +125,7 @@ if (!isset($_SESSION['usuario'])) {
     </style>
 </head>
 <body>
-    <div class="gheader">
+    <div class="header">
         <div class="reflexao">
         "A vida é um projeto em construção, e cada escolha que fazemos define o caminho
          que seguimos. Sonhar é essencial, mas agir com coragem e persistência é o que 
@@ -142,7 +142,7 @@ if (!isset($_SESSION['usuario'])) {
     <h2 class="section-title">ASSUNTOS PRINCIPAIS</h2>
 
     <div class="bloco-container">
-        <a href="quem-sou-eu.php" class="bloco">
+        <a href="quem.php" class="bloco">
             <img src="images.png" alt="">
             <span>QUEM SOU EU?</span>
         </a>
