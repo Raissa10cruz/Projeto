@@ -54,7 +54,7 @@ if (isset($_SESSION['usuario_id'])) {
             margin: 0;
             font-family: "Playfair Display", serif;
             font-style: italic;
-            background-color: #d9ded7;
+            background-color: #CDD5C6;
         }
 
         header {
@@ -184,11 +184,11 @@ if (isset($_SESSION['usuario_id'])) {
         <nav>
             <div>
                 <a href="#">Início</a>
-                <a href="#">Sonhos</a>
+                <a href="sonho.php">Sonhos</a>
                 <a href="#">Objetivos</a>
             </div>
             <div style="display: flex; align-items: center; gap: 15px;">
-                <a href="perfil.php">Plano Ação</a>
+                <a href="plano.php">Plano Ação</a>
                 <a href="perfil.php" class="perfil-link">
                     <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
                 </a>
