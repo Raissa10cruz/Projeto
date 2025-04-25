@@ -150,31 +150,31 @@ if (!isset($_SESSION['usuario'])) {
             <img src="7.jpg" alt="">
             <span>OBJETIVOS</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="plano.php" class="bloco">
             <img src="8.png" alt="">
             <span>PLANO DE AÇÃO</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="sonhos.php" class="bloco">
             <img src="9.jpg" alt="">
             <span>SONHOS</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="profissoes.php" class="bloco">
             <img src="1.webp" alt="">
             <span>PROFISSÕES</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="teste1.php" class="bloco">
             <img src="6.jpg" alt="">
             <span>TESTE DE PERSONALIDADE</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="teste2.php" class="bloco">
             <img src="5.jpg" alt="">
             <span>TESTE DE MÚLTIPLAS INTELIGÊNCIAS</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="oquee.php" class="bloco">
             <img src="11.JPG" alt="">
             <span>OQUE É O PROJETO DE VIDA?</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="comoter.php" class="bloco">
             <img src="12.jpg" alt="">
             <span>COMO TER UM PROJETO DE VIDA?</span>
         </a>
