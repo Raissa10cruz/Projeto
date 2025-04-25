@@ -10,8 +10,8 @@ if (!isset($_SESSION["user"])) {
 // Pega o e-mail da sessão
 $email = $_SESSION["user"]["email"] ?? '';
 
-// Buscar os dados atualizados do banco (incluindo name e profile_pic)
-$stmt = $conn->prepare("SELECT name, email, profile_pic FROM users WHERE email = :email");
+// Buscar os dados atualizados do banco (incluindo name, profile_pic e descricao)
+$stmt = $conn->prepare("SELECT name, email, profile_pic, descricao FROM users WHERE email = :email");
 $stmt->bindParam(':email', $email);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -24,6 +24,7 @@ $fotoPerfil = (!empty($user["profile_pic"]) && file_exists('uploads/' . $user["p
 // Nome para exibir
 $nomeExibido = $user["name"] ?? 'Usuário';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -130,14 +131,22 @@ $nomeExibido = $user["name"] ?? 'Usuário';
 
     <div class="profile-name"><?= htmlspecialchars($nomeExibido) ?></div>
     <p><?= htmlspecialchars($user["email"]) ?></p>
+    
 
     <div class="actions">
   <a href="editar_perfil.php"><button><i class="fas fa-user-edit"></i> Editar Perfil</button></a>
+
+  
   <?php if (!empty($user['descricao'])): ?>
-    <p style="color: white; text-align: center; margin-top: 10px;"><?= htmlspecialchars($user['descricao']) ?></p>
+    <p style="color: white; text-align: center; margin-top: 10px;">
+      <?= htmlspecialchars($user['descricao']) ?>
+    </p>
   <?php else: ?>
-    <p style="color: white; text-align: center; margin-top: 10px;">Adicione uma descrição no perfil</p>
+    <p style="color: white; text-align: center; margin-top: 10px;">
+      Adicione uma descrição no perfil
+    </p>
   <?php endif; ?>
+</div>
   
 </div>
 

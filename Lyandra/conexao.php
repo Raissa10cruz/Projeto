@@ -1,14 +1,14 @@
 <?php
-$host = 'localhost';
-$dbname = 'pdv'; // Substitua aqui com o nome correto do seu banco de dados
-$user = 'root';
-$pass = '';
+define('HOST', 'localhost');
+define('USER', 'root');
+define('PASS', '');
+define('DBNAME', 'pdv');
 
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Erro na conexão: " . $e->getMessage();
-    exit;
+  $conn = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME . ";charset=utf8mb4", USER, PASS, [
+    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
+  ]);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $err) {
+  die("Erro na conexão: " . $err->getMessage());
 }
-?>
