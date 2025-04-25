@@ -11,28 +11,35 @@ include 'conexao.php'; // Conexão com o banco
 $userSessao = $_SESSION["user"];
 $emailSessao = $userSessao["email"] ?? '';
 
-// Buscando dados atualizados do usuário no banco (tabela correta: users)
-$stmt = $conn->prepare("SELECT email, profile_pic FROM users WHERE email = :email");
-$stmt->bindParam(':email', $emailSessao);
-$stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC); // <-- Correção aplicada aqui
+try {
+    // Buscando dados atualizados do usuário no banco (tabela correta: users)
+    $stmt = $conn->prepare("SELECT email, profile_pic FROM users WHERE email = :email");
+    $stmt->bindParam(':email', $emailSessao);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Definindo variáveis de exibição
-$foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))
-    ? 'uploads/' . $user['profile_pic']
-    : 'perfil.png';
+    // Definindo variáveis de exibição
+    $foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))
+        ? 'uploads/' . $user['profile_pic']
+        : 'perfil.png';
 
-$email = htmlspecialchars($user['email']);
+    $email = htmlspecialchars($user['email']);
+} catch (PDOException $e) {
+    echo "Erro na conexão com o banco de dados: " . $e->getMessage();
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P.D.V.</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painéis de Autoconhecimento</title>
+  <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
   <style>
 
 
@@ -155,14 +162,14 @@ $email = htmlspecialchars($user['email']);
   </style>
 </head>
 <body>
-  <header class="header">
+<header class="header">
     <div class="logo-container">
       <div class="logo-flor">
-        <img src="download.png">
+        <img src="img/download.png">
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="pag1.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -176,7 +183,7 @@ $email = htmlspecialchars($user['email']);
       <div class="linha"></div>
       <div class="linha"></div>
       <div class="linha"></div>
-      <img src="coelhinho-da-pascoa (1).png" alt="Coelho" class="icone-coelho-menu" id="icone-coelho">
+      <img src="img/coelho-acordando.gif" alt="Coelho" class="icone-coelho-menu" id="icone-coelho">
     </div>
 
     <nav class="menu" id="menu-navegacao">
@@ -190,36 +197,61 @@ $email = htmlspecialchars($user['email']);
 
   <br><br><br>
 
-  <section class="pag">
-    <main class="conteudo">
-      <div class="container">
-    <img src="download.png" alt="Coração fofo" class="header-img">
-
-    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
-
-    <p>Olá! Que alegria ter você por aqui! ✨</p>
-    
-    <p>Você está prestes a embarcar numa jornada incrível chamada <strong>Projeto de Vida</strong> – o famoso <strong>PDV</strong> 🌈📘</p>
-
-    <p>Esse espaço é só seu! Aqui você pode refletir, sonhar alto, definir metas e descobrir o que te faz brilhar! ✨💭</p>
-
-    <p>O PDV é o seu mapa para o futuro. Ele ajuda você a planejar os passos, entender quem você é e o que quer conquistar no mundo! 🌍🚀</p>
-
-    <p>Lembre-se: cada objetivo é uma sementinha do seu sucesso! 🌱💡</p>
-
-    <a href="painel.php" class="start-button">Começar minha jornada ✨</a>
+  <div class="container">
+  <!-- MBTI -->
+  <div class="profile-card">
+    <img src="logo.png" class="logo" alt="Logo">
+    <div class="username">Teste MBTI</div>
+    <div class="content">
+      <h1>Descubra sua Personalidade</h1>
+      <p>Baseado no teste MBTI. Responda as perguntas e veja qual tipo de personalidade você tem.</p>
+      <a href="mbti.php" class="button">Fazer o Teste</a>
+    </div>
   </div>
-    </main>
-  </section>
 
-  <script>
-    const botaoMenu = document.getElementById('botao-menu');
-    const menu = document.getElementById('menu-navegacao');
+  <!-- 4 Temperamentos -->
+  <div class="profile-card">
+    <img src="logo.png" class="logo" alt="Logo">
+    <div class="username">4 Temperamentos</div>
+    <div class="content">
+      <h1>Qual é o seu temperamento?</h1>
+      <p>Identifique se você é colérico, sanguíneo, fleumático ou melancólico.</p>
+      <a href="temperamento.php" class="button">Fazer o Teste</a>
+    </div>
+  </div>
 
-    botaoMenu.addEventListener('click', () => {
-      botaoMenu.classList.toggle('ativo');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    });
+  <!-- Planos e Sonhos -->
+  <div class="profile-card">
+    <img src="logo.png" class="logo" alt="Logo">
+    <div class="username">Meus Projetos</div>
+    <div class="content">
+      <h1>Organize seus sonhos</h1>
+      <p>Adicione metas, sonhos e realizações.</p>
+      <a href="projetos.php" class="button">Acessar Planilha</a>
+    </div>
+  </div>
+
+  <!-- Diário -->
+  <div class="profile-card">
+    <img src="logo.png" class="logo" alt="Logo">
+    <div class="username">Meu Diário</div>
+    <div class="content">
+      <h1>Como foi seu dia?</h1>
+      <p>Registre seus pensamentos e sentimentos.</p>
+      <a href="diario.php" class="button">Escrever ou Ver Histórico</a>
+    </div>
+  </div>
+</div>
+<script>
+const botaoMenu = document.getElementById("botao-menu");
+const menu = document.getElementById("menu-navegacao");
+
+botaoMenu.addEventListener("click", () => {
+    botaoMenu.classList.toggle("active");
+    menu.classList.toggle("active");
+});
+
   </script>
+
 </body>
 </html>
