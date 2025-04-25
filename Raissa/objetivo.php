@@ -204,21 +204,38 @@ try {
       font-size: 18px;
       line-height: 1.6;
     }
+
     .btn-avatar {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .avatar-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+
+    .simbolo-cobra {
+  position: fixed;
+  left: 0;
+  top: 185px;
+  width: 160px;
+  height: auto;
+  z-index: 1000;
 }
 
-.avatar-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; /* deixa a imagem redonda */
-  object-fit: cover;  /* garante que a imagem se encaixe perfeitamente */
-  border: 2px solid #ccc; /* opcional: borda ao redor do avatar */
-}
 
+
+
+
+
+
+    
   </style>
 </head>
 <body>
@@ -241,39 +258,34 @@ try {
 
   <!-- Topo com Perfil + Botões -->
   <div class="top-bar">
-  <div class="profile-info">
-    <?= htmlspecialchars($user['nome']) ?><br>
-    <?= htmlspecialchars($user['email']) ?><br>
+    <div class="profile-info">
+      <?= htmlspecialchars($user['nome']) ?><br>
+    </div>
+
+    <?php
+      $avatarPadrao = './imgRaissa/User_Clipart_PNG_Images__User_Avatar_Login_Interface_Abstract_Purple_User_Icon__Avatar__User__Login_Avatar_PNG_Image_For_Free_Download-removebg-preview.png';
+      $caminhoImagem = isset($user['foto']) && !empty($user['foto']) 
+          ? './imgRaissa/' . htmlspecialchars($user['foto']) 
+          : $avatarPadrao;
+    ?>
+
+    <button class="btn-avatar" onclick="location.href='editar_perfil.php'">
+      <img src="<?= $caminhoImagem ?>" alt="Avatar" class="avatar-img">
+    </button>
+
+    <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
+    <button class="btn-logout" onclick="location.href='logout.php'">Logout</button>
   </div>
-
-  <?php
-    // Caminho padrão
-    $avatarPadrao = './imgRaissa/User_Clipart_PNG_Images__User_Avatar_Login_Interface_Abstract_Purple_User_Icon__Avatar__User__Login_Avatar_PNG_Image_For_Free_Download-removebg-preview.png';
-    
-    // Caminho da imagem de perfil (se existir)
-    $caminhoImagem = isset($user['imagem_perfil']) && !empty($user['imagem_perfil']) 
-        ? './imgRaissa/' . htmlspecialchars($user['imagem_perfil']) 
-        : $avatarPadrao;
-  ?>
-
-  <button class="btn-avatar" onclick="location.href='editar_perfil.php'">
-    <img src="<?= $caminhoImagem ?>" alt="Avatar" class="avatar-img">
-  </button>
-
-  <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
-  <button class="btn-logout" onclick="location.href='logout.php'">Logout</button>
-</div>
-
 
   <!-- Conteúdo -->
   <div class="content">
-    <h2>Bem-vindo ao Meu Projeto de Vida!</h2>
+    <h2>OBJETIVO</h2>
+    <img src="./imgRaissa/35560467-removebg-preview.png" alt="Símbolo Medicina" class="simbolo-cobra">
     <p>
-      Aqui, compartilho meus sonhos, metas e aprendizados ao longo da minha jornada.
-      <br><br>
-      Este espaço é dedicado ao crescimento pessoal, planejamento e motivação para alcançar objetivos, sejam eles profissionais, acadêmicos ou pessoais.
-      <br><br>
-      Acompanhe minha evolução, descubra dicas valiosas e inspire-se para construir o seu próprio caminho rumo ao sucesso!
+      Meu maior objetivo na medicina é me tornar uma profissional dedicada, capaz de proporcionar cuidado e bem-estar a cada paciente. Quero não apenas diagnosticar e tratar doenças, mas também oferecer apoio e esperança, valorizando a humanização no atendimento.
+      Busco constantemente aprimorar meus conhecimentos para atuar com excelência, seja na pesquisa, na clínica ou em hospitais. Além disso, desejo contribuir para a evolução da área da saúde, promovendo um impacto positivo na vida das pessoas e na sociedade.
+      A medicina é um caminho de aprendizado contínuo, desafios e conquistas, e estou determinada a trilhar essa jornada com dedicação, ética e paixão pela profissão.
+      💙 Salvar vidas, aliviar dores e transformar realidades!
     </p>
   </div>
 

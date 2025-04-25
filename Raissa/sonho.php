@@ -214,10 +214,26 @@ try {
 .avatar-img {
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* deixa a imagem redonda */
-  object-fit: cover;  /* garante que a imagem se encaixe perfeitamente */
-  border: 2px solid #ccc; /* opcional: borda ao redor do avatar */
+  border-radius: 50%; 
+  object-fit: cover;  
+  border: 2px solid #ccc; 
 }
+
+.simbolo-cobra {
+  position: absolute;
+  left: calc(50% - 440px); 
+  top: 185px;
+  width: 140px;  
+  height: auto;
+  z-index: 1;
+}
+
+
+
+
+
+
+
 
   </style>
 </head>
@@ -267,15 +283,19 @@ try {
 
   <!-- Conteúdo -->
   <div class="content">
-    <h2>Bem-vindo ao Meu Projeto de Vida!</h2>
-    <p>
-      Aqui, compartilho meus sonhos, metas e aprendizados ao longo da minha jornada.
-      <br><br>
-      Este espaço é dedicado ao crescimento pessoal, planejamento e motivação para alcançar objetivos, sejam eles profissionais, acadêmicos ou pessoais.
-      <br><br>
-      Acompanhe minha evolução, descubra dicas valiosas e inspire-se para construir o seu próprio caminho rumo ao sucesso!
-    </p>
-  </div>
+  <h2>SONHO</h2>
+  <img src="./imgRaissa/35560467-removebg-preview.png" alt="Símbolo Medicina" class="simbolo-cobra">
+  <p>
+    Desde pequena, sempre fui fascinada pela medicina e pelo impacto que ela tem na vida das pessoas. O desejo de ajudar, de aliviar dores e de proporcionar esperança me motiva a seguir essa jornada desafiadora, mas extremamente gratificante.
+    <br><br>
+    Ser médica vai muito além do conhecimento técnico; é sobre empatia, dedicação e a busca constante por aprendizado. Quero ser capaz de fazer a diferença, acolhendo e cuidando de cada paciente com respeito e humanidade.
+    <br><br>
+    Sei que o caminho exige esforço, disciplina e resiliência, mas cada desafio enfrentado será um passo a mais para realizar esse grande sonho. E eu estou determinada a torná-lo realidade!
+    <br><br>
+    💙 Cuidar, curar e transformar vidas!
+  </p>
+</div>
+
 
   <script>
     function toggleMenu() {
