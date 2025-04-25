@@ -1,211 +1,214 @@
 <?php
 session_start();
-require_once 'config/conexao.php';
-
 if (!isset($_SESSION['usuario'])) {
     header("Location: index.php");
     exit;
 }
 
-$email = $_SESSION['email'] ?? '';
-$mensagem = "";
+$usuario = $_SESSION['usuario'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = $_POST['nome'];
-    $sobre_mim = $_POST['sobre_mim'];
-    $senha = $_POST['senha'];
-
-    $foto_nome = null;
-
-    if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
-        $foto_nome = 'uploads/' . uniqid() . '_' . $_FILES['foto_perfil']['name'];
-        move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $foto_nome);
-    }
-
-    $sql = "UPDATE usuario SET nome = :nome, sobre_mim = :sobre_mim";
-
-    if (!empty($senha)) {
-        $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
-        $sql .= ", senha = :senha";
-    }
-
-    if ($foto_nome) {
-        $sql .= ", foto_perfil = :foto";
-    }
-
-    $sql .= " WHERE email = :email";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nome', $nome);
-    $stmt->bindParam(':sobre_mim', $sobre_mim);
-    $stmt->bindParam(':email', $email);
-
-    if (!empty($senha)) {
-        $stmt->bindParam(':senha', $senha_criptografada);
-    }
-
-    if ($foto_nome) {
-        $stmt->bindParam(':foto', $foto_nome);
-    }
-
-    if ($stmt->execute()) {
-        $mensagem = "Dados atualizados com sucesso!";
-    } else {
-        $mensagem = "Erro ao atualizar.";
-    }
+// Conexão com o banco
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=usuario", "root", "");
+} catch (PDOException $e) {
+    die("Erro na conexão: " . $e->getMessage());
 }
 
-$stmt = $pdo->prepare("SELECT * FROM usuario WHERE email = :email");
-$stmt->execute(['email' => $email]);
-$usuario = $stmt->fetch();
+// Atualização dos dados
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $sobre = $_POST['sobre'];
+    $id = $usuario['id'];
 
-if (!$usuario) {
-    echo "<p style='color:red; text-align:center;'>Usuário não encontrado.</p>";
+    // Atualiza senha se for informada
+    if (!empty($_POST['senha'])) {
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("UPDATE usuario SET nome=?, email=?, senha=?, sobre=? WHERE id=?");
+        $stmt->execute([$nome, $email, $senha, $sobre, $id]);
+    } else {
+        $stmt = $pdo->prepare("UPDATE usuario SET nome=?, email=?, sobre=? WHERE id=?");
+        $stmt->execute([$nome, $email, $sobre, $id]);
+    }
+
+    // Upload da imagem
+    if (!empty($_FILES['foto']['name'])) {
+        $foto = "fotos/" . uniqid() . "-" . $_FILES['foto']['name'];
+        move_uploaded_file($_FILES['foto']['tmp_name'], $foto);
+
+        $stmt = $pdo->prepare("UPDATE usuario SET foto=? WHERE id=?");
+        $stmt->execute([$foto, $id]);
+        $_SESSION['usuario']['foto'] = $foto;
+    }
+
+    // Atualiza os dados da sessão
+    $_SESSION['usuario']['nome'] = $nome;
+    $_SESSION['usuario']['email'] = $email;
+    $_SESSION['usuario']['sobre'] = $sobre;
+
+    header("Location: perfil.php");
     exit;
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Perfil</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f2f2f2;
+            background-color: #D23636;
         }
 
         .header {
-            background-color: #d32f2f;
-            color: white;
-            padding: 15px;
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-image: url('kauany.jpg');
+            background-size: cover;
+            background-position: center;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
         }
 
-        .header img {
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        .form-container {
-            max-width: 500px;
-            margin: 40px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-
-        h2 {
+        .reflexao {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.4);
+            padding: 12px 20px;
+            border-radius: 10px;
             text-align: center;
-            color: #d32f2f;
-            margin-bottom: 25px;
+            max-width: 90%;
+        }
+
+        .icones {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .icones a img {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .titulo {
+            background-color: #c62828;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
         }
 
         label {
-            display: block;
-            margin: 15px 0 5px;
             font-weight: bold;
-            color: #333;
+            display: block;
+            margin-bottom: 6px;
         }
 
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        input[type="file"],
-        textarea {
+        input, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 8px;
             border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
+            border: 1px solid #ccc;
         }
 
         button {
-            margin-top: 20px;
-            background-color: #d32f2f;
+            background-color: #c62828;
             color: white;
+            padding: 10px 20px;
             border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            display: block;
+            margin: 20px auto 0;
         }
 
-        button:hover {
-            background-color: #b71c1c;
-        }
-
-        p img {
-            margin-top: 10px;
-            border-radius: 10px;
-        }
-
-        p a {
-            color: #d32f2f;
-            text-decoration: none;
-        }
-
-        @media (max-width: 600px) {
-            .form-container {
-                margin: 20px;
-                padding: 20px;
-            }
-
-            .header p {
-                font-size: 14px;
-            }
-
-            .header img {
-                width: 20px;
-            }
+        img.perfil {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+            border: 4px solid #c62828;
         }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <p>Perfil de <strong><?php echo htmlspecialchars($usuario['nome']); ?></strong></p>
-    <div>
-        <a href="home.php"><img src="img/voltar.png" alt="Voltar" width="24"></a>
-        <a href="perfil.php"><img src="img/perfil.png" alt="Perfil" width="24"></a>
-        <a href="logout.php"><img src="img/sair.png" alt="Sair" width="24"></a>
+    <div class="reflexao">
+        "A vida é um projeto em construção, e cada escolha que fazemos define o caminho que seguimos..."
+    </div>
+    <div class="icones">
+        <a href="home.php" title="Início"><img src="3.png" alt="Início"></a>
+        <a href="perfil.php" title="Perfil"><img src="2.png" alt="Perfil"></a>
+        <a href="logout.php" title="Sair"><img src="icone1.png" alt="Sair"></a>
     </div>
 </div>
 
-<div class="form-container">
-    <h2>Editar Perfil</h2>
-    <?php if ($mensagem): ?>
-        <p style="color: green;"><?php echo $mensagem; ?></p>
+<div class="container">
+    <div class="titulo">MEU PERFIL</div>
+
+    <?php if (!empty($usuario['foto'])): ?>
+        <img src="<?= htmlspecialchars($usuario['foto']) ?>" class="perfil" alt="Foto de Perfil">
     <?php endif; ?>
 
     <form method="post" enctype="multipart/form-data">
-        <label>Nome</label>
-        <input type="text" name="nome" value="<?php echo htmlspecialchars($usuario['nome']); ?>" required>
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" name="nome" value="<?= htmlspecialchars($usuario['nome']) ?>" required>
+        </div>
 
-        <label>Sobre Mim</label>
-        <textarea name="sobre_mim"><?php echo htmlspecialchars($usuario['sobre_mim']); ?></textarea>
+        <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" name="email" value="<?= htmlspecialchars($usuario['email']) ?>" required>
+        </div>
 
-        <label>Nova Senha</label>
-        <input type="password" name="senha" placeholder="Deixe em branco para não alterar">
+        <div class="form-group">
+            <label>Nova Senha (opcional)</label>
+            <input type="password" name="senha">
+        </div>
 
-        <label>Foto de Perfil</label>
-        <input type="file" name="foto_perfil" accept="image/*">
-        <?php if ($usuario['foto_perfil']): ?>
-            <p><img src="<?php echo $usuario['foto_perfil']; ?>" alt="Foto de Perfil" width="100"></p>
-        <?php endif; ?>
+        <div class="form-group">
+            <label>Sobre Mim</label>
+            <textarea name="sobre" rows="4"><?= htmlspecialchars($usuario['sobre']) ?></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Foto de Perfil</label>
+            <input type="file" name="foto" accept="image/*">
+        </div>
 
         <button type="submit">Salvar Alterações</button>
     </form>
