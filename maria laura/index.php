@@ -1,21 +1,23 @@
 <?php
 session_start();
 
-// Verifica se o usuário está logado
-$foto = 'default.png'; // Imagem padrão
+$foto = 'default.png';
+$email = '';
 
 if (isset($_SESSION['usuario_id'])) {
     try {
         $conn = new PDO('mysql:host=localhost;dbname=sistema_cadastro;charset=utf8', 'root', '');
-        $stmt = $conn->prepare("SELECT foto_perfil FROM usuarios WHERE id = :id");
+        $stmt = $conn->prepare("SELECT email, foto_perfil FROM usuarios WHERE id = :id");
         $stmt->execute([':id' => $_SESSION['usuario_id']]);
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($resultado && !empty($resultado['foto_perfil'])) {
-            $foto = $resultado['foto_perfil'];
+        if ($resultado) {
+            if (!empty($resultado['foto_perfil'])) {
+                $foto = $resultado['foto_perfil'];
+            }
+            $email = $resultado['email'];
         }
     } catch (PDOException $e) {
-        // Em produção, você deve lidar melhor com o erro ou registrar em log
         echo "Erro ao conectar ao banco de dados: " . $e->getMessage();
     }
 }
@@ -27,27 +29,10 @@ if (isset($_SESSION['usuario_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto de Vida</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Raleway:wght@400;700&family=Shadows+Into+Light&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Raleway:wght@400;700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <style>
-        .card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        a.card {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .header-text {
-            margin-top: 60px;
-            text-align: left;
-            padding-left: 30px;
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -62,33 +47,119 @@ if (isset($_SESSION['usuario_id'])) {
             background-size: cover;
             background-position: center;
             color: white;
-            text-align: center;
             padding: 100px 20px;
             position: relative;
         }
 
-        nav {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
+        /* Ícone do menu hamburguer */
+        #menu-toggle {
+            display: none;
         }
 
-        nav a {
+        .menu-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 30px;
+            height: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-icon span {
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 220px;
+            height: 100%;
+            background-color: rgba(40, 40, 40, 0.97);
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+            padding-left: 20px;
+            gap: 25px;
+            transition: left 0.4s ease-in-out;
+            z-index: 1000;
+        }
+
+        .side-menu a {
             color: white;
             text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
 
-        nav a:hover {
+        .side-menu a:hover {
             color: #98A38F;
+        }
+
+        #menu-toggle:checked ~ .side-menu {
+            left: 0;
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .perfil-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+        }
+
+        .perfil-link {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 2px solid white;
+            transition: transform 0.3s ease;
+        }
+
+        .perfil-link:hover {
             transform: scale(1.1);
+        }
+
+        .perfil-foto {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .perfil-email {
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .header-text {
+            margin-top: 60px;
+            text-align: left;
+            padding-left: 30px;
         }
 
         .header-text h1 {
@@ -109,10 +180,10 @@ if (isset($_SESSION['usuario_id'])) {
             justify-items: center;
         }
 
-        .card:hover {
-            background-color: #f0f0f0;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transform: scale(1.02);
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .card {
@@ -124,6 +195,12 @@ if (isset($_SESSION['usuario_id'])) {
             display: flex;
             flex-direction: column;
             transition: all 0.5s ease-in-out;
+        }
+
+        .card:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
         }
 
         .card-image {
@@ -156,48 +233,35 @@ if (isset($_SESSION['usuario_id'])) {
             font-size: 0.95em;
             color: #333;
         }
-
-        .perfil-link {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            overflow: hidden;
-            border-radius: 50%;
-            border: 2px solid white;
-            transition: transform 0.3s ease;
-        }
-
-        .perfil-link:hover {
-            transform: scale(1.1);
-        }
-
-        .perfil-foto {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
     </style>
 </head>
 
 <body>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+
+    <nav class="side-menu">
+        <a href="index.php">Início</a>
+        <a href="sonho.php">Sonhos</a>
+        <a href="objetivo.php">Objetivos</a>
+        <a href="plano.php">Plano de Ação</a>
+    </nav>
+
     <header>
-        <nav>
-            <div>
-                <a href="#">Início</a>
-                <a href="sonho.php">Sonhos</a>
-                <a href="#">Objetivos</a>
-            </div>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <a href="plano.php">Plano Ação</a>
-                <a href="perfil.php" class="perfil-link">
-                    <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
-                </a>
-            </div>
-        </nav>
+        <div class="perfil-container">
+            <span class="perfil-email"><?= htmlspecialchars($email) ?></span>
+            <a href="perfil.php" class="perfil-link">
+                <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
+            </a>
+        </div>
 
         <div class="header-text">
             <h1>Projeto de Vida</h1>
-            <p>"Cada escolha que você faz constrói o futuro que deseja. Sonhe, planeje e realize!" 💭✨🌱</p>
+            <p>"Cada escolha que você faz constrói o futuro que deseja. Sonhe, planeje e realize!"</p>
         </div>
     </header>
 
@@ -215,7 +279,7 @@ if (isset($_SESSION['usuario_id'])) {
             </div>
         </a>
 
-        <a href="profissoes.html" class="card-link">
+        <a href="profisões.php" class="card-link">
             <div class="card">
                 <div class="card-image">
                     <img src="img/IMG2.jpg" alt="Profissões">
@@ -227,7 +291,7 @@ if (isset($_SESSION['usuario_id'])) {
             </div>
         </a>
 
-        <a href="quem-sou-eu.html" class="card-link">
+        <a href="quem.php" class="card-link">
             <div class="card">
                 <div class="card-image">
                     <img src="img/IMG4.jpg" alt="Quem sou eu?">
@@ -235,23 +299,19 @@ if (isset($_SESSION['usuario_id'])) {
                 </div>
                 <div class="card-content">
                     <p>🌟Quem Sou Eu? Descubra o Fascinante Universo que É Você! 🌟 Você já se perguntou o que te
-                        torna único? O que há por trás do seu sorriso, das suas escolhas e dos seus sonhos? Quem Sou Eu?
-                        não é apenas uma pergunta, é uma jornada emocionante para explorar o que faz de você, VOCÊ!
-                        ✨ Por que descobrir quem você é?</p>
+                        torna único?</p>
                 </div>
             </div>
         </a>
 
-        <a href="teste-personalidade.html" class="card-link">
+        <a href="teste-personalidade.php" class="card-link">
             <div class="card">
                 <div class="card-image">
                     <img src="img/imagem.jpg" alt="Teste de Personalidade">
                     <h3>Teste de Personalidade</h3>
                 </div>
                 <div class="card-content">
-                    <p>Os Testes de Personalidade avaliam características psicológicas e padrões de comportamento de uma
-                        pessoa. Eles ajudam no autoconhecimento, no desenvolvimento pessoal e na orientação
-                        profissional.</p>
+                    <p>Testes que ajudam no autoconhecimento, desenvolvimento pessoal e orientação profissional.</p>
                 </div>
             </div>
         </a>
