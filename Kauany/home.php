@@ -146,7 +146,7 @@ if (!isset($_SESSION['usuario'])) {
             <img src="images.png" alt="">
             <span>QUEM SOU EU?</span>
         </a>
-        <a href="#" class="bloco">
+        <a href="objetivos.php" class="bloco">
             <img src="7.jpg" alt="">
             <span>OBJETIVOS</span>
         </a>

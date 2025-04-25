@@ -93,7 +93,7 @@
     </div>
 
     <div class="container">
-        <img src="images.png" alt="Imagem representativa">
+        <img src="eu.jpg" alt="Imagem representativa">
         <div class="texto">
             <p>Apresento Kauany Gabrielly: quase adulta, totalmente desenrolada (e com um estoque de livros românticos pra ninguém botar defeito).</p>
 
@@ -113,6 +113,13 @@
                 <li>Solução de problemas na velocidade de um meme (enquanto todos panikam, eu tô tipo: "calma, já tenho 5 planos, 3 deles envolvem Google e um lanche").</li>
                 <li>Equilibro razão e emoção como ninguém (de manhã, calculo fórmulas; de tarde, choro com final de livro; à noite, debato ética filosófica no grupo da família).</li>
             </ul>
+
+            <p>E se a vida tivesse trilha sonora, pode apostar que a minha seria um mix entre vibes sombrias, refrões poderosos e letras que parecem ter sido escritas direto do meu diário emocional. The Weeknd? Um caso de amor antigo. <em>One of the Girls</em> toca e eu já tô no universo paralelo onde tudo é neon, perfume caro e drama silencioso. Lana Del Rey, então... quando começa <em>Salvatore</em>, eu viro personagem de filme europeu existencialista – com direito a olhar perdido pela janela e taça na mão (mesmo que seja suco de uva).</p>
+
+            <p>Sou completamente viciada nessas músicas em inglês que têm cara de "sofro, mas com glamour". Motel Fish me dá uma paz triste boa (se é que isso faz sentido), e Doja Cat me lembra que eu também sou fogo, dança e resposta atravessada na ponta da língua. Mas ó, minha alma também é vintage: não passo um mês sem escutar <em>21 Questions</em> do 50 Cent e relembrar o tempo em que o amor era feito de perguntas e batidas de R&B. E Akon? Injustiçado! Se tocar <em>Lonely</em> ou <em>Right Now (Na Na Na)</em>, eu canto como se estivesse no último episódio da minha própria série dramática da HBO.</p>
+
+            <p>Resumindo: meu gosto musical é tipo minha personalidade – intensa, cheia de camadas e com um pezinho no drama, outro na pista de dança. 🎧❤️</p>
+
 
             <p>Valor inegociável? JUSTIÇA. Se vejo alguém cortando fila, viro a Batman das redes sociais. Se o professor esquece de corrigir minha prova, viro a advogada de porta de sala. E se o crush me dá ghosting, viro a poeta das indiretas do Twitter (sim, ainda uso Twitter, julguem).</p>
 
