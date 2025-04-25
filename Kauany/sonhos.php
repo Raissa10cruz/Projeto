@@ -67,7 +67,7 @@ $usuario = $_SESSION['usuario'];
 
         /* Ajuste da imagem de fundo */
         .background {
-            background-image: url('img/fundo2.jpg');
+            background-image: url('kauany.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -79,10 +79,10 @@ $usuario = $_SESSION['usuario'];
 <body>
 
     <div class="menu-icons">
-        <a href="index.php"><img src="img/home.png" title="Início"></a>
-        <a href="perfil.php"><img src="img/perfil.png" title="Perfil"></a>
-        <a href="logout.php"><img src="img/sair.png" title="Sair"></a>
-    </div>
+        <a href="home.php" title="Voltar"><img src="3.png" alt="Voltar"></a>
+        <a href="perfil.php" title="Perfil"><img src="2.png" alt="Perfil"></a>
+        <a href="logout.php" title="Sair"><img src="icone1.png" alt="Sair"></a>
+        </div>
 
     <div class="background">
         <div class="container">
