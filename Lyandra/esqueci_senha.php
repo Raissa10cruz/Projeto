@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Esqueci a Senha</title>
-  <link rel="stylesheet" href="styles1.css">
+  <link rel="stylesheet" href="css/style1.css">
 </head>
 <body>
   <div class="container">

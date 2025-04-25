@@ -30,19 +30,16 @@ try {
 }
 ?>
 
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P.D.V.</title>
+  <title>Teste dos 4 Temperamentos</title>
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-
-
-    .usuario-logado {
+</head>
+<body>
+<style>
+      .usuario-logado {
       position: absolute;
       top: 15px;
       right: 20px;
@@ -86,89 +83,15 @@ try {
     .botao-voltar:hover {
       background-color: #f0f0f0;
     }
-
-    .container {
-      background-color: #ffffffcc;
-      border-radius: 25px;
-      padding: 50px 40px;
-      max-width: 750px;
-      width: 90%;
-      position: center;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 1.5s ease;
-      margin: 0 auto;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .emoji-bounce {
-      font-size: 38px;
-      animation: bounce 1.8s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .header-img {
-      width: 120px;
-      margin-bottom: 20px;
-      animation: zoomIn 1.3s ease;
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    h1 {
-      font-family: 'Comic Neue', cursive;
-      font-size: 36px;
-      color: #8e44ad;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #333;
-      margin-bottom: 15px;
-    }
-
-    .start-button {
-      background: linear-gradient(90deg, #ff9ff3, #c56cf0);
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      font-size: 16px;
-      border-radius: 30px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .start-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-  </style>
-</head>
-<body>
-  <header class="header">
+</style>
+<header class="header">
     <div class="logo-container">
       <div class="logo-flor">
         <img src="img/download.png">
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="pag1.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -195,29 +118,19 @@ try {
   </section>
 
   <br><br><br>
+  <a href="index.php" class="botao-voltar">← Voltar</a>
+  <div class="container">
+    <h1>Teste dos 4 Temperamentos</h1>
+    <form action="processa_temperamento.php" method="POST">
+      <p>Você se considera:</p>
+      <input type="radio" name="q1" value="C" required> Líder e direto<br>
+      <input type="radio" name="q1" value="S"> Comunicativo e entusiasmado<br><br>
 
-  <section class="pag">
-    <main class="conteudo">
-      <div class="container">
-        <div class="Coracao">
-    <img src="img/download.png" alt="Coração fofo" class="header-img">
+      <!-- Adicione mais perguntas aqui -->
+
+      <button type="submit" class="start-button">Ver Resultado</button>
+    </form>
   </div>
-    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
-
-    <p>Olá! Que alegria ter você por aqui! ✨</p>
-    
-    <p>Você está prestes a embarcar numa jornada incrível chamada <strong>Projeto de Vida</strong> – o famoso <strong>PDV</strong> 🌈📘</p>
-
-    <p>Esse espaço é só seu! Aqui você pode refletir, sonhar alto, definir metas e descobrir o que te faz brilhar! ✨💭</p>
-
-    <p>O PDV é o seu mapa para o futuro. Ele ajuda você a planejar os passos, entender quem você é e o que quer conquistar no mundo! 🌍🚀</p>
-
-    <p>Lembre-se: cada objetivo é uma sementinha do seu sucesso! 🌱💡</p>
-
-    <a href="painel.php" class="start-button">Começar minha jornada ✨</a>
-  </div>
-    </main>
-  </section>
 
   <script>
 const botaoMenu = document.getElementById("botao-menu");
