@@ -222,7 +222,7 @@ if (isset($_SESSION['usuario_id'])) {
         }
 
         .card:hover {
-            background-color:rgb(183, 194, 183);
+            background-color:rgb(255, 255, 255);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transform: scale(1.02);
         }
