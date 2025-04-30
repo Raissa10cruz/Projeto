@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+
+$_SESSION = [];
+
+
 session_destroy();
-header("Location: login.php");
-exit();
+
+
+header("Location: index.php");
+?>

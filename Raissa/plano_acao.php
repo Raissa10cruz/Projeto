@@ -3,7 +3,7 @@ session_start();
 
 // Redirecionar se não estiver logado
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: cadastrar.php");
+    header("Location: perfil.php");
     exit();
 }
 
@@ -177,27 +177,49 @@ try {
     }
 
     .btn-logout {
-      background-color: #f36c6c;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: 0.3s;
-    }
+  background-color: #f36c6c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
 
-    .btn-logout:hover {
-      background-color: #e15050;
-    }
+.btn-logout:hover {
+  background-color: #e15050;
+}
 
-    .icon-logout {
-      width: 20px;
-      height: 20px;
-    }
+.btn-logout {
+  background-color: #f36c6c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #e15050;
+}
+
+.icon-logout {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
 
     .content {
       max-width: 700px;
@@ -228,27 +250,24 @@ try {
       border: 2px solid #ccc;
     }
 
-    .btn-cadastro {
-      background-color: #d2b8f4;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      margin-top: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+    .simbolo-cobra {
+  position: absolute;
+  left: calc(50% - 440px); 
+  top: 185px;
+  width: 140px;  
+  height: auto;
+  z-index: 1;
+}
 
-    .btn-cadastro:hover {
-      background-color: #c09cf3;
-    }
+}
 
-    .mensagem {
-      margin-top: 20px;
-      font-weight: bold;
-      color: red;
-    }
+
+
+
+
+
+
+    
   </style>
 </head>
 <body>
@@ -289,24 +308,40 @@ try {
 
     <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
     <button class="btn-logout" onclick="location.href='logout.php'">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-        <polyline points="16 17 21 12 16 7" />
-        <line x1="21" y1="12" x2="9" y2="12" />
-      </svg>
-    </button>
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+  
+</button>
+
+</button>
+
+  
+</button>
+
+  
   </div>
 
-  <!-- Conteúdo principal -->
+  <!-- Conteúdo -->
   <div class="content">
-    <h2>Bem-vindo ao seu Projeto de Vida!</h2>
-    <p>Explore seus sonhos, defina seus objetivos e planeje seu futuro com clareza e inspiração.</p>
+    <h2>PLANO DE AÇÃO - MEDICINA</h2>
+    <img src="./imgRaissa/35560467-removebg-preview.png" alt="Símbolo Medicina" class="simbolo-cobra">
+    <p>
+    Meu plano de ação para a medicina é focado na formação acadêmica de excelência, no desenvolvimento de habilidades humanizadas e na atuação prática desde o início da graduação. Pretendo manter alto desempenho nos estudos, participar de monitorias, estágios e eventos científicos, além de investir no aprendizado de outros idiomas e na inteligência emocional. Quero atuar em projetos sociais, promover campanhas de saúde e participar de pesquisas que contribuam para a sociedade.
+    Estabeleci metas de curto, médio e longo prazo para garantir evolução contínua, sempre cuidando também da minha saúde física e mental. Meu propósito é me tornar uma médica ética, competente e dedicada a salvar vidas e transformar realidades.
+
+
+    </p>
   </div>
 
   <script>
     function toggleMenu() {
-        const menu = document.getElementById('menuLateral');
-        menu.classList.toggle('show');
+      const menu = document.getElementById('menuLateral');
+      const toggle = document.querySelector('.menu-toggle');
+      menu.classList.toggle('show');
+      toggle.classList.toggle('rotated');
     }
   </script>
 </body>

@@ -17,7 +17,8 @@ try {
     $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $conn->prepare("SELECT nome, email, foto FROM usuarios WHERE id = :id");
+    $stmt = $conn->prepare("SELECT nome, email, imagem_perfil FROM usuarios WHERE id = :id");
+
     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -177,19 +178,49 @@ try {
     }
 
     .btn-logout {
-      background-color: #f36c6c;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 18px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+  background-color: #f36c6c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
 
-    .btn-logout:hover {
-      background-color: #e15050;
-    }
+.btn-logout:hover {
+  background-color: #e15050;
+}
+
+.btn-logout {
+  background-color: #f36c6c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #e15050;
+}
+
+.icon-logout {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
 
     .content {
       max-width: 700px;
@@ -221,12 +252,14 @@ try {
     }
 
     .simbolo-cobra {
-  position: fixed;
-  left: 0;
+  position: absolute;
+  left: calc(50% - 440px); 
   top: 185px;
-  width: 160px;
+  width: 140px;  
   height: auto;
-  z-index: 1000;
+  z-index: 1;
+}
+
 }
 
 
@@ -250,7 +283,8 @@ try {
     <a href="#">INÍCIO</a>
     <a href="sonho.php">SONHO</a>
     <a href="objetivo.php">OBJETIVO</a>
-    <a href="#">TÓPICOS</a>
+    <a href="topicos.php">TÓPICOS</a>
+    <a href="quemsoueu.php">QUEM SOU EU?</a>
   </div>
 
   <!-- Título -->
@@ -264,9 +298,10 @@ try {
 
     <?php
       $avatarPadrao = './imgRaissa/User_Clipart_PNG_Images__User_Avatar_Login_Interface_Abstract_Purple_User_Icon__Avatar__User__Login_Avatar_PNG_Image_For_Free_Download-removebg-preview.png';
-      $caminhoImagem = isset($user['foto']) && !empty($user['foto']) 
-          ? './imgRaissa/' . htmlspecialchars($user['foto']) 
-          : $avatarPadrao;
+      $caminhoImagem = isset($user['imagem_perfil']) && !empty($user['imagem_perfil']) 
+      ? './imgRaissa/' . htmlspecialchars($user['imagem_perfil']) 
+      : $avatarPadrao;
+  
     ?>
 
     <button class="btn-avatar" onclick="location.href='editar_perfil.php'">
@@ -274,7 +309,21 @@ try {
     </button>
 
     <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
-    <button class="btn-logout" onclick="location.href='logout.php'">Logout</button>
+    <button class="btn-logout" onclick="location.href='logout.php'">
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+  
+</button>
+
+</button>
+
+  
+</button>
+
+  
   </div>
 
   <!-- Conteúdo -->
