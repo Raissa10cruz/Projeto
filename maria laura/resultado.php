@@ -1,110 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Resultado do Teste</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
   <style>
+    /* Adicione o mesmo estilo que você já usou na página de resultado */
     body {
-      font-family: "Playfair Display", serif;
-      font-style: italic;
       margin: 0;
       padding: 0;
       background: url('img/imagem.jpg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      font-family: 'Playfair Display', serif;
       color: #fff;
     }
+
     .resultado-container {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
-      padding: 40px;
       max-width: 800px;
-      width: 95%;
-      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+      margin: 80px auto;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
+
     h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
       text-align: center;
+      font-size: 32px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     }
+
     .tag {
       display: inline-block;
-      background: #222;
-      color: white;
-      padding: 5px 12px;
-      font-size: 13px;
-      border-radius: 12px;
-      margin-bottom: 10px;
+      background: #a0c39e;
+      color: #fff;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 25px;
+      text-align: center;
     }
+
+    .barras {
+      margin: 30px 0;
+    }
+
+    .barra {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .barra span {
+      display: block;
+      padding: 10px;
+      background: #a0c39e;
+      color: #fff;
+      font-weight: bold;
+      transition: width 0.5s ease;
+    }
+
     p {
-      font-size: 16px;
+      font-size: 18px;
       line-height: 1.6;
+      margin-bottom: 20px;
     }
 
-    .botao-voltar {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 8px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            cursor: pointer;
-            font-style: italic;
-            text-decoration: none;
-            font-family: 'Raleway', sans-serif;
-            transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
-        }
+    .voltar {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
 
-        .botao-voltar:hover {
-            transform: scale(1.05);
-            color: #d9ffd9;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
+    .voltar:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #d9ffd9;
+      transform: scale(1.05);
+    }
   </style>
 </head>
+
 <body>
   <div class="resultado-container">
     <?php
-      $score = 0;
+    // Supondo que o formulário foi enviado via POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      // Pontuação para cada pergunta
+      $pontuacoes = [];
       for ($i = 0; $i < 20; $i++) {
         if (isset($_POST["q$i"])) {
-          $score += (int)$_POST["q$i"];
+          $pontuacoes[$i] = (int) $_POST["q$i"];
         }
       }
 
-      echo "<h2>Seu Resultado</h2>";
+      // Inicializando variáveis para a pontuação de cada personalidade
+      $personalidadeA = 0;
+      $personalidadeB = 0;
+      $personalidadeC = 0;
+      $personalidadeD = 0;
 
-      if ($score >= 80) {
-        echo "<span class='tag'>LÍDER ANALÍTICO</span>";
-        echo "<p>Você possui uma mente altamente estruturada, com grande capacidade de análise e planejamento. 
-        Gosta de resolver problemas complexos e mantém a racionalidade mesmo sob pressão. 
-        Seu perfil é ideal para carreiras que exigem tomada de decisão e organização, como gestão, direito, engenharia ou consultoria estratégica.</p>";
-        echo "<p><strong>Fortalezas:</strong> Racionalidade, foco, liderança, consistência.</p>";
-        echo "<p><strong>Desafios:</strong> Trabalhar melhor suas emoções e tolerância à imprevisibilidade.</p>";
-      } elseif ($score >= 60) {
-        echo "<span class='tag'>EQUILIBRADO HUMANISTA</span>";
-        echo "<p>Você demonstra um bom equilíbrio entre razão e emoção, sendo empático e cooperativo, 
-        mas também analítico quando necessário. Gosta de entender pessoas e situações em profundidade. 
-        Se adapta bem a mudanças e costuma refletir antes de agir.</p>";
-        echo "<p><strong>Fortalezas:</strong> Empatia, diplomacia, adaptabilidade.</p>";
-        echo "<p><strong>Desafios:</strong> Definir limites e priorizar suas próprias necessidades.</p>";
-      } else {
-        echo "<span class='tag'>SONHADOR INTUITIVO</span>";
-        echo "<p>Você é guiado por emoções e ideias abstratas. Possui forte sensibilidade emocional, imaginação ativa e interesse por questões existenciais. 
-        Idealista e criativo, tende a buscar propósito e significado em tudo que faz.</p>";
-        echo "<p><strong>Fortalezas:</strong> Visão, intuição, empatia, criatividade.</p>";
-        echo "<p><strong>Desafios:</strong> Enraizar suas ideias em planos concretos e manter o foco a longo prazo.</p>";
+      // Cálculo das pontuações para diferentes perfis
+      foreach ($pontuacoes as $index => $pontuacao) {
+        if ($index < 5) {
+          $personalidadeA += $pontuacao;
+        } elseif ($index >= 5 && $index < 10) {
+          $personalidadeB += $pontuacao;
+        } elseif ($index >= 10 && $index < 15) {
+          $personalidadeC += $pontuacao;
+        } else {
+          $personalidadeD += $pontuacao;
+        }
       }
+
+      // Determinar o perfil de personalidade com base na maior pontuação
+      $personalidade = '';
+      $maxPontuacao = max($personalidadeA, $personalidadeB, $personalidadeC, $personalidadeD);
+
+      if ($maxPontuacao == $personalidadeA) {
+        $personalidade = 'Personalidade A';
+        $descricao = "A Personalidade A é marcada por uma tendência profunda à introspecção, análise e autoconhecimento. Pessoas com esse perfil costumam pensar antes de agir, refletindo cuidadosamente sobre os impactos de suas decisões. São metódicas, organizadas e prezam por coerência emocional e intelectual. Preferem ambientes calmos e previsíveis, onde possam exercer sua autonomia e focar em suas paixões pessoais. Embora possam parecer reservadas, elas valorizam relações profundas e significativas. São ótimas conselheiras, pois escutam com empatia e pensam de maneira crítica e ponderada. Essa personalidade busca crescimento interior constante, questionando padrões e buscando significado nas experiências da vida.";
+
+      } elseif ($maxPontuacao == $personalidadeB) {
+        $personalidade = 'Personalidade B';
+        $descricao = "A Personalidade B é caracterizada por uma orientação voltada ao futuro, inovação e otimismo. Indivíduos com esse perfil são visionários, movidos por objetivos claros e grande ambição. Possuem uma mente criativa e prática, que busca constantemente novas soluções e caminhos alternativos. Gostam de planejar, liderar e influenciar mudanças em seu meio. São resilientes diante de desafios e preferem correr riscos a permanecerem estagnados. Valorizam liberdade e progresso, tanto no campo pessoal quanto profissional. Essa personalidade tende a inspirar os outros com sua energia proativa, capacidade de sonhar grande e transformar ideias em ação.";
+
+      } elseif ($maxPontuacao == $personalidadeC) {
+        $personalidade = 'Personalidade C';
+        $descricao = "A Personalidade C é dominada por um foco interno intenso, regido pela sensibilidade emocional e compreensão profunda do mundo subjetivo. Pessoas com esse perfil são empáticas, intuitivas e possuem grande capacidade de captar sutilezas nos comportamentos e sentimentos dos outros. São criativas, expressivas e tendem a canalizar suas emoções em formas artísticas ou cuidadosas interações humanas. Apesar de emocionalmente intensas, conseguem se equilibrar ao entender e acolher sua própria vulnerabilidade. Essa personalidade valoriza conexões autênticas, ambientes harmoniosos e momentos de introspecção. Costumam ser excelentes ouvintes e possuem uma visão emocionalmente rica da realidade.";
+
+      } else {
+        $personalidade = 'Personalidade D';
+        $descricao = "A Personalidade D representa indivíduos movidos por uma sede de conhecimento, exploração e experiências únicas. São pessoas curiosas, intelectualmente inquietas e apaixonadas por descobrir como o mundo funciona — tanto em termos práticos quanto filosóficos. Costumam ser não-convencionais, adaptáveis e atraídas por temas fora do senso comum. Preferem a diversidade à rotina e abraçam o desconhecido com coragem e entusiasmo. Essa personalidade valoriza liberdade intelectual, desafios mentais e a chance de expandir seus horizontes constantemente. Muitas vezes são pioneiras em suas áreas de interesse, guiadas por uma necessidade inata de ir além do superficial e mergulhar nas complexidades da vida.";
+      }
+
+      // Exibindo o resultado
+      echo "<h1>Resultado do Teste de Personalidade</h1>";
+      echo "<p><strong>Seu tipo de personalidade é: $personalidade</strong></p>";
+      echo "<p><strong>Descrição:</strong> $descricao</p>";
+      echo "<p><strong>Pontuação total de cada perfil:</strong></p>";
+      echo "<ul>";
+      echo "<li>Personalidade A: $personalidadeA</li>";
+      echo "<li>Personalidade B: $personalidadeB</li>";
+      echo "<li>Personalidade C: $personalidadeC</li>";
+      echo "<li>Personalidade D: $personalidadeD</li>";
+      echo "</ul>";
+      ?>
+      <!-- Gráfico de barras usando Chart.js -->
+      <canvas id="graficoPersonalidade" width="400" height="200"></canvas>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        var ctx = document.getElementById('graficoPersonalidade').getContext('2d');
+        var graficoPersonalidade = new Chart(ctx, {
+          type: 'bar', // Tipo do gráfico (barras)
+          data: {
+            labels: ['Personalidade A', 'Personalidade B', 'Personalidade C', 'Personalidade D'],
+            datasets: [{
+              label: 'Pontuação das Personalidades',
+              data: [<?php echo $personalidadeA; ?>, <?php echo $personalidadeB; ?>, <?php echo $personalidadeC; ?>, <?php echo $personalidadeD; ?>],
+              backgroundColor: ['#d0debe', '#a1bd90', '#719c63', '#427a35'],
+              borderColor: ['#3e7b31', '#2e6225', '#1f4a19', '#0f310c'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 10
+                }
+              }
+            }
+          }
+        });
+      </script>
+      <?php
+    } else {
+      echo "Nenhuma resposta foi enviada.";
+    }
     ?>
-      <a href="teste-personalidade.php" class="botao-voltar">← Voltar</a>
+
+
+    <a href="teste-personalidade.php" class="voltar">← Refazer o teste</a>
   </div>
 </body>
+
 </html>

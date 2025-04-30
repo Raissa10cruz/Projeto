@@ -33,117 +33,178 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Teste de Múltiplas Inteligências</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <style>
- body {
-      font-family: 'Raleway', sans-serif;
+    body {
       margin: 0;
       padding: 0;
       background: url('img/imagem.jpg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      color: #fff;
+      font-family: 'Playfair Display', serif;
+      color: #333;
     }
 
     .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+      gap: 40px;
+      flex-wrap: wrap;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(14px);
-      border-radius: 0px;
-      padding: 40px;
-      max-width: 900px;
-      width: 95%;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.45);
     }
 
     h2 {
+      width: 100%;
       text-align: center;
-      font-size: 30px;
+      font-size: 28px;
+      color: #fff;
       margin-bottom: 30px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
 
     .pergunta-container {
-      margin-bottom: 25px;
-      padding: 20px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      max-width: 900px;
+      width: 100%;
     }
 
     .pergunta-container strong {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       font-size: 18px;
+      color: #333;
+    }
+
+    .opcoes {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     .opcoes label {
-      background-color: #dbffe3;
-      padding: 10px 20px;
-      border-radius: 30px;
-      margin-right: 10px;
+      flex: 1;
+      max-width: 160px;
+      text-align: center;
+      padding: 15px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      font-size: 14px;
       cursor: pointer;
+      color: #fff;
+    }
+
+    .opcoes label:hover {
+      transform: scale(1.05);
+    }
+
+    .opcoes input[type="radio"] {
+      display: none;
+    }
+
+    .circle {
+      display: block;
+      margin: auto;
+      margin-bottom: 8px;
+      border: 2px solid #6A7D5A;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    .maior .circle {
+      width: 24px;
+      height: 24px;
+    }
+
+    .medio .circle {
+      width: 18px;
+      height: 18px;
+    }
+
+    .menor .circle {
+      width: 14px;
+      height: 14px;
+    }
+
+    .opcoes input[type="radio"]:checked + label {
+      background-color: #a0c39e;
       color: #2b2b2b;
     }
 
     .botao-circular-container {
-      text-align: center;
-      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      margin-top: 45px;
+      width: 100%;
     }
 
     .botao-circular {
       padding: 14px 40px;
       border-radius: 30px;
       background: #a0c39e;
-      color: #2b2b2b;
+      color: white;
+      font-size: 16px;
       font-weight: bold;
+      border: none;
       cursor: pointer;
-      border: 2px solid #4b7f53;
+      transition: all 0.3s ease;
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
-    }
-
-    .resultado {
-      margin-top: 30px;
       text-align: center;
-      font-size: 22px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 15px;
+      letter-spacing: 1px;
     }
 
+    .botao-circular:hover {
+      background-color: #a0c39e;
+      transform: scale(1.05);
+    }
+
+    .botao-circular:active {
+      transform: scale(0.96);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
 
     .botao-voltar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 22px;
-  font-size: 14px;
-  font-weight: bold;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  cursor: pointer;
-  font-style: italic;
-  text-decoration: none;
-  font-family: 'Raleway', sans-serif;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: bold;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      cursor: pointer;
+      font-style: italic;
+      text-decoration: none;
+      font-family: 'Raleway', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
 
-.botao-voltar:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #d9ffd9;
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.3);
-}
+    .botao-voltar:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #d9ffd9;
+      transform: scale(1.05);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
 
-.botao-voltar:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
+    .botao-voltar:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
 
   </style>
 </head>
