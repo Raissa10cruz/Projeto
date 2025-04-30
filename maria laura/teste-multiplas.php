@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .container {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(14px);
-      border-radius: 20px;
+      border-radius: 0px;
       padding: 40px;
       max-width: 900px;
       width: 95%;
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       margin-bottom: 25px;
       padding: 20px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      border-radius: 2px;
     }
 
     .pergunta-container strong {
