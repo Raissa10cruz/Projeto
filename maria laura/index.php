@@ -20,6 +20,10 @@ if (isset($_SESSION['usuario_id'])) {
     } catch (PDOException $e) {
         echo "Erro ao conectar ao banco de dados: " . $e->getMessage();
     }
+} else {
+    // Redireciona se não estiver logado
+    header("Location: login.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -51,44 +55,56 @@ if (isset($_SESSION['usuario_id'])) {
             position: relative;
         }
 
-        /* Ícone do menu hamburguer */
         #menu-toggle {
             display: none;
         }
 
         .menu-icon {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 30px;
+            top: 25px;
+            left: 25px;
+            width: 35px;
             height: 25px;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            cursor: pointer;
-            z-index: 1001;
+            z-index: 1100;
         }
 
         .menu-icon span {
-            height: 3px;
-            background-color: white;
-            border-radius: 3px;
-            transition: all 0.4s ease-in-out;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.4s ease;
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #menu-toggle:checked + .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         .side-menu {
             position: fixed;
             top: 0;
             left: -250px;
-            width: 220px;
+            width: 240px;
             height: 100%;
-            background-color: rgba(40, 40, 40, 0.97);
+            background-color:  #98A38F;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+            padding-top: 100px;
+            padding-left: 30px;
             display: flex;
             flex-direction: column;
-            padding-top: 100px;
-            padding-left: 20px;
-            gap: 25px;
-            transition: left 0.4s ease-in-out;
+            gap: 30px;
+            transition: left 0.4s ease;
             z-index: 1000;
         }
 
@@ -106,18 +122,6 @@ if (isset($_SESSION['usuario_id'])) {
 
         #menu-toggle:checked ~ .side-menu {
             left: 0;
-        }
-
-        #menu-toggle:checked + .menu-icon span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        #menu-toggle:checked + .menu-icon span:nth-child(2) {
-            opacity: 0;
-        }
-
-        #menu-toggle:checked + .menu-icon span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         .perfil-container {
@@ -154,6 +158,26 @@ if (isset($_SESSION['usuario_id'])) {
             font-size: 14px;
             color: white;
             font-weight: bold;
+        }
+
+        .logout-button {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .logout-form {
+            margin: 0;
         }
 
         .header-text {
@@ -245,7 +269,6 @@ if (isset($_SESSION['usuario_id'])) {
     </label>
 
     <nav class="side-menu">
-        <a href="index.php">Início</a>
         <a href="sonho.php">Sonhos</a>
         <a href="objetivo.php">Objetivos</a>
         <a href="plano.php">Plano de Ação</a>
@@ -257,6 +280,9 @@ if (isset($_SESSION['usuario_id'])) {
             <a href="perfil.php" class="perfil-link">
                 <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
             </a>
+            <form class="logout-form" action="logout.php" method="post">
+                <button type="submit" class="logout-button">Sair</button>
+            </form>
         </div>
 
         <div class="header-text">
@@ -266,15 +292,14 @@ if (isset($_SESSION['usuario_id'])) {
     </header>
 
     <main>
-        <a href="multiplas-inteligencias.html" class="card-link">
+        <a href="teste-multiplas.php" class="card-link">
             <div class="card">
                 <div class="card-image">
                     <img src="img/IMG3.jpg" alt="Múltiplas Inteligências">
                     <h3>Testes de Múltiplas Inteligências</h3>
                 </div>
                 <div class="card-content">
-                    <p>Os Testes de Múltiplas Inteligências avaliam quais tipos de inteligência, segundo a teoria de
-                        Howard Gardner, são mais desenvolvidos em uma pessoa.</p>
+                    <p>Os Testes de Múltiplas Inteligências avaliam quais tipos de inteligência, segundo a teoria de Howard Gardner, são mais desenvolvidos em uma pessoa.</p>
                 </div>
             </div>
         </a>
@@ -298,8 +323,7 @@ if (isset($_SESSION['usuario_id'])) {
                     <h3>Quem Sou Eu?</h3>
                 </div>
                 <div class="card-content">
-                    <p>🌟Quem Sou Eu? Descubra o Fascinante Universo que É Você! 🌟 Você já se perguntou o que te
-                        torna único?</p>
+                    <p>🌟Quem Sou Eu? Descubra o Fascinante Universo que É Você! 🌟 Você já se perguntou o que te torna único?</p>
                 </div>
             </div>
         </a>

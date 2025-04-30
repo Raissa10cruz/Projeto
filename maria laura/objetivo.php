@@ -2,14 +2,18 @@
 session_start();
 
 $foto = 'default.png';
+$email = 'Usuário';
 if (isset($_SESSION['usuario_id'])) {
     try {
         $conn = new PDO('mysql:host=localhost;dbname=sistema_cadastro;charset=utf8', 'root', '');
-        $stmt = $conn->prepare("SELECT foto_perfil FROM usuarios WHERE id = :id");
+        $stmt = $conn->prepare("SELECT email, foto_perfil FROM usuarios WHERE id = :id");
         $stmt->execute([':id' => $_SESSION['usuario_id']]);
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($resultado && !empty($resultado['foto_perfil'])) {
-            $foto = $resultado['foto_perfil'];
+        if ($resultado) {
+            if (!empty($resultado['foto_perfil'])) {
+                $foto = $resultado['foto_perfil'];
+            }
+            $email = $resultado['email'];
         }
     } catch (PDOException $e) {
         echo "Erro ao conectar ao banco de dados: " . $e->getMessage();
@@ -21,8 +25,8 @@ if (isset($_SESSION['usuario_id'])) {
 
 <head>
     <meta charset="UTF-8">
+    <title>Objetivos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Objetivos</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Raleway:wght@400;700&family=Shadows+Into+Light&display=swap"
         rel="stylesheet">
@@ -39,33 +43,23 @@ if (isset($_SESSION['usuario_id'])) {
             background-size: cover;
             background-position: center;
             color: white;
-            text-align: left;
             padding: 100px 20px;
             position: relative;
         }
 
-        nav {
+        .perfil-container {
             position: absolute;
-            top: 10px;
-            left: 20px;
+            top: 20px;
             right: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            color: white;
+            gap: 15px;
+            z-index: 1100;
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
+        .perfil-email {
             font-weight: bold;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        nav a:hover {
-            color: rgb(173, 180, 168);
-            transform: scale(1.1);
+            color: white;
         }
 
         .perfil-link {
@@ -84,7 +78,6 @@ if (isset($_SESSION['usuario_id'])) {
         }
 
         .header-text {
-            text-align: left;
             margin-top: 60px;
         }
 
@@ -98,7 +91,6 @@ if (isset($_SESSION['usuario_id'])) {
             font-size: 1.1em;
             margin-top: 10px;
             max-width: 600px;
-            margin-right: auto;
         }
 
         main {
@@ -108,7 +100,7 @@ if (isset($_SESSION['usuario_id'])) {
         .objetivo {
             background-color: #98A38F;
             padding: 30px;
-            border-radius: 0px;
+            border-radius: 0;
             max-width: 900px;
             margin: 0 auto;
             color: white;
@@ -128,7 +120,7 @@ if (isset($_SESSION['usuario_id'])) {
 
         .img-psicologia {
             display: flex;
-            justify-content:  right;
+            justify-content: right;
             margin-top: 30px;
         }
 
@@ -136,25 +128,102 @@ if (isset($_SESSION['usuario_id'])) {
             width: 80px;
             height: auto;
         }
+
+        /* Ícone do menu hambúrguer */
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu-icon {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1100;
+        }
+
+        .menu-icon span {
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.4s ease;
+        }
+
+        #menu-toggle:checked+.menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        #menu-toggle:checked+.menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        #menu-toggle:checked+.menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 200px;
+            height: 100%;
+            background-color:  #98A38F;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+            padding-top: 100px;
+            padding-left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            transition: left 0.4s ease;
+            z-index: 1000;
+        }
+
+        .side-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .side-menu a:hover {
+            color: #98A38F;
+        }
+
+        #menu-toggle:checked~.side-menu {
+            left: 0;
+        }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <nav>
-            <div class="links-nav">
-                <a href="index.php">Início</a>
-                <a href="sonho.php">Sonhos</a>
+    <input type="checkbox" id="menu-toggle" />
+    <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
 
-            </div>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <a href="plano.php">Plano Ação</a>
-                <a href="perfil.php" class="perfil-link">
-                    <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
-                </a>
-            </div>
-        </nav>
+    <nav class="side-menu">
+        <a href="index.php">Início</a>
+        <a href="sonho.php">Sonhos</a>
+        <a href="plano.php">Plano de Ação</a>
+    </nav>
+
+    <header>
+        <div class="perfil-container">
+            <span class="perfil-email"><?= htmlspecialchars($email) ?></span>
+            <a href="perfil.php" class="perfil-link">
+                <img src="uploads/<?= htmlspecialchars($foto) ?>" alt="Perfil" class="perfil-foto">
+            </a>
+        </div>
+
         <div class="header-text">
             <h1>Meus Objetivos</h1>
             <p>"Defina seu objetivo, acredite no seu potencial e avance com determinação — cada passo conta na jornada
@@ -185,10 +254,10 @@ if (isset($_SESSION['usuario_id'])) {
                 Sei que esse caminho exigirá muito esforço, dedicação e perseverança, mas estou disposta a enfrentar
                 cada desafio com determinação. Cada passo que dou hoje é um investimento no futuro que desejo construir,
                 e minha maior motivação é saber que, ao alcançar meus objetivos, poderei viver a vida que sempre sonhei,
-                tanto profissionalmente quanto ao lado das pessoas que amo.</p>
+                tanto profissionalmente quanto ao lado das pessoas que amo.
+            </p>
             <div class="img-psicologia">
-            <img src="img/psiquiatria.png" alt="Símbolo de Psicologia">
-
+                <img src="img/psiquiatria.png" alt="Símbolo de Psicologia">
             </div>
         </section>
     </main>
@@ -196,3 +265,6 @@ if (isset($_SESSION['usuario_id'])) {
 </body>
 
 </html>
+
+
+
