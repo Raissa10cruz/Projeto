@@ -12,99 +12,121 @@
       padding: 0;
       background: url('img/imagem.jpg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      color: #fff;
+      font-family: 'Playfair Display', serif;
+      color: #333;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 900px;
-      width: 95%;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+      gap: 40px;
+      flex-wrap: wrap;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+
+
     }
 
     h2 {
+      width: 100%;
       text-align: center;
       font-size: 28px;
+      color: #fff;
       margin-bottom: 30px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
     }
 
-    .pergunta-container {
-      margin-bottom: 25px;
-      padding: 20px;
-      background:
-        border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
+    .pergunta {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      max-width: 900px;
+      width: 100%;
     }
 
-    .pergunta-container:hover {
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-    }
-
-    .pergunta-container strong {
+    .pergunta strong {
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
       font-size: 18px;
-      font-weight: 600;
+      color: #333;
     }
 
-    .opcoes {
+    .likert {
       display: flex;
+      justify-content: space-between;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
-    .opcoes label {
-      display: inline-flex;
-      align-items: center;
-      background-color: #c5dbc1;
-      padding: 10px 20px;
-      border-radius: 30px;
+    .likert label {
+      flex: 1;
+      max-width: 160px;
+      text-align: center;
+      padding: 15px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
       font-size: 14px;
-      font-weight: 600;
-      color: #2b2b2b;
       cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
     }
 
-    .opcoes input[type="radio"] {
+    .likert label:hover {
+      transform: scale(1.05);
+    }
+
+    .likert input[type="radio"] {
       display: none;
     }
 
-    .opcoes label:hover {
-      background-color: #b3caae;
-      transform: translateY(-2px);
+    .circle {
+      display: block;
+      margin: auto;
+      margin-bottom: 8px;
+      border: 2px solid #6A7D5A;
+      border-radius: 50%;
+      background-color: #fff;
     }
 
-    .opcoes input[type="radio"]:checked+label {
+    .maior .circle {
+      width: 24px;
+      height: 24px;
+    }
+
+    .medio .circle {
+      width: 18px;
+      height: 18px;
+    }
+
+    .menor .circle {
+      width: 14px;
+      height: 14px;
+    }
+
+    .likert input[type="radio"]:checked+.circle {
       background-color: #a0c39e;
-      border-color: #4b7f53;
-      color: #fff;
     }
 
     .botao-circular-container {
       display: flex;
       justify-content: center;
       margin-top: 45px;
+      width: 100%;
     }
 
     .botao-circular {
       padding: 14px 40px;
       border-radius: 30px;
-      background: #c5dbc1;
-      color: #2b2b2b;
+      background: #a0c39e;
+      color: white;
       font-size: 16px;
       font-weight: bold;
-      border: 2px solid  #4b7f53;
+      border: none;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
@@ -113,16 +135,14 @@
     }
 
     .botao-circular:hover {
-      background-color: #a9cba5;
+      background-color: #a0c39e;
       transform: scale(1.05);
-      color: white;
     }
 
     .botao-circular:active {
       transform: scale(0.96);
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     }
-
 
     .botao-voltar {
       position: absolute;
@@ -159,9 +179,9 @@
 </head>
 
 <body>
-  <div class="container">
-    <h2>Descubra Sua Personalidade</h2>
-    <form action="resultado.php" method="POST">
+  <form action="resultado.php" method="POST">
+    <div class="container">
+      <h2>Descubra Sua Personalidade</h2>
       <?php
       $perguntas = [
         "Você reflete profundamente antes de tomar decisões importantes?",
@@ -186,24 +206,50 @@
         "Você prefere um pequeno grupo de amigos íntimos à socialização ampla?"
       ];
 
+      $reflexoes = [
+        "Você considera todas as consequências possíveis antes de agir?",
+        "Você sente ansiedade por não ter controle sobre o que virá?",
+        "Você costuma ser o ombro amigo das pessoas próximas?",
+        "Você sente que ainda não atingiu seu verdadeiro potencial?",
+        "Você prefere observar o ambiente antes de interagir?",
+        "Você sente que conversas rasas o deixam esgotado?",
+        "Você enxerga críticas como oportunidades de crescimento?",
+        "Você sente propósito ao impactar positivamente alguém?",
+        "Você gosta de debater temas abstratos por prazer?",
+        "Você revisita suas crenças antigas com frequência?",
+        "Você busca estímulo mental em livros ou debates?",
+        "Você consegue 'ler' o clima emocional de uma sala?",
+        "Você escreve para entender melhor o que sente?",
+        "Você recarrega suas energias em momentos de silêncio?",
+        "Você termina aquilo que começa, mesmo sem motivação?",
+        "Você evita atalhos em nome da profundidade?",
+        "Você sente curiosidade em vez de medo diante do novo?",
+        "Você controla suas emoções em momentos de crise?",
+        "Você sente prazer em contemplar questões existenciais?",
+        "Você prefere qualidade a quantidade nas relações?"
+      ];
+
       foreach ($perguntas as $index => $pergunta) {
-        echo "<div class='pergunta-container'>";
+        echo "<div class='pergunta'>";
         echo "<strong>" . ($index + 1) . ". $pergunta</strong>";
-        echo "<div class='opcoes'>";
-        echo "<input type='radio' id='q{$index}_1' name='q$index' value='1' required><label for='q{$index}_1'>Discordo totalmente</label>";
-        echo "<input type='radio' id='q{$index}_2' name='q$index' value='2'><label for='q{$index}_2'>Discordo</label>";
-        echo "<input type='radio' id='q{$index}_3' name='q$index' value='3'><label for='q{$index}_3'>Neutro</label>";
-        echo "<input type='radio' id='q{$index}_4' name='q$index' value='4'><label for='q{$index}_4'>Concordo</label>";
-        echo "<input type='radio' id='q{$index}_5' name='q$index' value='5'><label for='q{$index}_5'>Concordo totalmente</label>";
+        echo "<em style='display:block; margin-bottom: 15px; color:#555;'>" . $reflexoes[$index] . "</em>";
+        echo "<div class='likert'>";
+        echo "<label class='menor'><input type='radio' name='q$index' value='1' required><span class='circle'></span>Discordo totalmente</label>";
+        echo "<label class='medio'><input type='radio' name='q$index' value='2'><span class='circle'></span>Discordo</label>";
+        echo "<label class='maior'><input type='radio' name='q$index' value='3'><span class='circle'></span>Neutro</label>";
+        echo "<label class='medio'><input type='radio' name='q$index' value='4'><span class='circle'></span>Concordo</label>";
+        echo "<label class='menor'><input type='radio' name='q$index' value='5'><span class='circle'></span>Concordo totalmente</label>";
         echo "</div></div>";
       }
       ?>
+
       <div class="botao-circular-container">
         <input type="submit" class="botao-circular" value="Pronto">
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
   <a href="index.php" class="botao-voltar">← Voltar</a>
 </body>
 
 </html>
+

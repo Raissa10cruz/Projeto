@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <div class="login-container">
-    <img src="img/foto de perfil.webp" alt="Avatar" class="profile-img">
+    <img src="img/do-utilizador.png" alt="Avatar" class="profile-img">
 
     <form method="POST" action="login.php" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       <div class="input-group">

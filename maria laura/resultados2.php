@@ -105,38 +105,24 @@ $explicacoes = [
       border-radius: 15px;
     }
 
+    .voltar {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
 
-    .botao-voltar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 22px;
-  font-size: 14px;
-  font-weight: bold;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  cursor: pointer;
-  font-style: italic;
-  text-decoration: none;
-  font-family: 'Raleway', sans-serif;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.botao-voltar:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #d9ffd9;
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.botao-voltar:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
+    .voltar:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #d9ffd9;
+      transform: scale(1.05);
+    }
 
   </style>
 </head>
@@ -155,8 +141,8 @@ $explicacoes = [
       </ul>
     </div>
 
-    <div class="botao-circular-container">
-      <a href="index.php" class="botao-voltar">← Voltar ao teste</a>
+
+    <a href="teste-multiplhas.php" class="voltar">← Refazer o teste</a>
     </div>
   </div>
 </body>

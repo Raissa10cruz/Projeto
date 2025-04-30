@@ -5,9 +5,8 @@ if (!isset($_SESSION["user"])) {
     exit;
 }
 
-include 'conexao.php'; // Arquivo que conecta ao banco de dados
+include 'conexao.php';
 
-// Pegando o e-mail da sessão
 $userSessao = $_SESSION["user"];
 $emailSessao = $userSessao["email"] ?? '';
 
@@ -23,15 +22,15 @@ try {
 
     $email = htmlspecialchars($user['email']);
 } catch (PDOException $e) {
-    echo "Erro na conexão com o banco de dados: " . $e->getMessage();
+    echo "Erro: " . $e->getMessage();
     exit;
 }
 
-// Processa o resultado do teste
+// Processar respostas
 $tipo = "";
 $pontuacoes = [];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $respostas = $_POST;
     $pontuacoes = [
         "E" => 0, "I" => 0,
@@ -40,132 +39,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "J" => 0, "P" => 0,
     ];
 
-    foreach ($respostas as $key => $value) {
-        list($nivel, $letra) = explode("-", $value);
-        if ($letra == "neutral") continue;
-        $pontuacoes[$letra] += (int)$nivel;
-    }
+    foreach ($_POST['respostas'] as $resposta) {
+      if (strpos($resposta, '-') !== false) {
+          list($valor, $letra) = explode('-', $resposta);
+  
+          // Garante que a letra é válida
+          if (isset($pontuacoes[$letra])) {
+              $pontuacoes[$letra] += (int)$valor;
+          }
+      }
+  }
+  
+    // Determinar o tipo MBTI com maior diferença
+    $tipo .= ($pontuacoes["E"] > $pontuacoes["I"]) ? "E" : "I";
+    $tipo .= ($pontuacoes["S"] > $pontuacoes["N"]) ? "S" : "N";
+    $tipo .= ($pontuacoes["T"] > $pontuacoes["F"]) ? "T" : "F";
+    $tipo .= ($pontuacoes["J"] > $pontuacoes["P"]) ? "J" : "P";
 
-    $tipo .= ($pontuacoes["E"] >= $pontuacoes["I"]) ? "E" : "I";
-    $tipo .= ($pontuacoes["S"] >= $pontuacoes["N"]) ? "S" : "N";
-    $tipo .= ($pontuacoes["T"] >= $pontuacoes["F"]) ? "T" : "F";
-    $tipo .= ($pontuacoes["J"] >= $pontuacoes["P"]) ? "J" : "P";
-
-    // Salva no banco
+    $_SESSION['tipo'] = $tipo;
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=pdv", "root", "");
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $sql = "INSERT INTO mbti_results (
-          tipo, pontuacao_e, pontuacao_i, pontuacao_s, pontuacao_n,
-          pontuacao_t, pontuacao_f, pontuacao_j, pontuacao_p, data_registro
+        $stmt = $conn->prepare("INSERT INTO mbti_results (
+            tipo, pontuacao_e, pontuacao_i, pontuacao_s, pontuacao_n,
+            pontuacao_t, pontuacao_f, pontuacao_j, pontuacao_p, data_registro
         ) VALUES (
-          :tipo, :e, :i, :s, :n, :t, :f, :j, :p, NOW()
-        )";
+            :tipo, :e, :i, :s, :n, :t, :f, :j, :p, NOW()
+        )");
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':tipo', $tipo);
-        $stmt->bindParam(':e', $pontuacoes['E']);
-        $stmt->bindParam(':i', $pontuacoes['I']);
-        $stmt->bindParam(':s', $pontuacoes['S']);
-        $stmt->bindParam(':n', $pontuacoes['N']);
-        $stmt->bindParam(':t', $pontuacoes['T']);
-        $stmt->bindParam(':f', $pontuacoes['F']);
-        $stmt->bindParam(':j', $pontuacoes['J']);
-        $stmt->bindParam(':p', $pontuacoes['P']);
-        $stmt->execute();
-
-        $mensagem = "<p>Resultado salvo com sucesso!</p>";
+        $stmt->execute([
+            ':tipo' => $tipo,
+            ':e' => $pontuacoes['E'],
+            ':i' => $pontuacoes['I'],
+            ':s' => $pontuacoes['S'],
+            ':n' => $pontuacoes['N'],
+            ':t' => $pontuacoes['T'],
+            ':f' => $pontuacoes['F'],
+            ':j' => $pontuacoes['J'],
+            ':p' => $pontuacoes['P'],
+        ]);
     } catch (PDOException $e) {
-        $mensagem = "<p>Erro ao salvar: " . $e->getMessage() . "</p>";
+        echo "Erro ao salvar no banco: " . $e->getMessage();
     }
 }
 
-  $tipo = $_POST['tipo'] ?? '';
-
-  $descricoes_mbti = [
-    "ISTJ" => [
-        "nome" => "O Realista",
-        "descricao" => "Você é prático, responsável e organizado. Gosta de manter a ordem e seguir regras.",
-        "imagem" => "./mbti/ISTJ.jpg"
-    ],
-    "ISFJ" => [
-        "nome" => "O Protetor",
-        "descricao" => "Você é leal, atencioso e tem um forte senso de dever. Preocupa-se com os outros.",
-        "imagem" => "./mbti/ISFJ.jpg"
-    ],
-    "INFJ" => [
-        "nome" => "O Visionário",
-        "descricao" => "Idealista, profundo e visionário. Busca um propósito maior em tudo o que faz.",
-        "imagem" => "./mbti/INFJ.jpg"
-    ],
-    "INTJ" => [
-        "nome" => "O Estrategista",
-        "descricao" => "Você é estrategista, independente e gosta de planejamento a longo prazo.",
-        "imagem" => "./mbti/INTJ.jpg"
-    ],
-    "ISTP" => [
-        "nome" => "O Lógico",
-        "descricao" => "Analítico e prático, você gosta de resolver problemas de forma lógica.",
-        "imagem" => "./mbti/ISTP.jpg"
-    ],
-    "ISFP" => [
-        "nome" => "O Artista",
-        "descricao" => "Sensível, gentil e tranquilo. Valoriza a beleza e a harmonia ao seu redor.",
-        "imagem" => "./mbti/ISFP.jpg"
-    ],
-    "INFP" => [
-        "nome" => "O Idealista",
-        "descricao" => "Você é empático, idealista e valoriza autenticidade e significado.",
-        "imagem" => "./mbti/INFP.jpg"
-    ],
-    "INTP" => [
-        "nome" => "O Analista",
-        "descricao" => "Curioso e lógico, você adora entender sistemas e conceitos complexos.",
-        "imagem" => "./mbti/INTP.jpg"
-    ],
-    "ESTP" => [
-        "nome" => "O Empreendedor",
-        "descricao" => "Aventureiro e direto, você vive o momento e gosta de ação.",
-        "imagem" => "./mbti/ESTP.jpg"
-    ],
-    "ESFP" => [
-        "nome" => "O Animador",
-        "descricao" => "Você é espontâneo, animado e adora aproveitar a vida ao máximo.",
-        "imagem" => "./mbti/ESFP.jpg"
-    ],
-    "ENFP" => [
-        "nome" => "O Inspirador",
-        "descricao" => "Criativo, entusiástico e sociável. Sempre em busca de novas possibilidades.",
-        "imagem" => "./mbti/ENFP.jpg"
-    ],
-    "ENTP" => [
-        "nome" => "O Inovador",
-        "descricao" => "Você é inventivo, expressivo e gosta de desafiar ideias estabelecidas.",
-        "imagem" => "./mbti/ENTP.jpg"
-    ],
-    "ESTJ" => [
-        "nome" => "O Executivo",
-        "descricao" => "Organizado, direto e responsável. Gosta de liderar e fazer as coisas acontecerem.",
-        "imagem" => "./mbti/ESTJ.jpg"
-    ],
-    "ESFJ" => [
-        "nome" => "O Cuidador",
-        "descricao" => "Sociável, protetor e confiável. Preza pela harmonia nos relacionamentos.",
-        "imagem" => "./mbti/ESFJ.jpg"
-    ],
-    "ENFJ" => [
-        "nome" => "O Líder",
-        "descricao" => "Líder nato, empático e inspirador. Gosta de ajudar os outros a crescerem.",
-        "imagem" => "./mbti/ENFJ.jpg"
-    ],
-    "ENTJ" => [
-        "nome" => "O Comandante",
-        "descricao" => "Você é determinado, eficiente e um verdadeiro estrategista nato.",
-        "imagem" => "./mbti/ENTJ.jpg"
-    ],
-  ];
-  
 
 ?>
 
@@ -250,6 +165,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .botao-voltar:hover {
       background-color: #f0f0f0;
     }
+
+    .cute-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cute-button {
+  background: #ffd4da;
+  color: #d25050;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(210, 80, 80, 0.2);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-icon {
+  position: absolute;
+  font-size: 14px;
+  opacity: 0;
+  animation: floatUp 2s ease-out forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+}
+
+
   </style>
 </head>
 <body>
@@ -288,38 +242,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </section>
 
   <br><br><br>
-
+<?php
+  include 'descricao_tipo_mbti.php'; 
+  $dados = $descricoes_mbti[$_SESSION['tipo']];?>
   <div class="container">
     <h1>Resultado do Teste MBTI</h1>
 
-    <?php if (isset($descricoes_mbti[$tipo])): ?>
-      <p class="tipo-nome"><?= $tipo ?> - <?= $descricoes_mbti[$tipo]['nome'] ?></p>
-      <img src="<?= $descricoes_mbti[$tipo]['imagem'] ?>" alt="Imagem do tipo <?= $tipo ?>">
-      <p class="descricao"><?= $descricoes_mbti[$tipo]['descricao'] ?></p>
+    <?php if ($dados): ;?>
+        <h1><?= $dados["nome"] ?> (<?= $tipo ?>)</h1>
+        <p><?= $dados["descricao"] ?></p>
+        <img src="<?= $dados["imagem"] ?>" alt="Tipo <?= $tipo ?>" style="max-width: 300px;">
 
-      <div class="botoes">
-        <button class="compartilhar" onclick="compartilharResultado()">Compartilhar</button>
-        <button class="refazer" onclick="window.location.href='index.html'">Refazer Teste</button>
-      </div>
+        <div class="cute-button-container">
+  <div class="cute-button-container">
+  <button onclick="redirecionarParaTeste()" class="cute-button">Refazer o Teste</button>
+</div>
     <?php else: ?>
-      <p>Tipo MBTI não encontrado. Tente novamente.</p>
+        <p>Resultado não encontrado. Tente novamente.</p>
     <?php endif; ?>
-  </div>
+</div>
 
-  <script>
-    function compartilharResultado() {
-      const texto = "Descobri que meu tipo MBTI é <?= $tipo ?> - <?= $descricoes_mbti[$tipo]['nome'] ?>! Confira também!";
-      if (navigator.share) {
-        navigator.share({
-          title: "Meu Tipo MBTI",
-          text: texto,
-          url: window.location.href
-        });
-      } else {
-        alert("Copie e compartilhe:\n" + texto);
-      }
-    }
-  </script>
+<script>
+function redirecionarParaTeste() {
+  const container = document.querySelectorAll('.cute-button-container')[1]; // segundo botão
+  const emojis = ['🐰', '❤️'];
+  const total = 10;
+
+  for (let i = 0; i < total; i++) {
+    const span = document.createElement('span');
+    span.classList.add('floating-icon');
+    span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = `${Math.random() * 100}%`;
+    span.style.top = `-10px`;
+    span.style.fontSize = `${Math.random() * 10 + 12}px`;
+    container.appendChild(span);
+    setTimeout(() => span.remove(), 2000);
+  }
+
+  // Aguarda 600ms para redirecionar após começar os efeitos
+  setTimeout(() => {
+    window.location.href = "mbti.php";
+  }, 600);
+}
+</script>
+
+
 
 </body>
 </html>

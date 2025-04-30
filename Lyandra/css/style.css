@@ -235,7 +235,7 @@ body {
   position: relative;
 }
 
-.profile-card img.profile-pic {
+.profile-card img.logo {
   width: 100px;
   height: 100px;
   object-fit: cover;
