@@ -3,7 +3,7 @@ session_start();
 
 // Redirecionar se não estiver logado
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: cadastrar.php");
+    header("Location: perfil.php");
     exit();
 }
 
@@ -16,8 +16,8 @@ $db = "site_autoconhecimento";
 try {
     $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $conn->prepare("SELECT nome, email, imagem_perfil FROM usuarios WHERE id = :id");
 
-    $stmt = $conn->prepare("SELECT nome, email, foto FROM usuarios WHERE id = :id");
     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -177,27 +177,49 @@ try {
     }
 
     .btn-logout {
-      background-color: #f36c6c;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: 0.3s;
-    }
+  background-color: #f36c6c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
 
-    .btn-logout:hover {
-      background-color: #e15050;
-    }
+.btn-logout:hover {
+  background-color: #e15050;
+}
 
-    .icon-logout {
-      width: 20px;
-      height: 20px;
-    }
+.btn-logout {
+  background-color: #f36c6c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #e15050;
+}
+
+.icon-logout {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
 
     .content {
       max-width: 700px;
@@ -228,27 +250,24 @@ try {
       border: 2px solid #ccc;
     }
 
-    .btn-cadastro {
-      background-color: #d2b8f4;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      margin-top: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+    .simbolo-cobra {
+  position: absolute;
+  left: calc(50% - 440px); 
+  top: 185px;
+  width: 140px;  
+  height: auto;
+  z-index: 1;
+}
 
-    .btn-cadastro:hover {
-      background-color: #c09cf3;
-    }
+}
 
-    .mensagem {
-      margin-top: 20px;
-      font-weight: bold;
-      color: red;
-    }
+
+
+
+
+
+
+    
   </style>
 </head>
 <body>
@@ -278,9 +297,11 @@ try {
 
     <?php
       $avatarPadrao = './imgRaissa/User_Clipart_PNG_Images__User_Avatar_Login_Interface_Abstract_Purple_User_Icon__Avatar__User__Login_Avatar_PNG_Image_For_Free_Download-removebg-preview.png';
-      $caminhoImagem = isset($user['foto']) && !empty($user['foto']) 
-          ? './imgRaissa/' . htmlspecialchars($user['foto']) 
-          : $avatarPadrao;
+      $caminhoImagem = !empty($user['imagem_perfil']) 
+      ? './imgRaissa/' . htmlspecialchars($user['imagem_perfil']) 
+      : $avatarPadrao;
+  
+  
     ?>
 
     <button class="btn-avatar" onclick="location.href='editar_perfil.php'">
@@ -289,24 +310,45 @@ try {
 
     <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
     <button class="btn-logout" onclick="location.href='logout.php'">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-        <polyline points="16 17 21 12 16 7" />
-        <line x1="21" y1="12" x2="9" y2="12" />
-      </svg>
-    </button>
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+  
+</button>
+
+</button>
+
+  
+</button>
+
+  
   </div>
 
-  <!-- Conteúdo principal -->
+  <!-- Conteúdo -->
   <div class="content">
-    <h2>Bem-vindo ao seu Projeto de Vida!</h2>
-    <p>Explore seus sonhos, defina seus objetivos e planeje seu futuro com clareza e inspiração.</p>
-  </div>
+  <h2>PROFISSÕES:</h2>
+  <p>
+  Escolher uma profissão nem sempre é fácil. Com tantas opções disponíveis, é comum ficar em dúvida sobre qual caminho seguir. Afinal, essa escolha influencia boa parte da nossa vida: desde a rotina do dia a dia até a realização pessoal e profissional.
+
+A melhor forma de começar essa jornada é olhando para dentro. Pensar no que você gosta de fazer, no que tem facilidade, no tipo de ambiente onde se sente bem, ajuda e muito na hora de decidir. Cada pessoa tem talentos e interesses diferentes, e é isso que torna cada escolha única.
+
+Existem profissões voltadas para o cuidado com as pessoas, outras que exigem criatividade, algumas ligadas à tecnologia, à natureza, aos números… e todas são importantes. Mais do que seguir o que está "em alta", é importante buscar algo que combine com quem você é, com seus valores e com o que te faz sentir bem.
+
+Se você ainda não tem certeza, tudo bem. Ninguém nasce sabendo o que quer ser para o resto da vida. O mais importante é estar aberto para aprender, pesquisar, conversar com pessoas da área, e, se possível, experimentar diferentes atividades. Com o tempo, as coisas vão ficando mais claras.
+
+No fim das contas, o melhor caminho é aquele que te faz crescer, aprender e acordar todos os dias com vontade de seguir em frente.
+  </p>
+</div>
+
 
   <script>
     function toggleMenu() {
-        const menu = document.getElementById('menuLateral');
-        menu.classList.toggle('show');
+      const menu = document.getElementById('menuLateral');
+      const toggle = document.querySelector('.menu-toggle');
+      menu.classList.toggle('show');
+      toggle.classList.toggle('rotated');
     }
   </script>
 </body>
