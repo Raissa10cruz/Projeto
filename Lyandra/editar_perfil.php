@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <title>Editar Perfil</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style3.css"> <!-- ou cole o CSS diretamente no <style> -->
+  <link rel="stylesheet" href="css/style3.css"> <!-- ou cole o CSS diretamente no <style> -->
 </head>
 <body>
   <div class="container">

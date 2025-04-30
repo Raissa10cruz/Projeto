@@ -1,0 +1,383 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background:#eda1acae ;
+  color: #333;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 150px 120px;
+  background-image: url('../img/florrosa.png'); /* Imagem de fundo */
+  background-size: cover; /* Faz a imagem cobrir todo o header */
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita repetição da imagem */
+  height: 150px; /* Defina a altura conforme necessário */
+  position: relative;
+}
+
+.logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-flor img {
+  width: 200px; /* Ajuste o tamanho da logo conforme necessário */
+  height: 200px;
+}
+
+.botao-voltar {
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.botao-voltar:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Torna o fundo mais escuro no hover */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza tudo horizontalmente */
+  text-align: center;  /* Garante que os textos também fiquem centralizados */
+  padding: 20px;
+}
+
+.Coracao {
+  margin-bottom: 20px; /* Espaço entre a imagem e o título */
+}
+
+.Coracao .header-img {
+  max-width: 150px;
+  height: auto;
+}
+
+
+.usuario-logado {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+.usuario-logado img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.usuario-logado span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.usuario-logado:hover {
+  color: #d25050; /* Mudança de cor ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header {
+      flex-direction: column;
+      height: auto;
+      text-align: center;
+  }
+
+  .botao-voltar {
+      margin-bottom: 10px;
+  }
+
+  .usuario-logado {
+      margin-top: 10px;
+  }
+}
+
+/* Estilos para o menu hambúrguer */
+.hamburguer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #D4ACB2; /* Fundo rosa para toda a faixa */
+  width: 97.3%;
+  height: 80px; /* Aumenta a altura da faixa */
+  padding: 0 20px;
+}
+
+/* Botão de hambúrguer */
+.menu-hamburguer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  background-color: #D4ACB2; /* Fundo rosa */
+  border-radius: 8px; /* Bordas levemente arredondadas */
+  padding: 8px;
+  z-index: 100;
+}
+
+.linha {
+  width: 100%;
+  height: 5px;
+  background-color: white; /* Linhas brancas */
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+}
+
+/* Coelho do menu */
+.icone-coelho-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px; /* Aumenta o tamanho da imagem do coelho */
+  height: 80px;
+  opacity: 0; /* Inicialmente invisível */
+  transition: 0.3s ease-in-out;
+}
+
+.menu {
+  display: none;  /* Inicialmente escondido */
+  position: absolute;
+  top: 120%;  /* Levemente abaixo do centro */
+  left: calc(50% + 60px); /* À direita do coelho centralizado */
+  transform: translateY(-50%);
+  background-color: #D4ACB2;  /* Fundo rosa */
+  width: 200px;
+  padding: 20px;
+  border-radius: 12px;  /* Bordas levemente arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra suave */
+  z-index: 99;
+}
+
+
+
+.quadro-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+
+.quadro-menu a {
+  color: #fff; /* Texto branco */
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.quadro-menu a:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Animação de transformação do hambúrguer */
+.menu-hamburguer.active .linha:nth-child(1),
+.menu-hamburguer.active .linha:nth-child(2),
+.menu-hamburguer.active .linha:nth-child(3) {
+  opacity: 0; /* Esconde as linhas */
+}
+
+.menu-hamburguer.active .icone-coelho-menu {
+  opacity: 1; /* Torna o coelho visível */
+}
+
+/* Quando o menu está ativo */
+.menu-hamburguer.active + .menu {
+  display: block;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .menu {
+      width: 100%;
+      right: unset;
+      top: 0;
+      left: 0;
+  }
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 360px;
+  position: relative;
+}
+
+.profile-card img.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #d25050;
+  margin-bottom: 10px;
+}
+
+.profile-card .username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4a90e2;
+  border-radius: 15px;
+  padding: 5px 10px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.logo {
+  width: 150px;
+  margin: 0 auto 20px;
+}
+
+.content {
+  max-width: 600px;
+  text-align: center;
+}
+
+.content h1 {
+  font-size: 28px;
+  color: #a14db8;
+  margin-bottom: 15px;
+}
+
+.content p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.button {
+  background: linear-gradient(90deg, #d25050, #ff84b4);
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background: linear-gradient(90deg, #ff84b4, #d25050);
+}
+
+.back-button {
+  background: white;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #e5b1b1;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pergunta {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin: 20px;
+  max-width: 900px;
+}
+
+.likert {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.likert label {
+  flex: 1;
+  max-width: 160px;
+  text-align: center;
+  padding: 15px;
+  border-radius: 25px;
+  background-color: #f9f9f9;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  font-size: 14px;
+}
+
+.likert label:hover {
+  transform: scale(1.05);
+}
+
+.likert input[type="radio"] {
+  display: none;
+}
+
+.likert .circle {
+  display: block;
+  margin: auto;
+  margin-bottom: 8px;
+  border: 2px solid #c44;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.likert input[type="radio"]:checked + .circle {
+  background-color: #c44;
+}
+
+/* Tamanhos personalizados */
+.likert label.maior .circle {
+  width: 24px;
+  height: 24px;
+}
+
+.likert label.medio .circle {
+  width: 18px;
+  height: 18px;
+}
+
+.likert label.menor .circle {
+  width: 14px;
+  height: 14px;
+}
