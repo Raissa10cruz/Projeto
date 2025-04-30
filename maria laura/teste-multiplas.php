@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .botao-circular {
       padding: 14px 40px;
       border-radius: 30px;
-      background: #c5dbc1;
+      background: #a0c39e;
       color: #2b2b2b;
       font-weight: bold;
       cursor: pointer;
