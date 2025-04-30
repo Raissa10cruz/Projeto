@@ -200,7 +200,8 @@ try {
   <div class="container">
   <!-- MBTI -->
   <div class="profile-card">
-    <img src="logo.png" class="logo" alt="Logo">
+   
+    <br>
     <div class="username">Teste MBTI</div>
     <div class="content">
       <h1>Descubra sua Personalidade</h1>
@@ -211,7 +212,8 @@ try {
 
   <!-- 4 Temperamentos -->
   <div class="profile-card">
-    <img src="logo.png" class="logo" alt="Logo">
+   
+    <br>
     <div class="username">4 Temperamentos</div>
     <div class="content">
       <h1>Qual é o seu temperamento?</h1>
@@ -222,7 +224,8 @@ try {
 
   <!-- Planos e Sonhos -->
   <div class="profile-card">
-    <img src="logo.png" class="logo" alt="Logo">
+    
+    <br>
     <div class="username">Meus Projetos</div>
     <div class="content">
       <h1>Organize seus sonhos</h1>
@@ -233,7 +236,8 @@ try {
 
   <!-- Diário -->
   <div class="profile-card">
-    <img src="logo.png" class="logo" alt="Logo">
+   
+    <br>
     <div class="username">Meu Diário</div>
     <div class="content">
       <h1>Como foi seu dia?</h1>
