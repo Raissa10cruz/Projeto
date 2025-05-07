@@ -210,17 +210,7 @@ try {
     </div>
   </div>
 
-  <!-- 4 Temperamentos -->
-  <div class="profile-card">
-   
-    <br>
-    <div class="username">4 Temperamentos</div>
-    <div class="content">
-      <h1>Qual é o seu temperamento?</h1>
-      <p>Identifique se você é colérico, sanguíneo, fleumático ou melancólico.</p>
-      <a href="temperamento.php" class="button">Fazer o Teste</a>
-    </div>
-  </div>
+
 
   <!-- Planos e Sonhos -->
   <div class="profile-card">
@@ -238,13 +228,15 @@ try {
   <div class="profile-card">
    
     <br>
-    <div class="username">Meu Diário</div>
+    <div class="username">Inteligencias Multiplas</div>
     <div class="content">
-      <h1>Como foi seu dia?</h1>
+      <h1>Qual minha inteligencia Dominante?</h1>
       <p>Registre seus pensamentos e sentimentos.</p>
-      <a href="diario.php" class="button">Escrever ou Ver Histórico</a>
+      <a href="multiplas_inteligencias.php" class="button">Fazer o Teste</a>
     </div>
   </div>
+
+  
 </div>
 <script>
 const botaoMenu = document.getElementById("botao-menu");

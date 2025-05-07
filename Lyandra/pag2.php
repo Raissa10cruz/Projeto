@@ -28,19 +28,20 @@ try {
     echo "Erro na conexão com o banco de dados: " . $e->getMessage();
     exit;
 }
-
-
 ?>
 
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Meus Projetos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P.D.V.</title>
   <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<style>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+
+
     .usuario-logado {
       position: absolute;
       top: 15px;
@@ -131,12 +132,7 @@ try {
       color: #8e44ad;
       margin-bottom: 10px;
     }
-    h2 {
-      font-family: 'Comic Neue', cursive;
-      font-size: 36px;
-      color: #8e44ad;
-      margin-bottom: 10px;
-    }
+
     p {
       font-size: 18px;
       line-height: 1.6;
@@ -163,14 +159,7 @@ try {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    >
-body {
-  background-color:rgb(255, 255, 255);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  margin: 0;
-  padding: 20px;
-}
-
+    
 .form-fofa {
   border-radius: 5%;
   background-color:rgb(255, 255, 255);
@@ -240,15 +229,17 @@ body {
 iframe {
   display: none;
 }
-</style>
-<header class="header">
+  </style>
+</head>
+<body>
+  <header class="header">
     <div class="logo-container">
       <div class="logo-flor">
         <img src="img/download.png">
       </div>
     </div>
 
-    <a href="painel.php" class="botao-voltar">← Voltar</a>
+    <a href="login.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -256,6 +247,7 @@ iframe {
       <span><?= $email ?></span>
     </a>
   </header>
+
   <section class="hamburguer">
     <div class="menu-hamburguer" id="botao-menu">
       <div class="linha"></div>
@@ -266,31 +258,150 @@ iframe {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pagina1.html">Página 1</a>
-        <a href="pagina2.html">Página 2</a>
-        <a href="pagina3.html">Página 3</a>
+        <a href="pag2.php">Quem sou eu?</a>
+        <a href="pag3.php">Como planejar o futuro</a>
+        <a href="pag4.php">Plano de ação</a>
       </div>
     </nav>
   </section>
 
   <br><br><br>
-  <div class="form-fofa">
-  <h2>Criar Nova Planilha</h2>
-  <!-- iframe oculto -->
 
-  <!-- Formulário para salvar planilha (permanece em projetos.php) -->
-  <form action="salvar_planilha.php" method="POST" target="invisivel">
-    <input type="text" name="titulo" placeholder="Título da planilha" required>
-    <textarea name="conteudo" rows="5" placeholder="Escreva algo fofo aqui..." required></textarea>
-    <button type="submit" class="icon-button">Salvar Planilha</button>
-  </form>
+  <section class="pag">
+    <main class="conteudo">
+      <div class="container">
+        <div class="Coracao">
+    <img src="img/download.png" alt="Coração fofo" class="header-img">
+  </div>
+    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
 
-  <!-- Botão para ver histórico -->
-  <form action="listar_planilhas.php" method="POST">
-    <button type="submit" class="history-button">Ver Histórico</button>
-  </form>
-</>
+    <h2>Planejamento de Futuro (Aprender a Fazer)</h2>
+    <div class="section">
+      <label>Minhas Aspirações</label>
+      <textarea rows="4" placeholder="Descreva suas aspirações futuras..."></textarea>
 
+      <label>Meu Sonho de Infância</label>
+      <textarea rows="4" placeholder="Descreva seus sonhos antigos..."></textarea>
+
+      <label>Escolha Profissional</label>
+      <input type="text" placeholder="Buscar profissão...">
+      <!-- Aqui poderia ser conectado a um banco de dados ou autocomplete -->
+      <small><a href="#">Ver detalhes da profissão</a></small>
+
+      <label>Meus Sonhos Hoje</label>
+      <div class="form-group">
+        <input type="text" placeholder="Sonho">
+        <input type="text" placeholder="O que já estou fazendo">
+        <input type="text" placeholder="O que ainda preciso fazer">
+      </div>
+
+      <label>Meus Principais Objetivos</label>
+      <div class="form-group">
+        <input type="text" placeholder="Objetivo em 1 ano">
+        <input type="text" placeholder="Objetivo em 3 anos">
+        <input type="text" placeholder="Objetivo em 7 anos">
+      </div>
+
+      <label>Como me imagino daqui a 10 anos</label>
+      <textarea rows="4" placeholder="Descreva livremente..."></textarea>
+    </div>
+
+    <h2>Plano de Ação (Tomando Decisões)</h2>
+    <div class="section">
+      <p><strong>Tomando Decisões e Estabelecendo Metas</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Área</th>
+            <th>Passo 1</th>
+            <th>Passo 2</th>
+            <th>Passo 3</th>
+            <th>Como irei fazer?</th>
+            <th>Prazo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Relacionamento Familiar</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Estudos</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Saúde</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Futura Profissão</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Religião (opcional)</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Amigos</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Namorado(a) (opcional)</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Comunidade</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+          <tr>
+            <td>Tempo Livre</td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+   
+  </div>
+    </main>
+  </section>
 
   <script>
 const botaoMenu = document.getElementById("botao-menu");
@@ -302,6 +413,5 @@ botaoMenu.addEventListener("click", () => {
 });
 
   </script>
-  
 </body>
 </html>

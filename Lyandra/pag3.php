@@ -158,6 +158,173 @@ try {
       transform: scale(1.05);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+
+    
+.form-fofa {
+  border-radius: 5%;
+  background-color:rgb(255, 255, 255);
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-fofa h2 {
+  font-size: 30px;
+  color: #a855f7;
+  margin-bottom: 10px;
+  border-bottom: 3px solid white;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.form-fofa input[type="text"],
+.form-fofa textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 15px 0;
+  border: 2px solid #ffb6c1;
+  border-radius: 20px;
+  font-size: 16px;
+  resize: vertical;
+  background-color: #fff;
+  transition: 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-fofa input[type="text"]:focus,
+.form-fofa textarea:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px #ff69b4;
+  outline: none;
+}
+
+.form-fofa button {
+  width: 100%;
+  background: linear-gradient(to right, #ff85a2, #ffc0cb);
+  color: white;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+  transition: 0.3s ease;
+}
+
+.form-fofa button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.03);
+}
+
+.icon-button::before {
+  content: "💾 ";
+}
+
+.history-button::before {
+  content: "📚 ";
+}
+
+iframe {
+  display: none;
+}
+
+.section-fofa {
+  background-color: #fff0f5;
+  border-radius: 25px;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section-fofa h3 {
+  color: #a855f7;
+  font-size: 24px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ffc0cb;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.section-fofa label {
+  font-weight: bold;
+  color: #a855f7;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.section-fofa input[type="text"],
+.section-fofa input[type="date"],
+.section-fofa select,
+.section-fofa textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 2px solid #ffb6c1;
+  border-radius: 15px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.section-fofa input:focus,
+.section-fofa textarea:focus,
+.section-fofa select:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px #ff69b4;
+  outline: none;
+}
+
+.section-fofa .dream-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #fffafd;
+  border: 1px dashed #ffb6c1;
+  border-radius: 20px;
+}
+
+.section-fofa table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.section-fofa table th,
+.section-fofa table td {
+  border: 1px solid #ffc0cb;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.section-fofa table th {
+  background-color: #ffe4e1;
+  color: #a855f7;
+}
+
+.section-fofa .submit-btn {
+  width: 100%;
+  background: linear-gradient(to right, #ff85a2, #ffc0cb);
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+  transition: 0.3s ease;
+}
+
+.section-fofa .submit-btn:hover {
+  background-color: #ff69b4;
+  transform: scale(1.03);
+}
+
   </style>
 </head>
 <body>
@@ -204,17 +371,40 @@ try {
   </div>
     <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
 
-    <p>Olá! Que alegria ter você por aqui! ✨</p>
+    <h2>Planejamento de Futuro (Aprender a Fazer)</h2>
+    <div class="section-fofa">
+  <label>Minhas Aspirações</label>
+  <textarea class="form-input" rows="4" placeholder="Descreva suas aspirações futuras..."></textarea>
+
+  <label>Meu Sonho de Infância</label>
+  <textarea class="form-input" rows="4" placeholder="Descreva seus sonhos antigos..."></textarea>
+
+  <label>Escolha Profissional</label>
+  <input class="form-input" type="text" placeholder="Buscar profissão...">
+  <small><a href="#" style="color:#a855f7;">Ver detalhes da profissão</a></small>
+
+  <label>Meus Sonhos Hoje</label>
+  <div class="dream-section">
+    <input class="form-input" type="text" placeholder="Sonho">
+    <input class="form-input" type="text" placeholder="O que já estou fazendo">
+    <input class="form-input" type="text" placeholder="O que ainda preciso fazer">
+  </div>
+
+  <label>Meus Principais Objetivos</label>
+  <div class="dream-section">
+    <input class="form-input" type="text" placeholder="Objetivo em 1 ano">
+    <input class="form-input" type="text" placeholder="Objetivo em 3 anos">
+    <input class="form-input" type="text" placeholder="Objetivo em 7 anos">
+  </div>
+
+  <label>Como me imagino daqui a 10 anos</label>
+  <textarea class="form-input" rows="4" placeholder="Descreva livremente..."></textarea>
+
+  <button class="submit-btn icon-button">Salvar Planejamento</button>
+</div>
+
+
     
-    <p>Você está prestes a embarcar numa jornada incrível chamada <strong>Projeto de Vida</strong> – o famoso <strong>PDV</strong> 🌈📘</p>
-
-    <p>Esse espaço é só seu! Aqui você pode refletir, sonhar alto, definir metas e descobrir o que te faz brilhar! ✨💭</p>
-
-    <p>O PDV é o seu mapa para o futuro. Ele ajuda você a planejar os passos, entender quem você é e o que quer conquistar no mundo! 🌍🚀</p>
-
-    <p>Lembre-se: cada objetivo é uma sementinha do seu sucesso! 🌱💡</p>
-
-    <a href="painel.php" class="start-button">Começar minha jornada ✨</a>
   </div>
     </main>
   </section>

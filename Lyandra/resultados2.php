@@ -30,15 +30,18 @@ try {
 }
 ?>
 
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P.D.V.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painéis de Autoconhecimento</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+</head>
+<body>
   <style>
 
 
@@ -158,17 +161,19 @@ try {
       transform: scale(1.05);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+
+    canvas { width: 500px; margin: 20px auto; }
   </style>
 </head>
 <body>
-  <header class="header">
+<header class="header">
     <div class="logo-container">
       <div class="logo-flor">
         <img src="img/download.png">
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="painel.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -187,39 +192,74 @@ try {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pag2.php">Quem sou eu?</a>
-        <a href="pag3.php">Como planejar o futuro</a>
-        <a href="pag4.php">Plano de ação</a>
+        <a href="pagina1.html">Página 1</a>
+        <a href="pagina2.html">Página 2</a>
+        <a href="pagina3.html">Página 3</a>
       </div>
     </nav>
   </section>
 
   <br><br><br>
 
-  <section class="pag">
-    <main class="conteudo">
-      <div class="container">
-        <div class="Coracao">
-    <img src="img/download.png" alt="Coração fofo" class="header-img">
-  </div>
-    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
+  <div class="container">
 
-    <p>Olá! Que alegria ter você por aqui! ✨</p>
-    
-    <p>Você está prestes a embarcar numa jornada incrível chamada <strong>Projeto de Vida</strong> – o famoso <strong>PDV</strong> 🌈📘</p>
+  <?php
 
-    <p>Esse espaço é só seu! Aqui você pode refletir, sonhar alto, definir metas e descobrir o que te faz brilhar! ✨💭</p>
+if (!isset($_SESSION['inteligencias'])) {
+  header("Location: index.php");
+  exit();
+}
 
-    <p>O PDV é o seu mapa para o futuro. Ele ajuda você a planejar os passos, entender quem você é e o que quer conquistar no mundo! 🌍🚀</p>
+$inteligencias = $_SESSION['inteligencias'];
+$principal = $_SESSION['principal'] ?? 'Indefinida';
 
-    <p>Lembre-se: cada objetivo é uma sementinha do seu sucesso! 🌱💡</p>
+// Calcular porcentagens
+$total = array_sum($inteligencias);
+$labels = [];
+$valores = [];
 
-    <a href="painel.php" class="start-button">Começar minha jornada ✨</a>
-  </div>
-    </main>
-  </section>
+foreach ($inteligencias as $tipo => $valor) {
+  $porcentagem = $total > 0 ? round(($valor / $total) * 100, 1) : 0;
+  $labels[] = "$tipo ({$porcentagem}%)";
+  $valores[] = $valor;
+}
+?>
+  <h1>Sua inteligência predominante é: </h1>
 
-  <script>
+  <canvas id="graficoInteligencias"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById('graficoInteligencias').getContext('2d');
+
+    const dados = {
+      labels: <?= json_encode($labels) ?>,
+      datasets: [{
+        label: 'Pontuação',
+        data: <?= json_encode($valores) ?>,
+        backgroundColor: [
+            '#50a1c7', '#50c77f', '#c7c750', '#c78d50',
+            '#c75050', '#c750a7', '#a750c7', '#8150c7'
+          ],
+          borderWidth: 1
+      }]
+    };
+
+    const config = {
+      type: 'doughnut',
+      data: dados,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'right' },
+          title: { display: true, text: 'Perfil de Inteligência (%)' }
+        }
+      }
+    };
+
+    new Chart(ctx, config);
+  });
+
 const botaoMenu = document.getElementById("botao-menu");
 const menu = document.getElementById("menu-navegacao");
 
@@ -229,5 +269,6 @@ botaoMenu.addEventListener("click", () => {
 });
 
   </script>
+  </div>
 </body>
 </html>
