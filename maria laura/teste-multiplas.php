@@ -1,4 +1,3 @@
-
 <?php
 $inteligencias = [
   'Linguística' => 0,
@@ -13,8 +12,10 @@ $inteligencias = [
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   foreach ($_POST as $key => $valor) {
-    if (isset($inteligencias[$valor])) {
-      $inteligencias[$valor]++;
+    // Espera-se valor no formato "5:Linguística"
+    list($peso, $tipo) = explode(':', $valor);
+    if (isset($inteligencias[$tipo])) {
+      $inteligencias[$tipo] += (int)$peso;
     }
   }
 
@@ -28,8 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Teste de Múltiplas Inteligências</title>
@@ -135,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       height: 14px;
     }
 
-    .opcoes input[type="radio"]:checked + label {
+    .opcoes input[type="radio"]:checked+label {
       background-color: #a0c39e;
       color: #2b2b2b;
     }
@@ -206,8 +211,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </style>
 </head>
 
-  </style>
+</style>
 </head>
+
 <body>
   <form method="POST">
     <div class="container">
@@ -215,48 +221,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <?php
       $perguntas = [
-        "Prefiro escrever histórias ou poemas." => "Linguística",
-        "Gosto de resolver quebra-cabeças lógicos." => "Lógico-Matemática",
-        "Tenho facilidade em desenhar ou imaginar objetos em 3D." => "Espacial",
-        "Sou sensível a sons e ritmos musicais." => "Musical",
-        "Aprendo melhor com atividades físicas." => "Corporal-Cinestésica",
-        "Entendo bem os sentimentos dos outros." => "Interpessoal",
-        "Tenho um forte conhecimento de mim mesmo." => "Intrapessoal",
-        "Gosto de estar em contato com a natureza." => "Naturalista",
-        "Consigo explicar bem minhas ideias." => "Linguística",
-        "Sou bom em matemática ou lógica." => "Lógico-Matemática",
-        "Consigo montar objetos com facilidade." => "Espacial",
-        "Toco ou gostaria de tocar um instrumento." => "Musical",
-        "Tenho boa coordenação motora." => "Corporal-Cinestésica",
-        "Consigo fazer amigos facilmente." => "Interpessoal",
-        "Refletir sobre meus sentimentos é natural para mim." => "Intrapessoal",
-        "Presto atenção em animais e plantas." => "Naturalista",
-        // Perguntas adicionais
-        "Tenho facilidade em aprender novas línguas." => "Linguística",
-        "Eu consigo ver padrões em números e sequências." => "Lógico-Matemática",
-        "Sinto prazer em organizar meu espaço." => "Espacial",
-        "Consigo reconhecer facilmente os diferentes tons musicais." => "Musical",
-        "Sinto que preciso me expressar fisicamente, seja dançando ou praticando esportes." => "Corporal-Cinestésica",
-        "Me sinto confortável em ambientes com outras pessoas e interajo facilmente." => "Interpessoal",
-        "Gosto de refletir sobre minhas emoções e pensamentos internos." => "Intrapessoal",
-        "Adoro observar animais em seu ambiente natural." => "Naturalista"
+        "Gosto de brincar com as palavras, escrever textos e explorar diferentes formas de linguagem." => "Linguística",
+        "Me sinto desafiado e animado ao resolver problemas complexos ou fazer cálculos mentais." => "Lógico-Matemática",
+        "Costumo visualizar mentalmente objetos, lugares ou caminhos com facilidade." => "Espacial",
+        "Sinto grande conexão com a música, prestando atenção aos detalhes sonoros como ritmo e melodia." => "Musical",
+        "Aprendo melhor quando uso meu corpo, como ao praticar esportes, atuar ou construir algo." => "Corporal-Cinestésica",
+        "Tenho facilidade em compreender e me comunicar com diferentes tipos de pessoas." => "Interpessoal",
+        "Costumo refletir sobre minhas emoções, motivações e objetivos pessoais com frequência." => "Intrapessoal",
+        "Sinto paz e curiosidade quando estou em ambientes naturais, como florestas, parques ou jardins." => "Naturalista",
+        "Gosto de ler, contar histórias ou me expressar por meio de textos escritos." => "Linguística",
+        "Geralmente encontro padrões e soluções em situações que envolvem lógica e estratégia." => "Lógico-Matemática",
+        "Consigo imaginar como objetos se encaixam ou funcionam mesmo sem vê-los fisicamente." => "Espacial",
+        "Identifico notas, instrumentos e padrões sonoros com facilidade ao ouvir música." => "Musical",
+        "Sinto necessidade de movimentar meu corpo regularmente, mesmo em atividades do dia a dia." => "Corporal-Cinestésica",
+        "Percebo com facilidade quando alguém está triste, desconfortável ou precisa de ajuda." => "Interpessoal",
+        "Tenho facilidade em perceber meus pontos fortes e fracos, e procuro crescer com isso." => "Intrapessoal",
+        "Tenho interesse em fenômenos naturais, como clima, ecossistemas ou comportamento animal." => "Naturalista",
+        "Gosto de aprender novos idiomas ou explorar expressões culturais através da linguagem." => "Linguística",
+        "Me sinto confortável resolvendo charadas, desafios matemáticos ou jogos de lógica." => "Lógico-Matemática",
+        "Organizar espaços ou criar mapas mentais me ajuda a entender melhor o mundo ao meu redor." => "Espacial",
+        "A música influencia fortemente meu humor e minha concentração." => "Musical",
+        "Sinto que meu corpo precisa participar do meu processo de aprendizado, seja escrevendo, caminhando ou praticando algo." => "Corporal-Cinestésica",
+        "Tenho facilidade para liderar grupos, ouvir opiniões e ajudar a resolver conflitos." => "Interpessoal",
+        "Geralmente entendo o que estou sentindo e consigo explicar isso de forma clara." => "Intrapessoal",
+        "Observar o comportamento dos animais ou o ciclo das plantas me desperta curiosidade e admiração." => "Naturalista"
       ];
+
 
       $i = 0;
       foreach ($perguntas as $texto => $tipo) {
         echo "<div class='pergunta-container'>
-                <strong>" . ($i + 1) . ". $texto</strong>
-                <div class='opcoes'>
-                  <input type='radio' name='q$i' id='q{$i}_1' value='$tipo' required>
-                  <label for='q{$i}_1'>Sim</label>
-
-                  <input type='radio' name='q$i' id='q{$i}_2' value=''>
-                  <label for='q{$i}_2'>Não</label>
-                </div>
-              </div>";
+             <strong>" . ($i + 1) . ". $texto</strong>
+             <div class='opcoes'>
+               <input type='radio' name='q$i' id='q{$i}_1' value='5:$tipo' required>
+               <label for='q{$i}_1'>Concordo totalmente</label>
+   
+               <input type='radio' name='q$i' id='q{$i}_2' value='4:$tipo'>
+               <label for='q{$i}_2'>Concordo</label>
+   
+               <input type='radio' name='q$i' id='q{$i}_3' value='3:$tipo'>
+               <label for='q{$i}_3'>Neutro</label>
+   
+               <input type='radio' name='q$i' id='q{$i}_4' value='2:$tipo'>
+               <label for='q{$i}_4'>Discordo</label>
+   
+               <input type='radio' name='q$i' id='q{$i}_5' value='1:$tipo'>
+               <label for='q{$i}_5'>Discordo totalmente</label>
+             </div>
+           </div>";
         $i++;
       }
       ?>
+
 
       <div class="botao-circular-container">
         <button type="submit" class="botao-circular">Ver Resultado</button>
@@ -265,4 +281,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </form>
   <a href="index.php" class="botao-voltar">← Voltar</a>
 </body>
+
 </html>
