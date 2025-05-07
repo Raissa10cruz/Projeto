@@ -1,162 +1,137 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['inteligencias'])) {
-  header("Location: index.php"); // Se o usuário tentar acessar sem realizar o teste
+if (!isset($_SESSION['inteligencias']) || !isset($_SESSION['principal'])) {
+  header("Location: index.php");
   exit();
 }
 
 $inteligencias = $_SESSION['inteligencias'];
 $principal = $_SESSION['principal'];
 
-$explicacoes = [
-  'Linguística' => "A inteligência linguística é a habilidade de usar palavras de forma eficaz, tanto ao falar quanto ao escrever. Pessoas com essa inteligência se destacam na leitura, escrita e oratória.",
-  'Lógico-Matemática' => "A inteligência lógico-matemática envolve a capacidade de analisar problemas de maneira lógica, realizar operações matemáticas e investigar questões científicas.",
-  'Espacial' => "A inteligência espacial refere-se à capacidade de pensar em três dimensões. As pessoas com essa inteligência são boas em visualizar, criar e manipular imagens mentais.",
-  'Musical' => "A inteligência musical está relacionada à habilidade de perceber, discriminar, transformar e expressar formas musicais. Pessoas com essa inteligência têm boa percepção de ritmo, melodia e timbre.",
-  'Corporal-Cinestésica' => "A inteligência corporal-cinestésica envolve a capacidade de usar o corpo para resolver problemas ou criar produtos. Atletas e dançarinos costumam possuir essa inteligência.",
-  'Interpessoal' => "A inteligência interpessoal diz respeito à habilidade de entender e interagir efetivamente com outras pessoas. Pessoas com essa inteligência têm empatia e sabem lidar bem com diferentes situações sociais.",
-  'Intrapessoal' => "A inteligência intrapessoal é a capacidade de compreender e gerenciar os próprios sentimentos, motivações e comportamentos. Indivíduos com essa inteligência possuem grande autoconhecimento.",
-  'Naturalista' => "A inteligência naturalista está relacionada à habilidade de reconhecer e categorizar elementos do mundo natural. Pessoas com essa inteligência possuem afinidade com a natureza e os seres vivos."
+$descricoes = [
+  'Linguística' => 'Você se destaca na comunicação verbal e escrita. Provavelmente gosta de ler, escrever, contar histórias e aprender idiomas.',
+  'Lógico-Matemática' => 'Você possui raciocínio lógico afiado, gosta de resolver problemas, analisar padrões e lidar com números.',
+  'Espacial' => 'Sua força está em visualizar formas e espaços. Tem facilidade para arte, design, mapas ou construções mentais.',
+  'Musical' => 'Você tem sensibilidade auditiva apurada e gosta de música, sons, ritmos e melodias.',
+  'Corporal-Cinestésica' => 'Você aprende melhor com o movimento e o uso do corpo. Possui habilidades físicas e coordenação.',
+  'Interpessoal' => 'Você compreende bem os outros e se comunica com facilidade. Trabalha bem em grupo e entende as emoções alheias.',
+  'Intrapessoal' => 'Você tem autoconhecimento, entende seus sentimentos, motivações e sabe trabalhar bem sozinho.',
+  'Naturalista' => 'Você se conecta com a natureza, gosta de observar animais, plantas e fenômenos naturais.'
 ];
 
+// Calcula o total de pontos (protege contra divisão por zero)
+$totalPontos = array_sum($inteligencias);
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Resultado do Teste de Múltiplas Inteligências</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <title>Resultado do Teste</title>
   <style>
-  body {
-      font-family: 'Raleway', sans-serif;
+    body {
+      font-family: 'Playfair Display', serif;
       margin: 0;
       padding: 0;
       background: url('img/imagem.jpg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       color: #fff;
     }
 
     .container {
+      max-width: 900px;
+      margin: 50px auto;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(14px);
+      padding: 30px;
       border-radius: 20px;
-      padding: 40px;
-      max-width: 900px;
-      width: 95%;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
 
-    h2 {
+    h1, h2 {
       text-align: center;
-      font-size: 30px;
       margin-bottom: 30px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
     }
 
-    .pergunta-container {
-      margin-bottom: 25px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
+    .inteligencia {
+      margin-bottom: 20px;
+    }
+
+    .barra {
+      height: 24px;
       border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin-top: 6px;
     }
 
-    .pergunta-container strong {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-
-    .opcoes label {
-      background-color: #dbffe3;
-      padding: 10px 20px;
-      border-radius: 30px;
-      margin-right: 10px;
-      cursor: pointer;
-      color: #2b2b2b;
-    }
-
-    .botao-circular-container {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .botao-circular {
-      padding: 14px 40px;
-      border-radius: 30px;
-      background: #c5dbc1;
-      color: #2b2b2b;
+    .preenchimento {
+      height: 100%;
+      background-color: #a0c39e;
+      border-radius: 12px;
+      text-align: right;
+      padding-right: 10px;
       font-weight: bold;
-      cursor: pointer;
-      border: 2px solid #4b7f53;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+      color: #2b2b2b;
     }
 
-    .resultado {
+    .descricao {
       margin-top: 30px;
-      text-align: center;
-      font-size: 22px;
-      background: rgba(255, 255, 255, 0.1);
       padding: 20px;
-      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      font-size: 16px;
+      line-height: 1.6;
     }
-
 
     .botao-voltar {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 22px;
-  font-size: 14px;
-  font-weight: bold;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  cursor: pointer;
-  font-style: italic;
-  text-decoration: none;
-  font-family: 'Raleway', sans-serif;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
 
-.botao-voltar:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #d9ffd9;
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.botao-voltar:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
+    .botao-voltar:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+      color: #d9ffd9;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Resultado do Teste</h2>
-    <div class="resultado">
-      <h3>Sua inteligência dominante é: <span style="color: #dfffe0;"><?= $principal ?></span></h3>
-      <p><?= $explicacoes[$principal] ?></p>
+    <h1>Resultado do Teste</h1>
+    <h2>Sua principal inteligência: <strong><?= htmlspecialchars($principal) ?></strong></h2>
 
-      <h4>Outras inteligências:</h4>
-      <ul>
-        <?php foreach ($inteligencias as $tipo => $pontuacao): ?>
-          <li><strong><?= $tipo ?>:</strong> <?= $pontuacao ?> pontos</li>
-        <?php endforeach; ?>
-      </ul>
+    <?php foreach ($inteligencias as $tipo => $valor): 
+      $percentual = ($totalPontos > 0) ? round(($valor / $totalPontos) * 100) : 0;
+    ?>
+      <div class="inteligencia">
+        <strong><?= htmlspecialchars($tipo) ?> - <?= $percentual ?>%</strong>
+        <div class="barra">
+          <div class="preenchimento" style="width: <?= $percentual ?>%;"><?= $percentual ?>%</div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+
+    <div class="descricao">
+      <strong><?= htmlspecialchars($principal) ?>:</strong>
+      <?= $descricoes[$principal] ?? 'Descrição não disponível.' ?>
     </div>
 
-    <div class="botao-circular-container">
-      <a href="index.php" class="botao-voltar">← Voltar ao teste</a>
+    <div style="text-align: center;">
+      <a href="index.php" class="botao-voltar">← Refazer Teste</a>
     </div>
   </div>
 </body>

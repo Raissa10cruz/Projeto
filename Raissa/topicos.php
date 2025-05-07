@@ -136,6 +136,11 @@ try {
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #ccc;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-img:hover {
+            transform: scale(1.05);
         }
 
         .profile-info {
@@ -250,14 +255,14 @@ try {
 
         <?php
         $avatarPadrao = './imgRaissa/User_Clipart_PNG_Images__User_Avatar_Login_Interface_Abstract_Purple_User_Icon__Avatar__User__Login_Avatar_PNG_Image_For_Free_Download-removebg-preview.png';
-        $caminhoImagem = isset($user['imagem_perfil']) && !empty($user['imagem_perfil']) 
-            ? './imgRaissa/' . htmlspecialchars($user['imagem_perfil']) 
+        $caminhoImagem = (!empty($user['imagem_perfil']) && file_exists('./imgRaissa/' . $user['imagem_perfil']))
+            ? './imgRaissa/' . htmlspecialchars($user['imagem_perfil'])
             : $avatarPadrao;
         ?>
 
-        <button onclick="location.href='editar_perfil.php'" class="btn-avatar">
-            <img src="<?= $caminhoImagem ?>" alt="Avatar" class="avatar-img">
-        </button>
+        <a href="editar_perfil.php" title="Editar Perfil">
+            <img src="<?= $caminhoImagem ?>" alt="Foto de Perfil" class="avatar-img">
+        </a>
 
         <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
         <button class="btn-logout" onclick="location.href='logout.php'">
