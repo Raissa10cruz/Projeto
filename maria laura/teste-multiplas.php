@@ -29,9 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -48,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       font-family: 'Playfair Display', serif;
       color: #333;
     }
+
 
     .container {
       display: flex;
