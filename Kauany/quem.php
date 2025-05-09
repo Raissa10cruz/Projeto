@@ -64,10 +64,14 @@
         }
 
         .container img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
+    width: 300px; /* Define a largura desejada */
+    border-radius: 200px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
         .texto {
             color: #333;
@@ -93,7 +97,7 @@
     </div>
 
     <div class="container">
-        <img src="eu.jpg" alt="Imagem representativa">
+        <img src="47.png" alt="Imagem representativa">
         <div class="texto">
             <p>Apresento Kauany Gabrielly: quase adulta, totalmente desenrolada (e com um estoque de livros românticos pra ninguém botar defeito).</p>
 
