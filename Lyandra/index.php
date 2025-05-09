@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="profile-pic-container">
     <div class="profile-pic">
       <div class="profile-pic-preview">
-        <img src="<?= !empty($_SESSION['user']['foto_perfil']) ? $_SESSION['user']['foto_perfil'] : 'perfil.png' ?>" alt="Foto de Perfil" id="profile-image">
+        <img src="<?= !empty($_SESSION['user']['foto_perfil']) ? $_SESSION['user']['foto_perfil'] : 'img/perfil.png' ?>" alt="Foto de Perfil" id="profile-image">
       </div>
       <input type="file" name="profile_pic" id="profile_pic" accept="image/*" onchange="openCropper(this.files[0])">
       <label for="profile_pic">

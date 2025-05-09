@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="container">
     <form method="post" enctype="multipart/form-data">
       <div class="profile-pic-container">
-        <div class="profile-pic" style="background-image: url('uploads/<?= htmlspecialchars($user['profile_pic'] ?? 'padrao.jpg') ?>');">
+        <div class="profile-pic" style="background-image: url('uploads/<?= htmlspecialchars($user['profile_pic'] ?? 'img/perfil.png') ?>');">
           <div class="profile-pic-preview">
             <i class="fas fa-camera"></i>
           </div>

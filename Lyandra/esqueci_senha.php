@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Esqueci a Senha</title>
-  <link rel="stylesheet" href="css/style1.css">
+  <link rel="stylesheet" href="css/styles1.css">
 </head>
 <body>
   <div class="container">
@@ -69,6 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </p>
       <?php endif; ?>
     </form>
+    <p style="color: white; text-align: center; margin-top: 20px;">
+      Já tem uma conta? <a href="login.php" style="color: #ffffff; text-decoration: underline;">Entre.</a>
+    </p>
+    <p style="color: white; text-align: center; margin-top: 20px;">
+      <a href="index.php" style="color: #ffffff; text-decoration: underline;">Cadastrar.</a>
+    </p>
   </div>
   <script>
 const botaoMenu = document.getElementById("botao-menu");

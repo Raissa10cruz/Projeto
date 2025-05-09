@@ -49,7 +49,7 @@ try {
     // Definindo variáveis de exibição
     $foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))
         ? 'uploads/' . $user['profile_pic']
-        : 'perfil.png';
+        : 'img/perfil.png';
 
     $email = htmlspecialchars($user['email']);
 } catch (PDOException $e) {

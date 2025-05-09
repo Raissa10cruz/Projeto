@@ -158,77 +158,51 @@ try {
       transform: scale(1.05);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+    }
 
-    
-.form-fofa {
-  border-radius: 5%;
-  background-color:rgb(255, 255, 255);
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
-}
+    .bloco {
+      background-color: #fef2f8;
+      border: 2px solid #fbcfe8;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(248, 187, 208, 0.3);
+    }
 
-.form-fofa h2 {
-  font-size: 30px;
-  color: #a855f7;
-  margin-bottom: 10px;
-  border-bottom: 3px solid white;
-  display: inline-block;
-  padding-bottom: 5px;
-}
+    .bloco h3 {
+      font-size: 20px;
+      color: #d946ef;
+      margin-bottom: 10px;
+    }
 
-.form-fofa input[type="text"],
-.form-fofa textarea {
-  width: 100%;
-  padding: 12px 15px;
-  margin: 15px 0;
-  border: 2px solid #ffb6c1;
-  border-radius: 20px;
-  font-size: 16px;
-  resize: vertical;
-  background-color: #fff;
-  transition: 0.3s ease;
-  box-sizing: border-box;
-}
+    .bloco p, .bloco ul {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.6;
+    }
 
-.form-fofa input[type="text"]:focus,
-.form-fofa textarea:focus {
-  border-color: #ff69b4;
-  box-shadow: 0 0 5px #ff69b4;
-  outline: none;
-}
+    .bloco ul {
+      padding-left: 20px;
+    }
 
-.form-fofa button {
-  width: 100%;
-  background: linear-gradient(to right, #ff85a2, #ffc0cb);
-  color: white;
-  padding: 12px;
-  margin-top: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
-  transition: 0.3s ease;
-}
+    .tag-list span {
+      background-color: #f3e8ff;
+      padding: 5px 12px;
+      margin: 5px;
+      display: inline-block;
+      border-radius: 20px;
+      color: #7c3aed;
+      font-weight: 500;
+    }
 
-.form-fofa button:hover {
-  background-color: #ff69b4;
-  transform: scale(1.03);
-}
-
-.icon-button::before {
-  content: "💾 ";
-}
-
-.history-button::before {
-  content: "📚 ";
-}
-
-iframe {
-  display: none;
-}
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -239,7 +213,7 @@ iframe {
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="pag1.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -258,9 +232,9 @@ iframe {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pag2.php">Quem sou eu?</a>
-        <a href="pag3.php">Como planejar o futuro</a>
+      <a href="pag3.php">Projeto de Vida</a>
         <a href="pag4.php">Plano de ação</a>
+        <a href="pag2.php">Quem sou eu?</a>
       </div>
     </nav>
   </section>
@@ -273,133 +247,110 @@ iframe {
         <div class="Coracao">
     <img src="img/download.png" alt="Coração fofo" class="header-img">
   </div>
-    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
+    <h2>🌸 Quem Sou Eu? – Por Lyandra Camille</h2>
 
-    <h2>Planejamento de Futuro (Aprender a Fazer)</h2>
-    <div class="section">
-      <label>Minhas Aspirações</label>
-      <textarea rows="4" placeholder="Descreva suas aspirações futuras..."></textarea>
+<div class="grid">
+  <div class="bloco">
+    <h3>🙋‍♀️ Dados Pessoais</h3>
+    <p><strong>Nome:</strong> Lyandra Camille da Silva Cruz<br>
+    <strong>Idade:</strong> 17 anos<br>
+    <strong>Local:</strong> Paraguaçu Paulista – SP<br>
+    <strong>Escolaridade:</strong> 3º ano do Ensino Médio + Curso Técnico em Desenvolvimento de Sistemas</p>
+  </div>
 
-      <label>Meu Sonho de Infância</label>
-      <textarea rows="4" placeholder="Descreva seus sonhos antigos..."></textarea>
+  <div class="bloco">
+    <h3>📝 Fale Sobre Você</h3>
+    <p>Sou uma jovem curiosa, criativa e cheia de vontade de entender o mundo e as pessoas. Tenho muitos interesses e estou em uma fase de descobertas, mas com os pés firmes nos meus sonhos. Acredito no poder de crescer, mudar e me reinventar conforme aprendo mais sobre mim.</p>
+  </div>
 
-      <label>Escolha Profissional</label>
-      <input type="text" placeholder="Buscar profissão...">
-      <!-- Aqui poderia ser conectado a um banco de dados ou autocomplete -->
-      <small><a href="#">Ver detalhes da profissão</a></small>
+  <div class="bloco">
+    <h3>🎠 Minhas Lembranças</h3>
+    <p>Lembro das brincadeiras de infância, dos momentos sonhando acordada com o futuro. Desde pequena, tive fascínio por entender o comportamento das pessoas, criar coisas novas, e imaginar mundos diferentes.</p>
+  </div>
 
-      <label>Meus Sonhos Hoje</label>
-      <div class="form-group">
-        <input type="text" placeholder="Sonho">
-        <input type="text" placeholder="O que já estou fazendo">
-        <input type="text" placeholder="O que ainda preciso fazer">
-      </div>
+  <div class="bloco">
+    <h3>💪 Pontos Fortes</h3>
+    <ul>
+      <li>Empatia</li>
+      <li>Facilidade com tecnologia</li>
+      <li>Curiosidade intelectual</li>
+      <li>Criatividade</li>
+    </ul>
+  </div>
 
-      <label>Meus Principais Objetivos</label>
-      <div class="form-group">
-        <input type="text" placeholder="Objetivo em 1 ano">
-        <input type="text" placeholder="Objetivo em 3 anos">
-        <input type="text" placeholder="Objetivo em 7 anos">
-      </div>
+  <div class="bloco">
+    <h3>🔧 Pontos a Melhorar</h3>
+    <ul>
+      <li>Insegurança com decisões difíceis</li>
+      <li>Procrastinação em tarefas rotineiras</li>
+      <li>Medo de falhar em escolhas importantes</li>
+    </ul>
+  </div>
 
-      <label>Como me imagino daqui a 10 anos</label>
-      <textarea rows="4" placeholder="Descreva livremente..."></textarea>
-    </div>
-
-    <h2>Plano de Ação (Tomando Decisões)</h2>
-    <div class="section">
-      <p><strong>Tomando Decisões e Estabelecendo Metas</strong></p>
-      <table>
-        <thead>
-          <tr>
-            <th>Área</th>
-            <th>Passo 1</th>
-            <th>Passo 2</th>
-            <th>Passo 3</th>
-            <th>Como irei fazer?</th>
-            <th>Prazo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Relacionamento Familiar</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Estudos</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Saúde</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Futura Profissão</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Religião (opcional)</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Amigos</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Namorado(a) (opcional)</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Comunidade</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-          <tr>
-            <td>Tempo Livre</td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="text"></td>
-            <td><input type="date"></td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="bloco">
+    <h3>💖 Meus Valores</h3>
+    <div class="tag-list">
+      <span>Autenticidade</span>
+      <span>Respeito</span>
+      <span>Liberdade</span>
+      <span>Aprendizado</span>
+      <span>Empatia</span>
+      <span>Justiça</span>
     </div>
   </div>
 
-   
+  <div class="bloco">
+    <h3>🎓 Minhas Principais Aptidões</h3>
+    <ul>
+      <li>Observação de comportamentos</li>
+      <li>Expressão criativa (design e arte)</li>
+      <li>Interesse por ciência, história e línguas</li>
+    </ul>
   </div>
+
+  <div class="bloco">
+    <h3>👥 Meus Relacionamentos</h3>
+    <p><strong>Família:</strong> Base de apoio e inspiração emocional.<br>
+    <strong>Amigos:</strong> Trocas sinceras, acolhimento e diversão.<br>
+    <strong>Escola:</strong> Espaço de crescimento e desafios.<br>
+    <strong>Sociedade:</strong> Um campo vasto de aprendizado e impacto futuro.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>⏳ Meu Dia a Dia</h3>
+    <p><strong>Gosto de:</strong> Ler, ouvir música, aprender coisas novas, explorar design e comportamento humano.<br>
+    <strong>Não gosto de:</strong> Superficialidade, rotina sem propósito, desorganização.<br>
+    <strong>Rotina:</strong> Estudo no ensino médio e curso técnico, momentos de lazer com criatividade e reflexão.<br>
+    <strong>Lazer:</strong> Criar, explorar, imaginar, assistir conteúdos sobre ciência e cultura.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>🏫 Minha Vida Escolar</h3>
+    <p>Durante os anos escolares, desenvolvi minha consciência sobre as escolhas futuras. O curso técnico em Desenvolvimento de Sistemas trouxe habilidades novas e abriu portas, mesmo que meu sonho principal esteja na Psicologia. A escola é um espaço onde posso experimentar, errar e crescer.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>🔍 Minha Visão Sobre Mim</h3>
+    <ul>
+      <li><strong>Física:</strong> Cuido do meu corpo com carinho e atenção.</li>
+      <li><strong>Intelectual:</strong> Tenho sede de aprender e descobrir.</li>
+      <li><strong>Emocional:</strong> Sou sensível, intensa e em constante evolução emocional.</li>
+    </ul>
+  </div>
+
+  <div class="bloco">
+    <h3>👁 A Visão das Pessoas Sobre Mim</h3>
+    <p><strong>Amigos:</strong> Criativa, confiável, engraçada.<br>
+    <strong>Família:</strong> Carinhosa, sonhadora, inteligente.<br>
+    <strong>Professores:</strong> Interessada, dedicada, cheia de potencial.</p>
+  </div>
+</div>
+  <div class="bloco">
+    <h3>🌟 Autovalorização</h3>
+    <p>Reconhecer minhas conquistas, mesmo pequenas, me ajuda a construir autoestima. Saber que estou no caminho certo, mesmo com dúvidas, é parte da jornada.</p>
+  </div>
+</div>
+
     </main>
   </section>
 

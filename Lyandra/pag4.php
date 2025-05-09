@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION["user"])) {
-    header("Location: login.php");
-    exit;
+  header("Location: login.php");
+  exit;
 }
 
 include 'conexao.php'; // Conexão com o banco
@@ -12,36 +12,36 @@ $userSessao = $_SESSION["user"];
 $emailSessao = $userSessao["email"] ?? '';
 
 try {
-    // Buscando dados atualizados do usuário no banco (tabela correta: users)
-    $stmt = $conn->prepare("SELECT email, profile_pic FROM users WHERE email = :email");
-    $stmt->bindParam(':email', $emailSessao);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  // Buscando dados atualizados do usuário no banco (tabela correta: users)
+  $stmt = $conn->prepare("SELECT email, profile_pic FROM users WHERE email = :email");
+  $stmt->bindParam(':email', $emailSessao);
+  $stmt->execute();
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Definindo variáveis de exibição
-    $foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))
-        ? 'uploads/' . $user['profile_pic']
-        : 'perfil.png';
+  // Definindo variáveis de exibição
+  $foto = (!empty($user['profile_pic']) && file_exists('uploads/' . $user['profile_pic']))
+    ? 'uploads/' . $user['profile_pic']
+    : 'perfil.png';
 
-    $email = htmlspecialchars($user['email']);
+  $email = htmlspecialchars($user['email']);
 } catch (PDOException $e) {
-    echo "Erro na conexão com o banco de dados: " . $e->getMessage();
-    exit;
+  echo "Erro na conexão com o banco de dados: " . $e->getMessage();
+  exit;
 }
 ?>
 
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>P.D.V.</title>
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap"
+    rel="stylesheet">
   <style>
-
-
     .usuario-logado {
       position: absolute;
       top: 15px;
@@ -101,8 +101,15 @@ try {
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .emoji-bounce {
@@ -111,8 +118,15 @@ try {
     }
 
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     .header-img {
@@ -122,8 +136,15 @@ try {
     }
 
     @keyframes zoomIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     h1 {
@@ -131,6 +152,7 @@ try {
       font-size: 36px;
       color: #8e44ad;
       margin-bottom: 10px;
+      text-align: center;
     }
 
     p {
@@ -160,242 +182,170 @@ try {
     }
 
     .section-fofa {
-  background-color: #fff0f5;
-  border-radius: 25px;
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
-  font-family: 'Segoe UI', sans-serif;
-}
+      background-color: #fff0f5;
+      border-radius: 25px;
+      max-width: 800px;
+      padding: 30px;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-.section-fofa h3 {
-  color: #a855f7;
-  font-size: 24px;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #ffc0cb;
-  display: inline-block;
-  padding-bottom: 5px;
-}
+    .section-fofa h3 {
+      color: #a855f7;
+      font-size: 24px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #ffc0cb;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
 
-.section-fofa label {
-  font-weight: bold;
-  color: #a855f7;
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
-}
+    .section-fofa label {
+      font-weight: bold;
+      color: #a855f7;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
 
-.section-fofa input[type="text"],
-.section-fofa input[type="date"],
-.section-fofa select,
-.section-fofa textarea {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  border: 2px solid #ffb6c1;
-  border-radius: 15px;
-  font-size: 16px;
-  background-color: #fff;
-  transition: 0.3s;
-  box-sizing: border-box;
-}
+    .section-fofa input[type="text"],
+    .section-fofa input[type="date"],
+    .section-fofa select,
+    .section-fofa textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 2px solid #ffb6c1;
+      border-radius: 15px;
+      font-size: 16px;
+      background-color: #fff;
+      transition: 0.3s;
+      box-sizing: border-box;
+    }
 
-.section-fofa input:focus,
-.section-fofa textarea:focus,
-.section-fofa select:focus {
-  border-color: #ff69b4;
-  box-shadow: 0 0 5px #ff69b4;
-  outline: none;
-}
+    .section-fofa input:focus,
+    .section-fofa textarea:focus,
+    .section-fofa select:focus {
+      border-color: #ff69b4;
+      box-shadow: 0 0 5px #ff69b4;
+      outline: none;
+    }
 
-.section-fofa .dream-section {
-  margin-bottom: 30px;
-  padding: 20px;
-  background-color: #fffafd;
-  border: 1px dashed #ffb6c1;
-  border-radius: 20px;
-}
+    .section-fofa .dream-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #fffafd;
+      border: 1px dashed #ffb6c1;
+      border-radius: 20px;
+    }
 
-.section-fofa table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
+    .section-fofa table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
-.section-fofa table th,
-.section-fofa table td {
-  border: 1px solid #ffc0cb;
-  padding: 10px;
-  text-align: left;
-  font-size: 14px;
-}
+    .section-fofa table th,
+    .section-fofa table td {
+      border: 1px solid #ffc0cb;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
 
-.section-fofa table th {
-  background-color: #ffe4e1;
-  color: #a855f7;
-}
+    .section-fofa table th {
+      background-color: #ffe4e1;
+      color: #a855f7;
+    }
 
-.section-fofa .submit-btn {
-  width: 100%;
-  background: linear-gradient(to right, #ff85a2, #ffc0cb);
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
-  transition: 0.3s ease;
-}
+    .section-fofa .submit-btn {
+      width: 100%;
+      background: linear-gradient(to right, #ff85a2, #ffc0cb);
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+      transition: 0.3s ease;
+    }
 
-.section-fofa .submit-btn:hover {
-  background-color: #ff69b4;
-  transform: scale(1.03);
-}
+    .section-fofa .submit-btn:hover {
+      background-color: #ff69b4;
+      transform: scale(1.03);
+    }
 
-    
-.form-fofa {
-  border-radius: 5%;
-  background-color:rgb(255, 255, 255);
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
-}
 
-.form-fofa h2 {
-  font-size: 30px;
-  color: #a855f7;
-  margin-bottom: 10px;
-  border-bottom: 3px solid white;
-  display: inline-block;
-  padding-bottom: 5px;
-}
 
-.form-fofa input[type="text"],
-.form-fofa textarea {
-  width: 100%;
-  padding: 12px 15px;
-  margin: 15px 0;
-  border: 2px solid #ffb6c1;
-  border-radius: 20px;
-  font-size: 16px;
-  resize: vertical;
-  background-color: #fff;
-  transition: 0.3s ease;
-  box-sizing: border-box;
-}
 
-.form-fofa input[type="text"]:focus,
-.form-fofa textarea:focus {
-  border-color: #ff69b4;
-  box-shadow: 0 0 5px #ff69b4;
-  outline: none;
-}
+    .section-fofa {
+      max-width: 1000px;
+      padding: 30px;
+      text-align: left;
+    }
 
-.form-fofa button {
-  width: 100%;
-  background: linear-gradient(to right, #ff85a2, #ffc0cb);
-  color: white;
-  padding: 12px;
-  margin-top: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
-  transition: 0.3s ease;
-}
+    .section-title {
+      text-align: center;
+      font-size: 30px;
+      color: #a855f7;
+      margin-bottom: 20px;
+      border-bottom: 3px solid white;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
 
-.form-fofa button:hover {
-  background-color: #ff69b4;
-  transform: scale(1.03);
-}
-
-.icon-button::before {
-  content: "💾 ";
-}
-
-.history-button::before {
-  content: "📚 ";
-}
-
-iframe {
-  display: none;
-}
-
-.section-fofa {
-  border-radius: 5%;
-  background-color: #ffffff;
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
-  text-align: left;
-  box-shadow: 0 0 10px rgba(255, 182, 193, 0.3);
-}
-
-.section-title {
-  text-align: center;
-  font-size: 30px;
-  color: #a855f7;
-  margin-bottom: 20px;
-  border-bottom: 3px solid white;
-  display: inline-block;
-  padding-bottom: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-    font-size: 1.1em;
-}
-
-th {
-    background-color: #D25050;
-    color: white;
-    font-weight: bold;
-}
-
-td {
-    background-color: #fff;
-    color: #333;
-}
-
-/* Estilos para as linhas alternadas */
-tbody tr:nth-child(even) {
-    background-color: #f4f4f4;
-}
-
-/* Hover para as linhas */
-tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
     table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+      font-size: 1.1em;
+    }
+
+    th {
+      background-color: #D25050;
+      color: white;
+      font-weight: bold;
+    }
+
+    td {
+      background-color: #fff;
+      color: #333;
+    }
+
+    /* Estilos para as linhas alternadas */
+    tbody tr:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+
+    /* Hover para as linhas */
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      table {
         font-size: 0.9em;
-    }
+      }
 
-    th, td {
+      th,
+      td {
         padding: 10px;
-    }
+      }
 
-    h1 {
+      h1 {
         font-size: 2em;
+      }
     }
-}
 
-.start-button {
+    .start-button {
       background: linear-gradient(90deg, #ff9ff3, #c56cf0);
       color: white;
       border: none;
@@ -413,8 +363,46 @@ tbody tr:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
+
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      color: #a855f7;
+      margin-bottom: 25px;
+      border-bottom: 3px solid #ffb6c1;
+      display: inline-block;
+      padding-bottom: 8px;
+    }
+
+    .fofa-bloco {
+      margin-bottom: 30px;
+    }
+
+    .fofa-bloco h3 {
+      font-size: 22px;
+      color: #d946ef;
+      margin-bottom: 10px;
+    }
+
+    .fofa-bloco p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .fofa-bloco ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+    .fofa-bloco ul li {
+      margin-bottom: 8px;
+      color: #555;
+    }
   </style>
 </head>
+
 <body>
   <header class="header">
     <div class="logo-container">
@@ -423,7 +411,7 @@ tbody tr:hover {
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="pag1.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -442,9 +430,9 @@ tbody tr:hover {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pag2.php">Quem sou eu?</a>
-        <a href="pag3.php">Como planejar o futuro</a>
+      <a href="pag3.php">Projeto de Vida</a>
         <a href="pag4.php">Plano de ação</a>
+        <a href="pag2.php">Quem sou eu?</a>
       </div>
     </nav>
   </section>
@@ -455,79 +443,144 @@ tbody tr:hover {
     <main class="conteudo">
       <div class="container">
         <div class="Coracao">
-    <img src="img/download.png" alt="Coração fofo" class="header-img">
-  </div>
-  <div class="form-fofa">
-        <h2>Planeje Seu Futuro</h2>
-        <form action="#" method="POST">
-            <label for="relacionamento_familiar">Relacionamento Familiar</label>
-            <input type="text" id="relacionamento_familiar" name="relacionamento_familiar" required>
+          <img src="img/download.png" alt="Coração fofo" class="header-img">
+        </div>
+        <div class="section-fofa">
+          <h1>Planeje Seu Futuro</h1>
+          <h2 class="section-title">Como Planejar Seu Futuro</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Área da Vida</th>
+                <th>Dica</th>
+                <th>Como Colocar em Prática</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Estudos</td>
+                <td>Organize uma rotina de estudos com horários definidos.</td>
+                <td>Use agenda ou aplicativos para separar horários de leitura, revisão e descanso.</td>
+              </tr>
+              <tr>
+                <td>Profissão</td>
+                <td>Descubra suas habilidades e interesses.</td>
+                <td>Pesquise profissões, faça testes vocacionais e converse com profissionais da área.</td>
+              </tr>
+              <tr>
+                <td>Saúde</td>
+                <td>Criar hábitos saudáveis.</td>
+                <td>Pratique exercícios, alimente-se bem e faça exames de rotina.</td>
+              </tr>
+              <tr>
+                <td>Família</td>
+                <td>Fortaleça o relacionamento com seus familiares.</td>
+                <td>Converse com frequência, participe de momentos juntos e demonstre carinho.</td>
+              </tr>
+              <tr>
+                <td>Amizades</td>
+                <td>Mantenha laços com pessoas positivas.</td>
+                <td>Envie mensagens, marque encontros e seja presente nas conquistas e dificuldades.</td>
+              </tr>
+              <tr>
+                <td>Finanças</td>
+                <td>Aprenda a economizar e planejar gastos.</td>
+                <td>Anote seus gastos, evite compras por impulso e crie metas de economia.</td>
+              </tr>
+              <tr>
+                <td>Tempo Livre</td>
+                <td>Tenha momentos de lazer e descanso.</td>
+                <td>Desconecte-se um pouco do digital e faça coisas que te dão prazer: ler, desenhar, caminhar.</td>
+              </tr>
+              <tr>
+                <td>Autoconhecimento</td>
+                <td>Reflita sobre suas emoções, decisões e sonhos.</td>
+                <td>Escreva em um diário, faça terapia ou converse com pessoas de confiança.</td>
+              </tr>
+            </tbody>
+          </table>
 
-            <label for="estudos">Estudos</label>
-            <input type="text" id="estudos" name="estudos" required>
+          <h2 class="section-title">Planejamento de Futuro (Aprender a Fazer)</h2>
 
-            <label for="saude">Saúde</label>
-            <input type="text" id="saude" name="saude" required>
+          <div class="fofa-bloco">
+            <h3>🌟 Minhas Aspirações</h3>
+            <p>Reflita sobre o que você deseja para o seu futuro. Quais valores são importantes para você? Que tipo de
+              vida quer construir? Aspirações são mais do que sonhos — são direções. Pense em:</p>
+            <ul>
+              <li>Onde quero morar?</li>
+              <li>Que impacto quero causar nas pessoas ao meu redor?</li>
+              <li>Como quero me sentir com meu trabalho e minha rotina?</li>
+            </ul>
+          </div>
 
-            <label for="futura_profissao">Futura Profissão</label>
-            <input type="text" id="futura_profissao" name="futura_profissao" required>
+          <div class="fofa-bloco">
+            <h3>🧸 Meu Sonho de Infância</h3>
+            <p>Olhar para o passado nos ajuda a entender quem somos. Qual era seu maior sonho quando criança? O que esse
+              sonho revela sobre seus desejos, talentos ou paixões? Nem sempre seguimos os mesmos caminhos, mas entender
+              isso ajuda a conectar o presente com sua essência.</p>
+          </div>
 
-            <label for="religiao">Religião (opcional)</label>
-            <input type="text" id="religiao" name="religiao">
+          <div class="fofa-bloco">
+            <h3>💼 Escolha Profissional</h3>
+            <p>A escolha profissional deve unir: aquilo que você ama, aquilo que sabe fazer, aquilo que o mundo precisa
+              e pelo que você pode ser pago. Explore profissões, investigue possibilidades e descubra:</p>
+            <ul>
+              <li>O que essa profissão faz no dia a dia?</li>
+              <li>Quais áreas de atuação ela oferece?</li>
+              <li>Como estão os salários e o mercado?</li>
+              <li>Você pode usar sites como o <strong>CBO (Classificação Brasileira de Ocupações)</strong> ou conversar
+                com profissionais da área.</li>
+            </ul>
+          </div>
 
-            <label for="amigos">Amigos</label>
-            <input type="text" id="amigos" name="amigos" required>
+          <div class="fofa-bloco">
+            <h3>🌈 Meus Sonhos Hoje</h3>
+            <p>Liste os sonhos que você tem agora. Eles podem ser simples ou grandiosos. Para cada um, pense:</p>
+            <ul>
+              <li><strong>O que já estou fazendo</strong> para alcançar esse sonho?</li>
+              <li><strong>O que ainda preciso fazer</strong> para chegar lá?</li>
+            </ul>
+            <p>Essa reflexão te ajuda a perceber que muitos passos já estão sendo dados, mesmo sem você perceber.</p>
+          </div>
 
-            <label for="namorado">Namorado(a) (opcional)</label>
-            <input type="text" id="namorado" name="namorado">
+          <div class="fofa-bloco">
+            <h3>🎯 Meus Principais Objetivos</h3>
+            <p>Defina metas claras para três momentos da sua vida:</p>
+            <ul>
+              <li><strong>Curto prazo (1 ano):</strong> O que posso conquistar até o ano que vem?</li>
+              <li><strong>Médio prazo (3 anos):</strong> Onde quero estar em alguns anos?</li>
+              <li><strong>Longo prazo (7 anos):</strong> Qual é o grande plano?</li>
+            </ul>
+            <p>Use essa estrutura para transformar sonhos em ações reais, passo a passo.</p>
+          </div>
 
-            <label for="comunidade">Comunidade</label>
-            <input type="text" id="comunidade" name="comunidade" required>
+          <div class="fofa-bloco">
+            <h3>🔮 Como Me Vejo em 10 Anos</h3>
+            <p>Feche os olhos por um momento e imagine: como você gostaria que sua vida estivesse daqui a 10 anos?</p>
+            <ul>
+              <li>Onde você está morando?</li>
+              <li>Com quem você convive?</li>
+              <li>O que você conquistou?</li>
+              <li>Como é sua rotina e como você se sente?</li>
+            </ul>
+            <p>Escrever sobre isso é uma forma poderosa de traçar um destino, mesmo que ele mude com o tempo.</p>
+          </div>
+        </div>
 
-            <label for="tempo_livre">Tempo Livre</label>
-            <input type="text" id="tempo_livre" name="tempo_livre" required>
 
-            <button type="submit" class="icon-button">Salvar</button>
-        </form>
-    </div>
-
-    <div class="section-fofa">
-        <h2 class="section-title">Dicas para Planejamento</h2>
-        <p>Invista tempo em cada área mencionada, tenha metas claras e organize suas ações para alcançar seus objetivos!</p>
-    </div>
+      </div>
     </main>
   </section>
   <script>
-document.getElementById('plano-form').addEventListener('submit', function(e) {
-  e.preventDefault(); // impede o redirecionamento
+    const botaoMenu = document.getElementById("botao-menu");
+    const menu = document.getElementById("menu-navegacao");
 
-  const formData = new FormData(this);
-
-  fetch('salvar_plano.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.text())
-  .then(data => {
-    if (data.trim() === 'OK') {
-      document.getElementById('mensagem-sucesso').style.display = 'block';
-    } else {
-      alert('Erro ao salvar: ' + data);
-    }
-  })
-  .catch(error => {
-    alert('Erro na requisição: ' + error);
-  });
-});
-
-const botaoMenu = document.getElementById("botao-menu");
-const menu = document.getElementById("menu-navegacao");
-
-botaoMenu.addEventListener("click", () => {
-    botaoMenu.classList.toggle("active");
-    menu.classList.toggle("active");
-});
+    botaoMenu.addEventListener("click", () => {
+      botaoMenu.classList.toggle("active");
+      menu.classList.toggle("active");
+    });
 
   </script>
 </body>
+
 </html>

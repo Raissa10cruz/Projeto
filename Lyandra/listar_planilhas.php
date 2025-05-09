@@ -240,9 +240,9 @@ try {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pagina1.html">Página 1</a>
-        <a href="pagina2.html">Página 2</a>
-        <a href="pagina3.html">Página 3</a>
+      <a href="pag3.php">Projeto de Vida</a>
+        <a href="pag4.php">Plano de ação</a>
+        <a href="pag2.php">Quem sou eu?</a>
       </div>
     </nav>
   </section>

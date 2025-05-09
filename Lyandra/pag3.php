@@ -159,171 +159,35 @@ try {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
-    
-.form-fofa {
-  border-radius: 5%;
-  background-color:rgb(255, 255, 255);
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
-}
+    .blocos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
 
-.form-fofa h2 {
-  font-size: 30px;
-  color: #a855f7;
-  margin-bottom: 10px;
-  border-bottom: 3px solid white;
-  display: inline-block;
-  padding-bottom: 5px;
-}
+    .bloco {
+      background-color: #fff;
+      padding: 20px;
+      border-left: 6px solid  #ff9ff3;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      flex: 1 1 calc(48% - 30px);
+      min-width: 280px;
+    }
 
-.form-fofa input[type="text"],
-.form-fofa textarea {
-  width: 100%;
-  padding: 12px 15px;
-  margin: 15px 0;
-  border: 2px solid #ffb6c1;
-  border-radius: 20px;
-  font-size: 16px;
-  resize: vertical;
-  background-color: #fff;
-  transition: 0.3s ease;
-  box-sizing: border-box;
-}
+    ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
 
-.form-fofa input[type="text"]:focus,
-.form-fofa textarea:focus {
-  border-color: #ff69b4;
-  box-shadow: 0 0 5px #ff69b4;
-  outline: none;
-}
+    ul li {
+      margin-bottom: 8px;
+    }
 
-.form-fofa button {
-  width: 100%;
-  background: linear-gradient(to right, #ff85a2, #ffc0cb);
-  color: white;
-  padding: 12px;
-  margin-top: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
-  transition: 0.3s ease;
-}
-
-.form-fofa button:hover {
-  background-color: #ff69b4;
-  transform: scale(1.03);
-}
-
-.icon-button::before {
-  content: "💾 ";
-}
-
-.history-button::before {
-  content: "📚 ";
-}
-
-iframe {
-  display: none;
-}
-
-.section-fofa {
-  background-color: #fff0f5;
-  border-radius: 25px;
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.3);
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.section-fofa h3 {
-  color: #a855f7;
-  font-size: 24px;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #ffc0cb;
-  display: inline-block;
-  padding-bottom: 5px;
-}
-
-.section-fofa label {
-  font-weight: bold;
-  color: #a855f7;
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
-}
-
-.section-fofa input[type="text"],
-.section-fofa input[type="date"],
-.section-fofa select,
-.section-fofa textarea {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  border: 2px solid #ffb6c1;
-  border-radius: 15px;
-  font-size: 16px;
-  background-color: #fff;
-  transition: 0.3s;
-  box-sizing: border-box;
-}
-
-.section-fofa input:focus,
-.section-fofa textarea:focus,
-.section-fofa select:focus {
-  border-color: #ff69b4;
-  box-shadow: 0 0 5px #ff69b4;
-  outline: none;
-}
-
-.section-fofa .dream-section {
-  margin-bottom: 30px;
-  padding: 20px;
-  background-color: #fffafd;
-  border: 1px dashed #ffb6c1;
-  border-radius: 20px;
-}
-
-.section-fofa table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.section-fofa table th,
-.section-fofa table td {
-  border: 1px solid #ffc0cb;
-  padding: 10px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.section-fofa table th {
-  background-color: #ffe4e1;
-  color: #a855f7;
-}
-
-.section-fofa .submit-btn {
-  width: 100%;
-  background: linear-gradient(to right, #ff85a2, #ffc0cb);
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
-  transition: 0.3s ease;
-}
-
-.section-fofa .submit-btn:hover {
-  background-color: #ff69b4;
-  transform: scale(1.03);
-}
+    @media (max-width: 768px) {
+      .bloco {
+        flex: 1 1 100%;
+      }
+    }
 
   </style>
 </head>
@@ -335,7 +199,7 @@ iframe {
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="pag1.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -354,9 +218,9 @@ iframe {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pag2.php">Quem sou eu?</a>
-        <a href="pag3.php">Como planejar o futuro</a>
+        <a href="pag3.php">Projeto de Vida</a>
         <a href="pag4.php">Plano de ação</a>
+        <a href="pag2.php">Quem sou eu?</a>
       </div>
     </nav>
   </section>
@@ -369,38 +233,43 @@ iframe {
         <div class="Coracao">
     <img src="img/download.png" alt="Coração fofo" class="header-img">
   </div>
-    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
+  <h1>🌟 Projeto de Vida: Construindo um Caminho Significativo</h1>
+    <p><strong>O que é um Projeto de Vida?</strong><br>
+      Um Projeto de Vida é um processo contínuo de planejamento e reflexão sobre os objetivos pessoais, profissionais e sociais. Ele visa criar um caminho para a realização de sonhos e a busca por uma vida mais plena e significativa. Envolve definir metas, identificar recursos, criar um plano de ação e manter o foco na busca por esses objetivos.
+    </p>
 
-    <h2>Planejamento de Futuro (Aprender a Fazer)</h2>
-    <div class="section-fofa">
-  <label>Minhas Aspirações</label>
-  <textarea class="form-input" rows="4" placeholder="Descreva suas aspirações futuras..."></textarea>
+    <h2>🧭 Componentes Essenciais do Projeto de Vida</h2>
 
-  <label>Meu Sonho de Infância</label>
-  <textarea class="form-input" rows="4" placeholder="Descreva seus sonhos antigos..."></textarea>
+    <div class="blocos">
+      <div class="bloco">
+        <h3>1. Autoconhecimento</h3>
+        <p>Compreender quem você é, suas paixões, habilidades, valores e limitações. Este é o alicerce para definir metas alinhadas com sua essência.</p>
+      </div>
 
-  <label>Escolha Profissional</label>
-  <input class="form-input" type="text" placeholder="Buscar profissão...">
-  <small><a href="#" style="color:#a855f7;">Ver detalhes da profissão</a></small>
+      <div class="bloco">
+        <h3>2. Definição de Metas</h3>
+        <p>Estabelecer objetivos claros e alcançáveis em diversas áreas da vida, como educação, carreira, relacionamentos e saúde.</p>
+        <p><strong>Utilize a metodologia SMART:</strong></p>
+        <ul>
+          <li><strong>Específicas:</strong> Claras e bem definidas.</li>
+          <li><strong>Mensuráveis:</strong> Quantificáveis para acompanhar o progresso.</li>
+          <li><strong>Alcançáveis:</strong> Realistas e possíveis de serem atingidas.</li>
+          <li><strong>Relevantes:</strong> Significativas e alinhadas com seus valores.</li>
+          <li><strong>Temporais:</strong> Com prazos definidos para conclusão.</li>
+        </ul>
+      </div>
 
-  <label>Meus Sonhos Hoje</label>
-  <div class="dream-section">
-    <input class="form-input" type="text" placeholder="Sonho">
-    <input class="form-input" type="text" placeholder="O que já estou fazendo">
-    <input class="form-input" type="text" placeholder="O que ainda preciso fazer">
-  </div>
+      <div class="bloco">
+        <h3>3. Planejamento de Ações</h3>
+        <p>Desenvolver um plano detalhado com as etapas necessárias para alcançar cada meta, identificando recursos, prazos e possíveis obstáculos.</p>
+      </div>
 
-  <label>Meus Principais Objetivos</label>
-  <div class="dream-section">
-    <input class="form-input" type="text" placeholder="Objetivo em 1 ano">
-    <input class="form-input" type="text" placeholder="Objetivo em 3 anos">
-    <input class="form-input" type="text" placeholder="Objetivo em 7 anos">
-  </div>
+      <div class="bloco">
+        <h3>4. Avaliação e Ajustes</h3>
+        <p>Periodicamente, revisar o progresso, refletir sobre os aprendizados e realizar ajustes no plano conforme necessário.</p>
+      </div>
+    </div>
 
-  <label>Como me imagino daqui a 10 anos</label>
-  <textarea class="form-input" rows="4" placeholder="Descreva livremente..."></textarea>
-
-  <button class="submit-btn icon-button">Salvar Planejamento</button>
 </div>
 
 

@@ -187,9 +187,9 @@ try {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pag2.php">Quem sou eu?</a>
-        <a href="pag3.php">Como planejar o futuro</a>
+      <a href="pag3.php">Projeto de Vida</a>
         <a href="pag4.php">Plano de ação</a>
+        <a href="pag2.php">Quem sou eu?</a>
       </div>
     </nav>
   </section>
