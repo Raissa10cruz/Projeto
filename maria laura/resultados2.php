@@ -131,7 +131,7 @@ $totalPontos = array_sum($inteligencias);
     </div>
 
     <div style="text-align: center;">
-      <a href="index.php" class="botao-voltar">← Refazer Teste</a>
+      <a href="teste-multiplas.php" class="botao-voltar">← Refazer Teste</a>
     </div>
   </div>
 </body>

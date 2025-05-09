@@ -352,7 +352,7 @@ if (isset($_SESSION['usuario_id'])) {
         <div class="bloco1">
             <h2>Meus Relacionamentos</h2>
             <p><strong>Família:</strong> Eles são Minha base, sempre presente e cheia de amor.<br>
-                <strong>Namorado:</strong> Amor da minha vida que sempre ta comigo quando um preciso.<br>
+                <strong>Namorado:</strong> Amor da minha vida que sempre ta comigo quando eu preciso.<br>
                 <strong>Amigos:</strong> Não tenho muitos mais os que tenho nunca me deixaram na mão.<br>
                 <strong>Sociedade:</strong> Quero fazer a diferença ajudando as pessoas a se sentirem melhor consigo
                 mesmas.

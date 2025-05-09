@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $db = 'site_autoconhecimento';
-$user = 'root'; // altere se necessário
-$pass = '';     // senha em branco (XAMPP padrão)
+$user = 'root';
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
@@ -43,24 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Teste de Inteligências</title>
     <style>
         body {
-            background: #fefefe;
+            background: #1e1e2f;
             font-family: 'Segoe UI', sans-serif;
-            color: #333;
+            color: #f1f1f1;
             padding: 30px;
         }
 
         h1 {
             text-align: center;
-            color: #6c63ff;
+            color: #a259ff;
+            font-size: 32px;
+            margin-bottom: 20px;
         }
 
         form {
-            max-width: 700px;
+            max-width: 800px;
             margin: auto;
-            background: #ffffff;
+            background: #2b2b3d;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: 0 0 15px rgba(162, 89, 255, 0.3);
         }
 
         .pergunta {
@@ -69,84 +71,127 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .pergunta label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
-            color: #555;
+            color: #d2b7ff;
         }
 
         .pergunta select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
+            border: none;
+            background: #3a3a50;
+            color: #fff;
+            font-size: 15px;
         }
 
         button {
-            background: #6c63ff;
+            background: #a259ff;
             color: white;
-            padding: 10px 18px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            transition: 0.3s;
             margin-top: 15px;
+        }
+
+        button:hover {
+            background: #8b43e0;
         }
 
         .resultado {
             max-width: 700px;
             margin: 20px auto;
-            background: #e6f3ff;
+            background: #3a3a50;
             padding: 20px;
-            border-left: 5px solid #6c63ff;
+            border-left: 5px solid #a259ff;
             border-radius: 8px;
             font-size: 18px;
+            color: #ffffff;
         }
 
+        .voltar-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+
+        .btn-voltar {
+            background-color: #a259ff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
         .btn-voltar:hover {
-  background-color: #9375d6;
-}
+            background-color: #8b43e0;
+        }
 
-.voltar-wrapper {
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  z-index: 999;
-}
+        .progress-bar {
+            height: 10px;
+            background: #444;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
 
+        .progress {
+            height: 100%;
+            background: #a259ff;
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+        }
 
+        .grafico-link {
+            background:#a259ff;
+            color:white;
+            padding:10px 18px;
+            border-radius:8px;
+            text-decoration:none;
+            transition: background 0.3s;
+        }
 
-.btn-voltar {
-  background-color: #a58ae7;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-}
-
-.btn-voltar:hover {
-  background-color: #9375d6;
-}
-
+        .grafico-link:hover {
+            background: #8b43e0;
+        }
     </style>
+    <script>
+        function atualizarProgresso() {
+            const total = document.querySelectorAll("select").length;
+            const respondidas = Array.from(document.querySelectorAll("select")).filter(s => s.value !== "").length;
+            const percent = Math.round((respondidas / total) * 100);
+            document.querySelector(".progress").style.width = percent + "%";
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("select").forEach(select => {
+                select.addEventListener("change", atualizarProgresso);
+            });
+        });
+    </script>
 </head>
 <body>
     <h1>Teste de Inteligências Múltiplas</h1>
 
     <?php if ($resultado): ?>
         <div class="resultado"><?= $resultado ?></div>
+        <div style="text-align:center;margin-top:20px;">
+            <a href="grafico_resultados.php" class="grafico-link">📊 Ver Gráfico de Resultados</a>
+        </div>
     <?php endif; ?>
 
     <form method="POST">
+        <div class="progress-bar"><div class="progress"></div></div>
         <?php
         $perguntas = [
             "Você prefere resolver problemas matemáticos ou escrever histórias?" => ['Lógica', 'Linguística'],
@@ -177,12 +222,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Ver Resultado</button>
     </form>
 
-    <a href="dashboard.php" style="display:inline-block;margin-top:15px;text-align:center;background:#ccc;color:#333;padding:10px 18px;border-radius:8px;text-decoration:none;font-size:16px;">
-            ← Voltar para a página inicial
-        </a>
-
-        <div class="voltar-wrapper">
-  <button onclick="window.location.href='topicos.php'" class="btn-voltar">← Voltar</button>
-</div>
+    <div class="voltar-wrapper">
+        <button onclick="window.location.href='topicos.php'" class="btn-voltar">← Voltar</button>
+    </div>
 </body>
 </html>
