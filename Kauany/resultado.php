@@ -28,7 +28,7 @@ if ($pontuacao <= 15) {
 <head>
     <meta charset="UTF-8">
     <title>Resultado do Teste de Personalidade</title>
-    <link rel="stylesheet" href="estilo.css"> <!-- Usando o mesmo arquivo de CSS -->
+    <link rel="stylesheet" href="estilo.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,9 +37,8 @@ if ($pontuacao <= 15) {
             background-color: #f4f4f4;
         }
 
-        /* Imagem de fundo com a mesma abordagem usada antes */
         .background {
-            background-image: url('kauany.jpg'); /* Substitua pelo caminho da sua imagem */
+            background-image: url('kauany.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -107,6 +106,18 @@ if ($pontuacao <= 15) {
         .botao:hover {
             background-color:rgb(0, 0, 0);
         }
+
+        .grafico {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .grafico img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -124,7 +135,12 @@ if ($pontuacao <= 15) {
             <h1>Resultado do Teste de Personalidade</h1>
             <p><strong>Resultado:</strong> <?php echo $resultado; ?></p>
             <p class="dicas"><strong>Dicas para melhorar:</strong> <?php echo $dicas; ?></p>
-            
+
+            <!-- Gráfico ilustrativo -->
+            <div class="grafico">
+                <img src="grafico_resultado_personalidade.png" alt="Gráfico de Resultado">
+            </div>
+
             <!-- Botão para refazer o teste -->
             <a href="teste1.php" class="botao">Refazer o Teste</a>
         </div>
