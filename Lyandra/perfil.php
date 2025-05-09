@@ -151,6 +151,15 @@ $nomeExibido = $user["name"] ?? 'Usuário';
 </div>
 
   </div>
+  <script>
+const botaoMenu = document.getElementById("botao-menu");
+const menu = document.getElementById("menu-navegacao");
 
+botaoMenu.addEventListener("click", () => {
+    botaoMenu.classList.toggle("active");
+    menu.classList.toggle("active");
+});
+
+  </script>
 </body>
 </html>

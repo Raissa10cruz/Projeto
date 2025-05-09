@@ -30,18 +30,15 @@ try {
 }
 ?>
 
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>P.D.V.</title>
+  <title>Meus Projetos</title>
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-
-
+</head>
+<body>
+<style>
     .usuario-logado {
       position: absolute;
       top: 15px;
@@ -158,17 +155,74 @@ try {
       transform: scale(1.05);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-  </style>
-</head>
-<body>
-  <header class="header">
+
+    .form-fofa {
+  border-radius: 5%;
+  background-color:rgb(255, 255, 255);
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-fofa h2 {
+  font-size: 30px;
+  color: #a855f7;
+  margin-bottom: 10px;
+  border-bottom: 3px solid white;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.form-fofa input[type="text"],
+.form-fofa textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 15px 0;
+  border: 2px solid #ffb6c1;
+  border-radius: 20px;
+  font-size: 16px;
+  resize: vertical;
+  background-color: #fff;
+  transition: 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-fofa input[type="text"]:focus,
+.form-fofa textarea:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px #ff69b4;
+  outline: none;
+}
+
+.form-fofa button {
+  width: 100%;
+  background: linear-gradient(to right, #ff85a2, #ffc0cb);
+  color: white;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+  transition: 0.3s ease;
+}
+
+.form-fofa button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.03);
+}
+
+</style>
+<header class="header">
     <div class="logo-container">
       <div class="logo-flor">
         <img src="img/download.png">
       </div>
     </div>
 
-    <a href="login.php" class="botao-voltar">← Voltar</a>
+    <a href="projetos.php" class="botao-voltar">← Voltar</a>
 
     <!-- Info do usuário logado -->
     <a class="usuario-logado" href="perfil.php" title="Meu Perfil">
@@ -176,7 +230,6 @@ try {
       <span><?= $email ?></span>
     </a>
   </header>
-
   <section class="hamburguer">
     <div class="menu-hamburguer" id="botao-menu">
       <div class="linha"></div>
@@ -187,39 +240,68 @@ try {
 
     <nav class="menu" id="menu-navegacao">
       <div class="quadro-menu">
-        <a href="pag2.php">Quem sou eu?</a>
-        <a href="pag3.php">Como planejar o futuro</a>
-        <a href="pag4.php">Plano de ação</a>
+        <a href="pagina1.html">Página 1</a>
+        <a href="pagina2.html">Página 2</a>
+        <a href="pagina3.html">Página 3</a>
       </div>
     </nav>
   </section>
 
   <br><br><br>
+  <div class="container">
+  <?php
+$stmt = $conn->prepare("SELECT * FROM planilhas WHERE email_usuario = :email ORDER BY data_criacao DESC");
+$stmt->bindParam(':email', $emailSessao);
+$stmt->execute();
+$planilhas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
-  <section class="pag">
-    <main class="conteudo">
-      <div class="container">
-        <div class="Coracao">
-    <img src="img/download.png" alt="Coração fofo" class="header-img">
-  </div>
-    <h1 class="emoji-bounce">💖 Bem-vindo ao seu PDV! 💖</h1>
+<div class="form-fofa">
+  <h2>Minhas Planilhas</h2>
+  <?php if ($planilhas): ?>
+    <ul style="list-style-type: none; padding: 0;">
+      <?php foreach ($planilhas as $p): ?>
+        <li style="margin-bottom: 20px; border: 1px solid #ffb6c1; border-radius: 15px; padding: 15px;">
+          <strong><?= htmlspecialchars($p['titulo']) ?></strong><br>
+          <small><?= date('d/m/Y H:i', strtotime($p['data_criacao'])) ?></small><br><br>
+          <a href="editar_planilha.php?id=<?= $p['id'] ?>" style="color: #a855f7; text-decoration: none; font-weight: bold;">Editar</a> |
+          <a href="listar_planilhas.php" class="excluir-link" data-id="<?= $p['id'] ?>" style="color: #ff69b4; text-decoration: none; font-weight: bold;">Excluir</a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  <?php else: ?>
+    <p>Você ainda não criou nenhuma planilha.</p>
+  <?php endif; ?>
+</div>
 
-    <p>Olá! Que alegria ter você por aqui! ✨</p>
-    
-    <p>Você está prestes a embarcar numa jornada incrível chamada <strong>Projeto de Vida</strong> – o famoso <strong>PDV</strong> 🌈📘</p>
-
-    <p>Esse espaço é só seu! Aqui você pode refletir, sonhar alto, definir metas e descobrir o que te faz brilhar! ✨💭</p>
-
-    <p>O PDV é o seu mapa para o futuro. Ele ajuda você a planejar os passos, entender quem você é e o que quer conquistar no mundo! 🌍🚀</p>
-
-    <p>Lembre-se: cada objetivo é uma sementinha do seu sucesso! 🌱💡</p>
-
-    <a href="painel.php" class="start-button">Começar minha jornada ✨</a>
-  </div>
-    </main>
-  </section>
 
   <script>
+document.querySelectorAll('.excluir-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const id = this.dataset.id;
+        if (confirm("Tem certeza que deseja excluir?")) {
+            fetch('excluir_planilha.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'id=' + encodeURIComponent(id)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove o item da lista
+                    this.closest('li').remove();
+                } else {
+                    alert('Erro ao excluir: ' + (data.message || 'Tente novamente'));
+                }
+            })
+            .catch(() => alert('Erro na requisição'));
+        }
+    });
+});
+
+
 const botaoMenu = document.getElementById("botao-menu");
 const menu = document.getElementById("menu-navegacao");
 
@@ -229,5 +311,6 @@ botaoMenu.addEventListener("click", () => {
 });
 
   </script>
+  
 </body>
 </html>
