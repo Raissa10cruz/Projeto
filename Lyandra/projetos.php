@@ -281,7 +281,7 @@ iframe {
   <!-- Formulário para salvar planilha (permanece em projetos.php) -->
   <form action="salvar_planilha.php" method="POST" target="invisivel">
     <input type="text" name="titulo" placeholder="Título da planilha" required>
-    <textarea name="conteudo" rows="5" placeholder="Escreva algo fofo aqui..." required></textarea>
+    <textarea name="conteudo" rows="5" placeholder="Escreva algo aqui..." required></textarea>
     <button type="submit" class="icon-button">Salvar Planilha</button>
   </form>
 
