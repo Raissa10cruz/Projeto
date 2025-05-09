@@ -316,11 +316,7 @@ try {
     <a href="quemsoueu.php">QUEM SOU EU?</a>
   </div>
 
-  <!-- Título -->
-  <div class="header">PROJETO DE VIDA</div>
-  <div class="voltar-wrapper">
-  <button onclick="window.location.href='topicos.php'" class="btn-voltar">← Voltar</button>
-</div>
+
 
   <!-- Topo com Perfil + Botões -->
   <div class="top-bar">
