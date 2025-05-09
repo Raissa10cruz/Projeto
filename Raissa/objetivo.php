@@ -280,7 +280,7 @@ try {
 
   <!-- Menu Lateral -->
   <div class="menu" id="menuLateral">
-    <a href="#">INÍCIO</a>
+    <a href="dashboard.php">INÍCIO</a>
     <a href="sonho.php">SONHO</a>
     <a href="objetivo.php">OBJETIVO</a>
     <a href="topicos.php">TÓPICOS</a>

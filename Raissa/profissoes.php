@@ -259,6 +259,51 @@ try {
   z-index: 1;
 }
 
+
+
+.btn-voltar {
+  background-color: #a58ae7;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-voltar:hover {
+  background-color: #9375d6;
+}
+
+.voltar-wrapper {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  z-index: 999;
+}
+
+}
+
+.btn-voltar {
+  background-color: #a58ae7;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.btn-voltar:hover {
+  background-color: #9375d6;
 }
 
 
@@ -279,12 +324,18 @@ try {
 
   <!-- Menu Lateral -->
   <div class="menu" id="menuLateral">
-    <a href="#">INÍCIO</a>
+    <a href="dashboard.php">INÍCIO</a>
     <a href="sonho.php">SONHO</a>
     <a href="objetivo.php">OBJETIVO</a>
     <a href="topicos.php">TÓPICOS</a>
     <a href="quemsoueu.php">QUEM SOU EU?</a>
   </div>
+
+  <div class="voltar-wrapper">
+  <button onclick="window.location.href='topicos.php'" class="btn-voltar">← Voltar</button>
+</div>
+
+
 
   <!-- Título -->
   <div class="header">PROJETO DE VIDA</div>

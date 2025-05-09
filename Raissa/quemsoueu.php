@@ -16,7 +16,6 @@ $db = "site_autoconhecimento";
 try {
     $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $stmt = $conn->prepare("SELECT nome, email, imagem_perfil FROM usuarios WHERE id = :id");
 
     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
@@ -178,62 +177,72 @@ try {
     }
 
     .btn-logout {
-  background-color: #f36c6c;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.3s;
-}
+      background-color: #f36c6c;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
 
-.btn-logout:hover {
-  background-color: #e15050;
-}
+    .btn-logout:hover {
+      background-color: #e15050;
+    }
 
-.btn-logout {
-  background-color: #f36c6c;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.3s;
-}
-
-.btn-logout:hover {
-  background-color: #e15050;
-}
-
-.icon-logout {
-  width: 20px;
-  height: 20px;
-}
-
-
-
-
+    .icon-logout {
+      width: 20px;
+      height: 20px;
+    }
 
     .content {
-      max-width: 700px;
+      max-width: 1000px;
       margin: 180px auto 40px;
       background-color: rgba(255, 255, 255, 0.25);
       padding: 30px 40px;
       border-radius: 30px;
-      text-align: center;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
       color: #333;
       font-size: 18px;
       line-height: 1.6;
+    }
+
+    .perfil-com-texto {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .perfil-com-texto img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .perfil-com-texto img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+
+    .perfil-com-texto > div {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    @media (min-width: 768px) {
+      .perfil-com-texto {
+        flex-wrap: nowrap;
+      }
     }
 
     .btn-avatar {
@@ -250,62 +259,6 @@ try {
       object-fit: cover;
       border: 2px solid #ccc;
     }
-
-    .simbolo-cobra {
-  position: absolute;
-  left: calc(50% - 440px); 
-  top: 185px;
-  width: 140px;  
-  height: auto;
-  z-index: 1;
-}
-
-.icon-lamp {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-}
-.btn-acao {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-
-.voltar-wrapper {
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  z-index: 999;
-}
-
-
-
-.btn-voltar {
-  background-color: #a58ae7;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
-}
-
-.btn-voltar:hover {
-  background-color: #9375d6;
-}
-
-
-
-
-
-    
   </style>
 </head>
 <body>
@@ -326,9 +279,6 @@ try {
 
   <!-- Título -->
   <div class="header">PROJETO DE VIDA</div>
-  <div class="voltar-wrapper">
-  <button onclick="window.location.href='topicos.php'" class="btn-voltar">← Voltar</button>
-</div>
 
   <!-- Topo com Perfil + Botões -->
   <div class="top-bar">
@@ -336,11 +286,13 @@ try {
       <?= htmlspecialchars($user['nome']) ?><br>
     </div>
 
+   
     <?php
       $avatarPadrao = './imgRaissa/User_Clipart_PNG_Images__User_Avatar_Login_Interface_Abstract_Purple_User_Icon__Avatar__User__Login_Avatar_PNG_Image_For_Free_Download-removebg-preview.png';
-      $caminhoImagem = isset($user['imagem_perfil']) && !empty($user['imagem_perfil']) 
+      $caminhoImagem = !empty($user['imagem_perfil']) 
       ? './imgRaissa/' . htmlspecialchars($user['imagem_perfil']) 
       : $avatarPadrao;
+  
   
     ?>
 
@@ -348,52 +300,35 @@ try {
       <img src="<?= $caminhoImagem ?>" alt="Avatar" class="avatar-img">
     </button>
 
-    <button class="btn-acao" onclick="location.href='plano_acao.php'">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon-lamp" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 18h6" />
-    <path d="M10 22h4" />
-    <path d="M12 2a7 7 0 0 0-4 12v1a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-1a7 7 0 0 0-4-12z" />
-    <!-- Raios de luz -->
-    <line x1="12" y1="0" x2="12" y2="2" />
-    <line x1="4.2" y1="4.2" x2="5.6" y2="5.6" />
-    <line x1="0" y1="12" x2="2" y2="12" />
-    <line x1="4.2" y1="19.8" x2="5.6" y2="18.4" />
-    <line x1="19.8" y1="19.8" x2="18.4" y2="18.4" />
-    <line x1="22" y1="12" x2="20" y2="12" />
-    <line x1="19.8" y1="4.2" x2="18.4" y2="5.6" />
-  </svg>
-  Plano de Ação
-</button>
-
-
-
+    <button class="btn-acao" onclick="location.href='plano_acao.php'">Plano de Ação</button>
     <button class="btn-logout" onclick="location.href='logout.php'">
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-    <polyline points="16 17 21 12 16 7" />
-    <line x1="21" y1="12" x2="9" y2="12" />
-  </svg>
-  
-</button>
-
-</button>
-
-  
-</button>
-
-  
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon-logout" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        <polyline points="16 17 21 12 16 7" />
+        <line x1="21" y1="12" x2="9" y2="12" />
+      </svg>
+    </button>
   </div>
 
   <!-- Conteúdo -->
   <div class="content">
-    <h2>PLANO DE AÇÃO - MEDICINA</h2>
-    <img src="./imgRaissa/35560467-removebg-preview.png" alt="Símbolo Medicina" class="simbolo-cobra">
-    <p>
-    Meu plano de ação para a medicina é focado na formação acadêmica de excelência, no desenvolvimento de habilidades humanizadas e na atuação prática desde o início da graduação. Pretendo manter alto desempenho nos estudos, participar de monitorias, estágios e eventos científicos, além de investir no aprendizado de outros idiomas e na inteligência emocional. Quero atuar em projetos sociais, promover campanhas de saúde e participar de pesquisas que contribuam para a sociedade.
-    Estabeleci metas de curto, médio e longo prazo para garantir evolução contínua, sempre cuidando também da minha saúde física e mental. Meu propósito é me tornar uma médica ética, competente e dedicada a salvar vidas e transformar realidades.
+    <div class="perfil-com-texto">
+      <img src="./imgRaissa/WhatsApp Image 2025-05-07 at 10.45.43.jpeg" alt="Minha foto">
+      <div>
+        <h2>QUEM SOU EU?</h2>
+        <p>
+          Oi! Meu nome é Raissa, tenho 17 anos e atualmente estou no 3º ano do ensino médio. Além dos estudos regulares, também faço um curso técnico em Desenvolvimento de Sistemas, o que tem me proporcionado bastante aprendizado na área de tecnologia e programação.<br><br>
 
+          Sou uma pessoa curiosa, dedicada e sempre em busca de novos conhecimentos. Tenho muitos interesses, e entre eles, dois se destacam quando penso no meu futuro: Medicina e Psicologia. São áreas que admiro profundamente por estarem ligadas ao cuidado com o outro e ao impacto que podem causar na vida das pessoas.<br><br>
 
-    </p>
+          Criei este espaço para compartilhar um pouco do que aprendo, das minhas experiências e também das coisas que me inspiram. Acredito que, mesmo estando só começando, sempre temos algo valioso a dividir.<br><br>
+
+          Fique à vontade para explorar e acompanhar essa jornada comigo!<br>
+          <strong>Com carinho,</strong><br>
+          Raissa
+        </p>
+      </div>
+    </div>
   </div>
 
   <script>

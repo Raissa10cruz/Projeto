@@ -102,6 +102,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 8px;
             font-size: 18px;
         }
+
+
+        .btn-voltar:hover {
+  background-color: #9375d6;
+}
+
+.voltar-wrapper {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  z-index: 999;
+}
+
+
+
+.btn-voltar {
+  background-color: #a58ae7;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.btn-voltar:hover {
+  background-color: #9375d6;
+}
+
     </style>
 </head>
 <body>
@@ -146,5 +181,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ← Voltar para a página inicial
         </a>
 
+        <div class="voltar-wrapper">
+  <button onclick="window.location.href='topicos.php'" class="btn-voltar">← Voltar</button>
+</div>
 </body>
 </html>
