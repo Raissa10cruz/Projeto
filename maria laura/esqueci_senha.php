@@ -3,10 +3,6 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
 
 $host = 'localhost';
 $dbname = 'sistema_cadastro';
@@ -20,34 +16,75 @@ try {
     die("Erro na conexão: " . $e->getMessage());
 }
 
-$mensagem = '';
+$mensagens = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nova_senha = $_POST['nova_senha'];
-    $confirmar_senha = $_POST['confirmar_senha'];
-    $usuario_id = $_SESSION['usuario_id'];
+    $email_alvo = trim($_POST['email_alvo'] ?? '');
 
-    if ($nova_senha === $confirmar_senha) {
-        $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-        $update = $conn->prepare("UPDATE usuarios SET senha = :senha WHERE id = :id");
-        $update->bindParam(':senha', $nova_senha_hash);
-        $update->bindParam(':id', $usuario_id);
-        $update->execute();
-        $mensagem = "✅ Senha alterada com sucesso!";
+    if (!empty($email_alvo) && filter_var($email_alvo, FILTER_VALIDATE_EMAIL)) {
+        // Verifica se o e-mail existe no banco
+        $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = :email");
+        $stmt->bindParam(':email', $email_alvo);
+        $stmt->execute();
+        $usuario_alvo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($usuario_alvo) {
+            $alvo_id = $usuario_alvo['id'];
+
+            // Atualiza a senha se enviada
+            $nova_senha = $_POST['nova_senha'] ?? '';
+            $confirmar_senha = $_POST['confirmar_senha'] ?? '';
+
+            if (!empty($nova_senha) && !empty($confirmar_senha)) {
+                if ($nova_senha === $confirmar_senha) {
+                    $senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
+                    $stmt = $conn->prepare("UPDATE usuarios SET senha = :senha WHERE id = :id");
+                    $stmt->bindParam(':senha', $senha_hash);
+                    $stmt->bindParam(':id', $alvo_id);
+                    $stmt->execute();
+                    $mensagens[] = "✅ Senha de {$email_alvo} alterada com sucesso!";
+                } else {
+                    $mensagens[] = "❌ As senhas não coincidem.";
+                }
+            }
+
+            // Atualizar o e-mail, se fornecido
+            $novo_email = trim($_POST['novo_email'] ?? '');
+            if (!empty($novo_email) && filter_var($novo_email, FILTER_VALIDATE_EMAIL)) {
+                $stmt = $conn->prepare("UPDATE usuarios SET email = :email WHERE id = :id");
+                $stmt->bindParam(':email', $novo_email);
+                $stmt->bindParam(':id', $alvo_id);
+                $stmt->execute();
+                $mensagens[] = "✅ E-mail atualizado com sucesso!";
+            }
+
+        } else {
+            $mensagens[] = "❌ Usuário com este e-mail não encontrado.";
+        }
     } else {
-        $mensagem = "❌ As novas senhas não coincidem.";
+        $mensagens[] = "❌ E-mail alvo inválido.";
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
-    <title>Alterar Senha</title>
+    <title>Alterar Dados</title>
     <style>
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -64,18 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: center;
             align-items: center;
             color: #333;
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 50px 40px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-            text-align: center;
         }
 
         h2 {
@@ -98,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: 500;
         }
 
+        input[type="email"],
         input[type="password"] {
             width: 100%;
             padding: 14px 18px;
@@ -110,11 +136,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: all 0.3s ease;
         }
 
-        input[type="password"]::placeholder {
+        input::placeholder {
             color: #e0e0e0;
         }
 
-        input[type="password"]:focus {
+        input:focus {
             background: rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 0 2px #d4dec2;
         }
@@ -148,36 +174,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .sobre-mim {
-            position: absolute;
-            bottom: 20px;
-            right: 30px;
-            background-color: rgba(255, 255, 255, 0.6);
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 13px;
-            font-style: italic;
-            color: #444;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        }
-
-        @media (max-width: 500px) {
-            .login-container {
-                padding: 35px 25px;
-            }
-
-            input[type="submit"] {
-                font-size: 14px;
-                padding: 12px;
-            }
-
-            .sobre-mim {
-                right: 15px;
-                bottom: 15px;
-                font-size: 12px;
-            }
-        }
-
         .botao-voltar {
             position: absolute;
             top: 20px;
@@ -201,26 +197,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: rgba(255, 255, 255, 0.2);
         }
     </style>
-
-
 </head>
 
 <body>
     <div class="container">
-        <h2>🔒 Alterar Senha</h2>
+        <h2>🔒 Alterar Dados de Usuário</h2>
+
         <form method="POST">
+            <label for="email_alvo">E-mail do usuário a ser alterado:</label>
+            <input type="email" name="email_alvo" placeholder="E-mail do usuário" required>
+
+            <label for="novo_email">Novo e-mail (opcional):</label>
+            <input type="email" name="novo_email" placeholder="Novo e-mail">
+
             <label for="nova_senha">Nova senha:</label>
-            <input type="password" name="nova_senha" required>
+            <input type="password" name="nova_senha" placeholder="Digite nova senha">
 
             <label for="confirmar_senha">Confirmar nova senha:</label>
-            <input type="password" name="confirmar_senha" required>
+            <input type="password" name="confirmar_senha" placeholder="Confirme nova senha">
 
-            <input type="submit" value="Alterar senha">
+            <input type="submit" value="Atualizar dados">
         </form>
 
-        <?php if ($mensagem): ?>
-            <div class="mensagem"><?= $mensagem ?></div>
+        <?php if (!empty($mensagens)): ?>
+            <?php foreach ($mensagens as $mensagem): ?>
+                <div class="mensagem"><?= htmlspecialchars($mensagem) ?></div>
+            <?php endforeach; ?>
         <?php endif; ?>
+
         <a href="login.php" class="botao-voltar">← Voltar</a>
     </div>
 </body>
+</html>

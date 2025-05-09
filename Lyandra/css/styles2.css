@@ -1,0 +1,212 @@
+body {
+  font-family: 'Comic Neue', cursive;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    background-image: url('../img/coelho.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .container {
+    background-color: #845c543f;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 20px 20px 20px #845c543f,
+                -20px -20px 20px #845c543f,
+                20px -20px 20px #845c543f,
+                -20px 20px 20px #845c543f;
+    max-width: 600px;
+    max-height: 600px;
+    width: 100%;
+    height: 60%;
+    backdrop-filter: blur(10px);
+  }
+  
+  .profile-pic-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* adiciona alinhamento vertical */
+    margin-bottom: 20px;
+  }
+  
+  
+  .profile-pic {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .profile-pic-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4); /* mais leve */
+    color: #fff;
+    font-size: 48px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+    pointer-events: none; /* evita problemas de clique */
+  }
+  
+  .profile-pic:hover .profile-pic-preview {
+    opacity: 1;
+  }
+  
+  .profile-pic-preview img {
+    display: none; /* removemos o img aqui */
+  }
+  
+  
+  .profile-pic:hover .profile-pic-preview {
+    opacity: 1;
+  }
+  
+  .profile-pic-preview i {
+    margin-right: 10px;
+  }
+  
+  .profile-pic-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-pic input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .profile-pic label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 0;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  
+  
+  input[type=text], input[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: inline 1px solid  #ffffff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color:#845c545f;
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    flex: 0 0 100px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-bottom: 2px solid white;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+  }
+
+  button {
+    background-color: #D4ACB2;
+    color: rgba(0, 0, 0, 0.888);
+    padding: 25px 5px;
+    margin: 30px 150px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 50%;
+  }
+  
+  button:hover {
+    background-color: #8e44ad;
+  }
+
+  .cropper-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .cropper-wrapper {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  .cropper-image-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .cropper-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .cropper-controls {
+    margin-top: 20px;
+  }
+  
+  .cropper-controls button {
+    margin: 0 10px;
+  }
+  

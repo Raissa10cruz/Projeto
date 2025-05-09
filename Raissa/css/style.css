@@ -1,0 +1,73 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+  }
+  
+  .background {
+    background-image: url("./imgRaissa/flores.jfif"); /* substitua com sua imagem */
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .menu {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .menu button {
+    background: none;
+    border: none;
+    margin: 5px 0;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .content-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .content-box h1 {
+    color: #f9f9f9;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #000;
+  }
+  
+  .texto p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .plano-acao {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .plano-acao button {
+    background-color: #d5c6f2;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

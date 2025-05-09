@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Login - PDV-Ly</title>
-  <link rel="stylesheet" href="styles1.css">
+  <link rel="stylesheet" href="css/styles1.css">
 </head>
 <body>
   <div class="container">

@@ -7,17 +7,46 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $host = 'localhost';
 $dbname = 'sistema_cadastro';
-$usuario = 'root';
+$usuario_db = 'root';
 $senha_db = '';
 
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario, $senha_db);
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $usuario_db, $senha_db);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Erro na conexão: " . $e->getMessage());
 }
 
 $id = $_SESSION['usuario_id'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $novo_nome = $_POST['nome'] ?? '';
+    $novo_email = $_POST['email'] ?? '';
+    $nova_data = $_POST['data'] ?? '';
+
+    $stmt = $conn->prepare("UPDATE usuarios SET nome = :nome, email = :email, data_nascimento = :data WHERE id = :id");
+    $stmt->execute([
+        ':nome' => $novo_nome,
+        ':email' => $novo_email,
+        ':data' => $nova_data,
+        ':id' => $id
+    ]);
+
+    if (isset($_FILES['nova_foto']) && $_FILES['nova_foto']['error'] === UPLOAD_ERR_OK) {
+        $ext = pathinfo($_FILES['nova_foto']['name'], PATHINFO_EXTENSION);
+        $novo_nome_arquivo = uniqid() . '.' . $ext;
+        $caminho = 'uploads/' . $novo_nome_arquivo;
+
+        if (move_uploaded_file($_FILES['nova_foto']['tmp_name'], $caminho)) {
+            $stmt = $conn->prepare("UPDATE usuarios SET foto_perfil = :foto WHERE id = :id");
+            $stmt->execute([
+                ':foto' => $novo_nome_arquivo,
+                ':id' => $id
+            ]);
+        }
+    }
+}
+
 $stmt = $conn->prepare("SELECT nome, email, data_nascimento, foto_perfil FROM usuarios WHERE id = :id");
 $stmt->bindParam(':id', $id);
 $stmt->execute();
@@ -27,55 +56,79 @@ if (!$usuario) {
     echo "Usuário não encontrado.";
     exit;
 }
-?>
 
+$foto_perfil = $usuario['foto_perfil'] ? $usuario['foto_perfil'] : 'default.png';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Raleway:wght@400;700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Raleway:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Cursive', sans-serif;
+            font-family: 'Raleway', sans-serif;
             background-image: url('img/imagem.jpg');
             background-size: cover;
             background-position: center;
             color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
         }
 
         .perfil-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            backdrop-filter: brightness(0.9);
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 20px;
+            width: 95%;
+            max-width: 820px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .perfil-titulo {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 32px;
+            margin-bottom: 25px;
             font-family: 'Fleur De Leah', cursive;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
         }
 
         .foto-nome-container {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .foto-bloco {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
         }
 
         .foto-perfil {
-            width: 120px;
-            height: 120px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            border: 4px solid #d9ffd9;
-            background-color: #d9ffd9;
+            border: 4px solid rgba(255, 255, 255, 0.6);
             overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s ease;
+        }
+
+        .foto-perfil:hover {
+            transform: scale(1.05);
         }
 
         .foto-perfil img {
@@ -85,146 +138,153 @@ if (!$usuario) {
         }
 
         .alterar-foto {
-            color: white;
-            font-size: 14px;
-            margin-top: 5px;
-            text-align: center;
+            margin-top: 12px;
+        }
+
+        .alterar-foto label {
+            font-size: 15px;
             cursor: pointer;
-            transition: transform 0.2s ease, color 0.2s ease;
+            padding: 6px 18px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            color: white;
         }
 
-        .alterar-foto:hover {
+        .alterar-foto label:hover {
+            background-color: rgba(255, 255, 255, 0.4);
             transform: scale(1.05);
-            color: #d9ffd9;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-style: italic;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="date"] {
-            width: 250px;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-            font-size: 16px;
-            font-style: italic;
-        }
-
-        input::placeholder {
-            color: white;
-            opacity: 0.8;
-        }
-
-        .botao-alterar {
-            margin-top: 15px;
-            padding: 10px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 10px;
-            background-color: transparent;
-            color: white;
-            cursor: pointer;
-            font-style: italic;
-            font-family: 'Fleur De Leah', cursive;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .botao-alterar:hover {
-            transform: scale(1.05);
-            color: #d9ffd9;
-        }
-
-        .botao-voltar {
-            margin-top: 10px;
-            padding: 8px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            cursor: pointer;
-            font-style: italic;
-            transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
-        }
-
-        .botao-voltar:hover {
-            transform: scale(1.05);
-            color: #d9ffd9;
-            background-color: rgba(255, 255, 255, 0.2);
+        input[type="file"] {
+            display: none;
         }
 
         .campo {
             margin-bottom: 10px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus {
+            background-color: rgba(255, 255, 255, 0.25);
+            outline: none;
+        }
+
+        .campo-senha {
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #eee;
+            padding: 10px;
+            border-radius: 12px;
+            width: 100%;
+            cursor: not-allowed;
+        }
+
+        .botao-alterar {
+            font-family: 'Fleur De Leah', cursive;
+            margin-top: 20px;
+            padding: 14px 40px;
+            font-size: 22px;
+            font-weight: normal;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            background-size: 200% 200%;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: background-position 0.5s ease, transform 0.3s ease;
+        }
+
+
+        .botao-alterar:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3); );
         }
 
         .botao-voltar {
             position: absolute;
             top: 20px;
             left: 20px;
-            padding: 8px 20px;
-            font-size: 14px;
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.25);
             color: white;
             cursor: pointer;
-            font-style: italic;
-            transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
             text-decoration: none;
-            font-family: 'Raleway', sans-serif;
+            transition: all 0.3s ease;
         }
 
         .botao-voltar:hover {
+            background-color: rgba(255, 255, 255, 0.4);
             transform: scale(1.05);
-            color: #d9ffd9;
-            background-color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
 
 <body>
     <div class="perfil-container">
-        <div class="perfil-titulo">Meu perfil</div>
+        <div class="perfil-titulo">Meu Perfil</div>
 
-        <div class="foto-nome-container">
-            <div>
-                <div class="foto-perfil">
-                    <img src="uploads/<?= htmlspecialchars($usuario['foto_perfil']) ?>" alt="Foto de perfil">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="foto-nome-container">
+                <div class="foto-bloco">
+                    <div class="foto-perfil">
+                        <img src="uploads/<?= htmlspecialchars($foto_perfil) ?>" alt="Foto de perfil">
+                    </div>
+                    <div class="alterar-foto">
+                        <label for="nova_foto">Alterar Foto</label>
+                        <input type="file" name="nova_foto" id="nova_foto" accept="image/*">
+                    </div>
                 </div>
-                <div class="alterar-foto">Alterar Foto</div>
+
+                <div class="campo">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($usuario['nome']) ?>">
+                </div>
             </div>
 
             <div class="campo">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" value="<?= htmlspecialchars($usuario['nome']) ?>" readonly>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($usuario['email']) ?>">
             </div>
-        </div>
 
-        <div class="campo">
-            <label for="email">Email:</label>
-            <input type="email" id="email" value="<?= htmlspecialchars($usuario['email']) ?>" readonly>
-        </div>
+            <div class="campo">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" value="••••••" readonly class="campo-senha">
+            </div>
 
-        <div class="campo">
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" placeholder="••••••" value="" readonly>
-        </div>
+            <div class="campo">
+                <label for="data">Data de Nascimento:</label>
+                <input type="date" id="data" name="data" value="<?= $usuario['data_nascimento'] ?>">
+            </div>
 
-        <div class="campo">
-            <label for="data">Data:</label>
-            <input type="date" id="data" value="<?= $usuario['data_nascimento'] ?>" readonly>
-        </div>
+            <button type="submit" class="botao-alterar">Salvar Alterações</button>
+        </form>
 
-        <button class="botao-alterar">Alterar o Perfil</button>
         <a href="index.php" class="botao-voltar">← Voltar</a>
     </div>
 </body>
