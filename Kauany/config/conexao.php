@@ -12,7 +12,7 @@ try {
 }
 ?>
 
-
+<!-- 
 <?php
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=site_autoconhecimento", "root", "");
@@ -20,4 +20,4 @@ try {
 } catch (PDOException $e) {
     echo "Erro na conexão: " . $e->getMessage();
 }
-?>
+?> -->
