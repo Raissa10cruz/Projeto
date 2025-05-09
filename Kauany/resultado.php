@@ -10,16 +10,19 @@ if (!isset($_SESSION['pontuacao'])) {
 // Obter a pontuação da sessão
 $pontuacao = $_SESSION['pontuacao'];
 
-// Dicas baseadas na pontuação
+// Resultado e dicas baseados na pontuação
 if ($pontuacao <= 15) {
     $resultado = "Você tende a ser mais introvertido e cauteloso. Focar em se abrir mais para novas experiências pode ser um bom passo!";
     $dicas = "Tente ser mais flexível com mudanças e procure formas de se socializar sem se sobrecarregar.";
+    $tipo = "Introvertido";
 } elseif ($pontuacao <= 25) {
     $resultado = "Você tem um equilíbrio interessante entre introversão e extroversão. É ótimo, mas pode melhorar o equilíbrio!";
     $dicas = "Continue com sua abordagem equilibrada, mas tente ser mais espontâneo e lidar melhor com a pressão.";
+    $tipo = "Equilibrado";
 } else {
     $resultado = "Você é muito extrovertido e gosta de estar no centro das atenções! Continue aproveitando essa energia!";
     $dicas = "Tente prestar mais atenção às necessidades dos outros e considerar momentos de introspecção para equilibrar sua vida.";
+    $tipo = "Extrovertido";
 }
 ?>
 
@@ -29,21 +32,16 @@ if ($pontuacao <= 15) {
     <meta charset="UTF-8">
     <title>Resultado do Teste de Personalidade</title>
     <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .background {
             background-image: url('kauany.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            padding: 150px 0;
-            height: 100vh;
         }
 
         .menu-icons {
@@ -93,7 +91,7 @@ if ($pontuacao <= 15) {
             display: block;
             margin: 30px auto;
             padding: 10px 20px;
-            background-color:rgb(0, 0, 0);
+            background-color: rgb(0, 0, 0);
             border: none;
             color: white;
             font-size: 16px;
@@ -104,47 +102,76 @@ if ($pontuacao <= 15) {
         }
 
         .botao:hover {
-            background-color:rgb(0, 0, 0);
+            background-color: rgb(0, 0, 0);
         }
 
         .grafico {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .grafico img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            max-width: 600px;
+            margin: 40px auto;
         }
     </style>
 </head>
 <body>
 
-    <!-- Ícones no topo, ajustados para o lado direito -->
+    <!-- Ícones no topo -->
     <div class="menu-icons">
         <a href="home.php" title="Voltar"><img src="3.png" alt="Voltar"></a>
         <a href="perfil.php" title="Perfil"><img src="2.png" alt="Perfil"></a>
         <a href="logout.php" title="Sair"><img src="icone1.png" alt="Sair"></a>
     </div>
 
-    <!-- Div para imagem de fundo -->
-    <div class="background">
-        <div class="container">
-            <h1>Resultado do Teste de Personalidade</h1>
-            <p><strong>Resultado:</strong> <?php echo $resultado; ?></p>
-            <p class="dicas"><strong>Dicas para melhorar:</strong> <?php echo $dicas; ?></p>
+    <!-- Conteúdo -->
+    <div class="container">
+        <h1>Resultado do Teste de Personalidade</h1>
+        <p><strong>Resultado:</strong> <?php echo $resultado; ?></p>
+        <p class="dicas"><strong>Dicas para melhorar:</strong> <?php echo $dicas; ?></p>
 
-            <!-- Gráfico ilustrativo -->
-            <div class="grafico">
-                <img src="grafico_resultado_personalidade.png" alt="Gráfico de Resultado">
-            </div>
-
-            <!-- Botão para refazer o teste -->
-            <a href="teste1.php" class="botao">Refazer o Teste</a>
+        <!-- Gráfico -->
+        <div class="grafico">
+            <canvas id="graficoPersonalidade"></canvas>
         </div>
+
+        <!-- Botão -->
+        <a href="teste1.php" class="botao">Refazer o Teste</a>
     </div>
+
+    <script>
+        const ctx = document.getElementById('graficoPersonalidade').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Introversão', 'Equilíbrio', 'Extroversão'],
+                datasets: [{
+                    label: 'Pontuação',
+                    data: [
+                        <?= $tipo == 'Introvertido' ? $pontuacao : 0 ?>,
+                        <?= $tipo == 'Equilibrado' ? $pontuacao : 0 ?>,
+                        <?= $tipo == 'Extrovertido' ? $pontuacao : 0 ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(255, 99, 132, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 30
+                    }
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
