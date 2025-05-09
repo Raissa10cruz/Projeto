@@ -86,7 +86,7 @@ try {
 <style>
 
 .usuario-logado {
-  color: #fff;
+      color: #fff;
       position: absolute;
       top: 15px;
       right: 20px;
