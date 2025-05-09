@@ -277,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
   </form>
-  <a href="index.php" class="botao-voltar">← Voltar</a>
+  <a href="teste-multiplas.php" class="botao-voltar">← Voltar</a>
 </body>
 
 </html>
