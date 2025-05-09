@@ -135,43 +135,71 @@ if ($pontuacao <= 15) {
         <a href="teste1.php" class="botao">Refazer o Teste</a>
     </div>
 
-    <script>
-        const ctx = document.getElementById('graficoPersonalidade').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Introversão', 'Equilíbrio', 'Extroversão'],
-                datasets: [{
-                    label: 'Pontuação',
-                    data: [
-                        <?= $tipo == 'Introvertido' ? $pontuacao : 0 ?>,
-                        <?= $tipo == 'Equilibrado' ? $pontuacao : 0 ?>,
-                        <?= $tipo == 'Extrovertido' ? $pontuacao : 0 ?>
-                    ],
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const pontuacao = <?= $pontuacao ?>;      // sua pontuação PHP → JS
+    const tipo      = "<?= $tipo ?>";         // Introvertido | Equilibrado | Extrovertido
+
+    // valores-base (marcam os intervalos de corte: 15 – 25 – 30)
+    const base = [15, 25, 30];
+
+    // cria um vetor só com zeros
+    const destaque = [0, 0, 0];
+
+    // coloca a pontuação apenas na categoria certa
+    if (tipo === 'Introvertido') {
+        destaque[0] = pontuacao;
+    } else if (tipo === 'Equilibrado') {
+        destaque[1] = pontuacao;
+    } else {
+        destaque[2] = pontuacao;
+    }
+
+    const ctx = document.getElementById('graficoPersonalidade').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Introversão', 'Equilíbrio', 'Extroversão'],
+            datasets: [
+                {
+                    label: 'Limite da Faixa',
+                    data: base,
+                    backgroundColor: 'rgba(200,200,200,0.35)',
+                    borderColor: 'rgba(200,200,200,0.7)',
+                    borderWidth: 1,
+                },
+                {
+                    label: 'Sua Pontuação',
+                    data: destaque,
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(255, 99, 132, 0.7)'
+                        'rgba(54, 162, 235, 0.8)',   // azul
+                        'rgba(255, 206, 86, 0.8)',   // amarelo
+                        'rgba(255, 99, 132, 0.8)'    // vermelho
                     ],
                     borderColor: [
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
                         'rgba(255, 99, 132, 1)'
                     ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 30
-                    }
+                    borderWidth: 2
                 }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 30,
+                    ticks: { stepSize: 5 }
+                }
+            },
+            plugins: {
+                legend: { labels: { color: '#333' } }
             }
-        });
-    </script>
+        }
+    });
+</script>
 
 </body>
 </html>
