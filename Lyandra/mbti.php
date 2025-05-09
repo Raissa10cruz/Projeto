@@ -84,6 +84,34 @@ try {
   <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
+
+.usuario-logado {
+  color: #fff;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .usuario-logado img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .usuario-logado span {
+      color: white;
+      font-size: 14px;
+    }
+
+    .usuario-logado:hover {
+      opacity: 0.8;
+    }
   .container {
     background-color: #ffffffcc;
     border-radius: 25px;
