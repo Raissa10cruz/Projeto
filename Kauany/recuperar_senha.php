@@ -27,108 +27,77 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f2f2f2;
+            background: url('kauany.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .header {
-            background-color: #d32f2f;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .form-container {
-            max-width: 400px;
-            margin: 60px auto;
-            background-color: white;
+        .login-box {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-
-        .form-container h2 {
-            color: #d32f2f;
-            margin-bottom: 20px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
             text-align: center;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
         }
 
         input[type="email"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 14px;
-            box-sizing: border-box;
+            background-color: #fff;
+            color: #000;
         }
 
         button {
-            width: 100%;
-            padding: 12px;
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
+            background: white;
+            color: black;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: #b71c1c;
-        }
-
-        p {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        a {
-            color: #d32f2f;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
         }
 
         .mensagem {
-            color: #d32f2f;
-            text-align: center;
+            color: #f66;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .link {
+            margin-top: 15px;
+        }
+
+        .link a {
+            color: #fff;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">Recuperar Senha</div>
-
-    <div class="form-container">
-        <h2>Digite seu e-mail</h2>
+    <div class="login-box">
+        <h2>Recuperar Senha</h2>
 
         <?php if (!empty($mensagem)): ?>
             <div class="mensagem"><?= htmlspecialchars($mensagem) ?></div>
         <?php endif; ?>
 
         <form method="post">
-            <label for="usuario">E-mail</label>
-            <input type="email" id="usuario" name="usuario" required>
+            <input type="email" id="usuario" name="usuario" placeholder="Digite seu e-mail" required>
             <button type="submit">Enviar</button>
         </form>
-        <p><a href="index.php">Voltar para o login</a></p>
-    </div>
 
-</body>
-</html>
+        <div class="link">

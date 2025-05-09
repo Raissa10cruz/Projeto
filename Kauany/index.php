@@ -27,6 +27,7 @@
 
             if ($user && password_verify($senha, $user['senha'])) {
                 $_SESSION['usuario'] = $user['nome'];
+                $_SESSION['id'] = $user['id'];
                 header("Location: home.php");
                 exit;
             } else {
